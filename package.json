@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "npm run build && serve dist --listen tcp://127.0.0.1:8772",
+    "dev": "npm start",
+    "build": "npm run build:studio && node build-site.cjs",
     "build:studio": "node build-studio.cjs",
     "check": "node --check app.js"
   },
@@ -13,6 +16,7 @@
     "three": "^0.180.0"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "serve": "^14.2.6"
   }
 }

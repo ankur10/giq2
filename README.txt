@@ -1,5 +1,15 @@
 GrowthIQ — Briefing + Intelligence Studio
 
+LOCAL SERVER AND VERCEL — 4 OCTOBER 2026
+Use a current Node.js LTS release with npm. From this repository:
+  npm ci
+  npm start
+Open http://127.0.0.1:8772/ or http://127.0.0.1:8772/#demo.
+npm start (also npm run dev) builds the app and serves dist locally. It is a static preview, without hot reload; after editing source, run npm run build and refresh. If port 8772 is already occupied, stop that server or use: npx serve dist --listen tcp://127.0.0.1:8773
+
+For Vercel, push the project files to your Git repository and import it into Vercel with this folder as the project root. vercel.json sets Framework Preset Other, Install Command npm ci, Build Command npm run build, and Output Directory dist. No environment variables are required for this captured-data preview. The Vercel deployment itself has not been performed or verified.
+Build locally with npm run build. Only runtime HTML/JS/CSS and assets are published; local review captures and source/tooling files are excluded. Existing hash routes such as /#demo, /#studio-next and /#studio-v3 work directly without rewrites. Backend services and research generation remain unconnected. This configuration does not add production authentication; apply your Vercel project's access settings if the preview needs restricted access.
+
 INTELLIGENCE STUDIO
 Studio is the second destination under Intelligence, between Your Briefing and Ask GrowthIQ. All 22 existing capability choices are retained and searchable by outcome, original capability name, or description. Five objective groups and secondary output filters replace the Micro artifacts / Deep research split.
 
