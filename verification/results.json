@@ -1,0 +1,273 @@
+{
+  "scope": "Local JavaScript function and event-handler checks with a mocked DOM. Not browser or visual verification.",
+  "checks": [
+    {
+      "name": "Render home",
+      "status": "passed"
+    },
+    {
+      "name": "Render ask",
+      "status": "passed"
+    },
+    {
+      "name": "Render markets",
+      "status": "passed"
+    },
+    {
+      "name": "Render ecosystem",
+      "status": "passed"
+    },
+    {
+      "name": "Render my-markets",
+      "status": "passed"
+    },
+    {
+      "name": "Render competitors",
+      "status": "passed"
+    },
+    {
+      "name": "Render my-competitors",
+      "status": "passed"
+    },
+    {
+      "name": "Render benchmark",
+      "status": "passed"
+    },
+    {
+      "name": "Render benchmark-empty",
+      "status": "passed"
+    },
+    {
+      "name": "Render customers",
+      "status": "passed"
+    },
+    {
+      "name": "Render signals",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-workspace",
+      "status": "passed"
+    },
+    {
+      "name": "Render agents",
+      "status": "passed"
+    },
+    {
+      "name": "Render deep-research",
+      "status": "passed"
+    },
+    {
+      "name": "Render support",
+      "status": "passed"
+    },
+    {
+      "name": "Render ticket",
+      "status": "passed"
+    },
+    {
+      "name": "Selecting briefing signal changes reader",
+      "status": "passed"
+    },
+    {
+      "name": "Saving a signal persists locally and filters saved list",
+      "status": "passed"
+    },
+    {
+      "name": "Unread filter removes marked signal",
+      "status": "passed"
+    },
+    {
+      "name": "Empty saved view has recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Signal context pre-fills research question without generating",
+      "status": "passed"
+    },
+    {
+      "name": "Research direction inserts an editable question",
+      "status": "passed"
+    },
+    {
+      "name": "Market search and selection retain query",
+      "status": "passed"
+    },
+    {
+      "name": "Market transfers selected record to research",
+      "status": "passed"
+    },
+    {
+      "name": "Difference comparison changes visible market rows",
+      "status": "passed"
+    },
+    {
+      "name": "Identical selected competitors show honest empty difference result",
+      "status": "passed"
+    },
+    {
+      "name": "One selected competitor shows recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Financial row selection controls table contents",
+      "status": "passed"
+    },
+    {
+      "name": "Financial metric updates chart",
+      "status": "passed"
+    },
+    {
+      "name": "Live feed filter changes selection to matching record",
+      "status": "passed"
+    },
+    {
+      "name": "Route navigation restores search and scroll context",
+      "status": "passed"
+    },
+    {
+      "name": "New comparison retains original indices after selection changes",
+      "status": "passed"
+    },
+    {
+      "name": "Legacy deep research route opens complete Studio catalog",
+      "status": "passed"
+    },
+    {
+      "name": "Market command selects record on the same route",
+      "status": "passed"
+    },
+    {
+      "name": "Category filter retains keyboard focus",
+      "status": "passed"
+    },
+    {
+      "name": "Studio preserves all 22 existing capabilities and original mappings",
+      "status": "passed"
+    },
+    {
+      "name": "Studio is a primary Intelligence navigation item",
+      "status": "passed"
+    },
+    {
+      "name": "Studio objective and output filters combine",
+      "status": "passed"
+    },
+    {
+      "name": "Studio search matches original capability names",
+      "status": "passed"
+    },
+    {
+      "name": "Studio empty state offers filter recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Every task deep link resolves to its own workspace",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown Studio task recovers to catalog",
+      "status": "passed"
+    },
+    {
+      "name": "Market context carries existing figures into model brief",
+      "status": "passed"
+    },
+    {
+      "name": "Company context carries original company data into profile brief",
+      "status": "passed"
+    },
+    {
+      "name": "Signal strategy brief uses captured title and relevance",
+      "status": "passed"
+    },
+    {
+      "name": "Blank Studio brief shows an accessible error",
+      "status": "passed"
+    },
+    {
+      "name": "Review uses user brief without generating research",
+      "status": "passed"
+    },
+    {
+      "name": "Draft save persists text but not template contents",
+      "status": "passed"
+    },
+    {
+      "name": "Template brief requires an actual file selection before review",
+      "status": "passed"
+    },
+    {
+      "name": "Task brief escapes HTML in user input",
+      "status": "passed"
+    },
+    {
+      "name": "Global search includes deep research tasks with original identity",
+      "status": "passed"
+    },
+    {
+      "name": "Saved draft restores persisted text after another contextual brief",
+      "status": "passed"
+    },
+    {
+      "name": "Restored template draft requires file reselection",
+      "status": "passed"
+    },
+    {
+      "name": "Three themes apply to the entire document and persist",
+      "status": "passed"
+    },
+    {
+      "name": "Theme switching preserves task draft and route",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid persisted theme falls back to Advisory",
+      "status": "passed"
+    },
+    {
+      "name": "Theme select change announces selected palette",
+      "status": "passed"
+    },
+    {
+      "name": "Retired palette selections migrate to Advisory on reload",
+      "status": "passed"
+    },
+    {
+      "name": "Retained palette restores before app initialization",
+      "status": "passed"
+    },
+    {
+      "name": "Theme comparison links open and persist the requested palette",
+      "status": "passed"
+    },
+    {
+      "name": "Unavailable storage does not prevent theme selection",
+      "status": "passed"
+    },
+    {
+      "name": "Only the three shortlisted themes appear in preferred order",
+      "status": "passed"
+    },
+    {
+      "name": "Dark header toggles accessibly without resetting current work",
+      "status": "passed"
+    },
+    {
+      "name": "Header preference persists independently of all three themes",
+      "status": "passed"
+    },
+    {
+      "name": "Header comparison links consume both preferences and preserve page",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid or unavailable header storage safely defaults to light",
+      "status": "passed"
+    }
+  ]
+}

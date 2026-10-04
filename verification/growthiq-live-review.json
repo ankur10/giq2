@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-02",
+  "route": "#demo",
+  "build": "passed: npm run build:studio",
+  "syntax": "passed: node --check app.js",
+  "mock_checks": 84,
+  "browser_checks": [
+    "All seven chapters fit 1920x1080 without internal stage scrolling",
+    "Reviewed mobile chapters at 390px have no page-level horizontal overflow",
+    "Selected signal, market, peer, segment and question carry into Ask and strategy brief",
+    "Return to demo restores chapter and selections",
+    "Arrow navigation works outside editable controls and does not advance from the question textarea",
+    "Empty question is blocked with visible validation",
+    "Manual motion pause works",
+    "No application console errors observed",
+    "Mobile comparison labels wrap without overlapping values after review fix"
+  ],
+  "review": {
+    "disposition": "ship",
+    "scope": "Reviewer confirmed the single reported mobile table overlap finding resolved after recapture"
+  },
+  "screenshots": ".impeccable/review/growthiq-live/",
+  "data_sha256": "6b5480d079b0619c7a3710a12c07ee56d1dfac735c167684fe7f39b877b5681e",
+  "limits": [
+    "Fullscreen entry and exit not verified",
+    "System reduced motion and WebGL fallback are implemented but not independently simulated",
+    "Mock checks do not execute React or WebGL; browser observations are separate",
+    "No production APIs or research generation connected",
+    "Conference display hardware and frame rate not benchmarked"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "disposition": "recapture",
+  "visualVerification": "blocked: browser admin-enforced policy check unavailable",
+  "requiredViewports": [
+    1440,
+    390
+  ],
+  "screenshots": [],
+  "codeFindings": [
+    {
+      "finding": "Original company indices in new comparison",
+      "status": "resolved by independent code inspection"
+    },
+    {
+      "finding": "Micro-artifact format filter leaking into deep research",
+      "status": "resolved by independent code inspection"
+    },
+    {
+      "finding": "Market command search selecting requested record",
+      "status": "resolved by independent code inspection"
+    },
+    {
+      "finding": "Keyboard focus restoration after rerender",
+      "status": "resolved by independent code inspection"
+    }
+  ],
+  "localChecks": 67,
+  "dataUnchanged": true,
+  "studio": {
+    "capabilities": 22,
+    "routeDefinitions": 17,
+    "taskDeepLinks": 22,
+    "visualVerification": "blocked: CUA admin-enforced policy could not be verified",
+    "codeFinding": "Saved draft restoration resolved by independent code inspection"
+  },
+  "requiredStates": [
+    "Studio catalog",
+    "Filtered and empty catalog",
+    "Market context in task workspace",
+    "Brief validation",
+    "Brief review",
+    "Saved draft resume",
+    "Mobile navigation",
+    "All three themes at desktop and mobile widths",
+    "Theme persistence across reload",
+    "Command search focus and hover",
+    "Signal unread and selected states",
+    "Studio start hover states",
+    "Light and dark header in all three themes",
+    "Header control fit at 390px,900px,1200px and1440px",
+    "Dark header keyboard focus and native theme selector"
+  ],
+  "themes": {
+    "variants": [
+      "Precision",
+      "Advisory",
+      "Mineral"
+    ],
+    "staticContrastPairs": 162,
+    "staticContrastFailures": 0,
+    "minimumBodyRatio": 5.06,
+    "scope": "Mock-DOM behavior and semantic token calculations only; browser-computed styles and visual checks remain unverified.",
+    "reviewedFixes": [
+      "Search results use selected surface for hover/focus",
+      "Unread and selected signal dots use accent",
+      "Signal and nonfeatured Studio hover surfaces are distinct"
+    ],
+    "fixReview": "Independent bounded header code review: no material defects; token scoping, toggle semantics, parameter handling, independent persistence and responsive CSS checked. Rendered/native-control fit remains unverified; recapture required.",
+    "disposition": "recapture",
+    "latestChange": "Lighter main canvases plus independent light/dark header experiment. Header storage, combined comparison parameters and unchanged task state checked in mocked DOM. Static header text/control/focus contrast checked. Browser rendering remains blocked."
+  }
+}

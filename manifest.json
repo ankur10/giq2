@@ -1,0 +1,102 @@
+{
+  ".impeccable/design.json": {
+    "bytes": 48344,
+    "sha256": "986271b1ed689e0dee827b88665feba40cdd90df03f54c0406c19a037d140e7e"
+  },
+  "DESIGN.md": {
+    "bytes": 26718,
+    "sha256": "c4753bc45c8cf6c58e16a69cf6160c254259355e7d530a2adeb251f903a41c79"
+  },
+  "PRODUCT.md": {
+    "bytes": 6488,
+    "sha256": "59ba2a9677d1b5d82df7d7a34907f9c542e30df9f3324e688b48355babb46f0a"
+  },
+  "README.txt": {
+    "bytes": 5676,
+    "sha256": "82ac96417c932e5a2bba5f259c02b7e9fb45edc9cd5b9fccd1390b71ef474663"
+  },
+  "app.js": {
+    "bytes": 82103,
+    "sha256": "175172fe51de36b327cb33c0ef14d63bc88ff8c6ecff0580e0dbec879c77fd48"
+  },
+  "assets/FONT-LICENSES.txt": {
+    "bytes": 4733,
+    "sha256": "b4b3e9aba2d0f997ea490364794a3827c1ccdc013cad97f59995844b8b89b321"
+  },
+  "assets/mono.woff2": {
+    "bytes": 40480,
+    "sha256": "1e06740a02a443fb7f3eeda8fcaa685a0f6c620e3f01e6666e847295469ce3ad"
+  },
+  "assets/sans.woff2": {
+    "bytes": 28792,
+    "sha256": "ac057a5593cbe3df0d2585da5dd5f33b8efa84aa30550c710fe061b37fc5c54b"
+  },
+  "assets/serif.woff2": {
+    "bytes": 122168,
+    "sha256": "2a24bad466f09b88b8e9cbc488bf774117c912e66374c57bf4716855849143f8"
+  },
+  "data.js": {
+    "bytes": 13145,
+    "sha256": "6b5480d079b0619c7a3710a12c07ee56d1dfac735c167684fe7f39b877b5681e"
+  },
+  "direction-contract.md": {
+    "bytes": 1905,
+    "sha256": "4c9dcd2afe07eec272f6e28bf36d7d3f22c9be44cdf8ba3af89f6c51fa135c7e"
+  },
+  "index.html": {
+    "bytes": 1380,
+    "sha256": "28c2283f470ae4fefc688136c1a6bb640554fb91daec756e9509607dbdfbb97b"
+  },
+  "specifications.html": {
+    "bytes": 10576,
+    "sha256": "6d4ca008300f311b641a24031f8458f1b9df3b4e477bec54e86e53820481eb20"
+  },
+  "studio-contract.txt": {
+    "bytes": 1530,
+    "sha256": "db2abd23ffc42dc34afed489e58dd8009be268a51d72ebf4ffc03faa1ba1e895"
+  },
+  "studio-data.js": {
+    "bytes": 5891,
+    "sha256": "dc9ad815e8355cd2809a785d7931b185b0e2ae0f56f0c1ecf4c94f56682849d9"
+  },
+  "styles.css": {
+    "bytes": 78557,
+    "sha256": "3dacc828a115b069cd802ebb51523c383c449c1b2ed19af510f519cff17f31a6"
+  },
+  "theme-contract.txt": {
+    "bytes": 2526,
+    "sha256": "1ea344943479bba3ebd8445613fb4a3168475f764c7773663540347dd737c21b"
+  },
+  "theme.js": {
+    "bytes": 3614,
+    "sha256": "f9e9a1c0d217bfeefb479324f5f7b54042588f75a27245ab17e9560ce9ed1046"
+  },
+  "themes.css": {
+    "bytes": 10439,
+    "sha256": "598b71b864d61d990f8bf0b2b84fb8486462b407c83d0856dfe21407e80e22b0"
+  },
+  "themes.json": {
+    "bytes": 3162,
+    "sha256": "191065fdc9f264785a3411d6670bbd407553add963ab74ea3e98cec41668e28a"
+  },
+  "verification/check.cjs": {
+    "bytes": 19272,
+    "sha256": "0d30250a3c6071eeb777969015776411089f090671136d786fe50bd08d86ef24"
+  },
+  "verification/results.json": {
+    "bytes": 6704,
+    "sha256": "771c39a85858115788dcaac30c5eb6558ee7efc7df6562239fcb73eddedb8bf0"
+  },
+  "verification/review-status.json": {
+    "bytes": 2757,
+    "sha256": "f9d5bac4eb16a390b8dc28da1eedac18a73d4acaf7a1e26b42fb26232690fddd"
+  },
+  "verification/theme-contrast.json": {
+    "bytes": 171,
+    "sha256": "feaae928d78b008ee3d6acd58bc6bfe8c43e8a48cae4b56dc93df907dfba85e1"
+  },
+  "verification/theme-contrast.py": {
+    "bytes": 2408,
+    "sha256": "9e43079f638e3b14adc62eb54be22f39c4dab24b16804637e1a62f55f8c27c47"
+  }
+}

@@ -1,0 +1,11 @@
+Intelligence Studio — approved extension of GrowthIQ Briefing
+Mode: Operate (task discovery, brief preparation and review).
+Approval: user accepted Intelligence Studio naming, moving to Intelligence navigation, outcome-led grouping, dedicated task workspace and contextual entry points.
+World: inherit existing Source Serif 4 / Source Sans 3 / JetBrains Mono and mineral palette.
+First viewport: Studio title; question-led search; three prominent starts (market model, competitor profile, market entry); objective filters leading into the full task catalog.
+Signature flow: objective → existing task → scope and deliverable outline → editable local brief → review/download or open existing production setup.
+Task source: 7 micro artifacts + 15 research choices from unchanged data.js. studio-data.js only maps those capabilities to frontend names, objectives and outlines derived from existing descriptions.
+No fabricated results, popularity, completion history, scores, cost or estimated duration. No new APIs. Local draft collection is explicitly browser-only.
+Contextual links: home to Studio; briefing signal to strategy brief; market to market model; company to company profile; live signal to signal analysis.
+Routes: #studio and #studio/<task-id>; legacy #agents and #deep-research remain accessible. Existing 15 routes retained, two route types added.
+Responsive: discovery columns collapse; objective filters scroll on mobile; task workspace stacks brief before deliverable scope. Existing mobile nav retained.

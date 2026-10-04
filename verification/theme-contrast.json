@@ -1,0 +1,6 @@
+{
+  "scope": "Static semantic token-pair calculations; not browser-computed styles or visual verification.",
+  "pairs": 162,
+  "failures": [],
+  "minimumBodyRatio": 5.06
+}

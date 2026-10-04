@@ -1,0 +1,12 @@
+GrowthIQ shortlisted themes
+User selection: keep only Precision, Advisory and Mineral, in that order.
+Precision: white/navy, focused blue actions; Source Sans 3 operational headings, task names and composer; serif signal reading, tighter task rows and outlined active navigation.
+Advisory: navy/white with editorial typography. Existing default and recovery palette.
+Mineral: cool gray/blue with editorial typography.
+Native selector now has three direct choices, without optgroups. CSS/JSON/runtime choices for other palettes are removed. Saved choices for retained themes persist. Retired Grove, Midnight, Evergreen, Graphite, Slate, Atelier and Parchment recover to Advisory. Valid comparison links apply and persist once; their theme parameter is consumed so later choices survive reload. Routes, drafts and filters remain intact. No changes to existing data or backend APIs.
+All three palettes use light color-scheme and shared semantic roles; Precision typography/component refinements remain scoped only to Precision.
+Verification:67 mocked-DOM checks and162 static contrast calculations pass. Browser-rendered appearance remains unverified because browser security-policy verification is unavailable. No new screenshots or visual approval claimed.
+
+Header contrast experiment: user asked whether a dark top bar would anchor the page. Main canvases lightened to Precision #f7f8fa, Advisory #f7f8f9, Mineral #f5f7f9; white panels retained. Topbar has an accessible Dark header toggle, labelled and aria-pressed. It changes only the topbar through local semantic-role overrides; sidebar/content stay light. Header colors are explicit header-* roles mirrored in themes.json. Native topbar controls use dark color-scheme when enabled. Search, breadcrumbs, selector, icons, hover and focus derive from local header roles.
+Default header is light. Header preference is stored independently under growthiq-header-style and restored before app render. Valid ?header=dark or ?header=light links override once, persist, and consume the parameter; combined theme/header links preserve other query fields and route. Changing theme preserves header choice. Toggling does not rerender/reset draft/route/filter. Storage failure preserves in-memory use. Browser theme-color follows header surface when dark, canvas when light.
+Responsive: header toggle displays icon-only through900px with accessible name retained; search collapses through1200px to reserve room. Both branches await real browser fit verification. No visual approval.

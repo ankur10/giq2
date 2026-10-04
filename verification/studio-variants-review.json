@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-02",
+  "routes": [
+    "#studio-v3",
+    "#studio-v4",
+    "#studio-v5"
+  ],
+  "build": "passed: npm run build:studio",
+  "syntax": "passed: npm run check",
+  "mock_checks": 83,
+  "browser_checks": [
+    "All three variants carry subject and context into their respective task workspace",
+    "Growth objective \u2192 all capabilities \u2192 company profile \u2192 workspace \u2192 back retains selected task and edited context in all three variants",
+    "Original capability-name search and empty search recovery",
+    "Pause motion state",
+    "Shared workspace Review brief",
+    "390px layouts have no page-level horizontal overflow",
+    "Required objectives precede primary action on mobile",
+    "No application console errors observed"
+  ],
+  "screenshots": ".impeccable/review/studio-variants/",
+  "review": {
+    "disposition": "ship",
+    "scope": "three material fixes confirmed resolved after bounded visual/source review",
+    "resolved": [
+      "persist cross-objective browsing and selection",
+      "mobile required objective placement",
+      "V4 selected sheet clipping"
+    ]
+  },
+  "limits": [
+    "Fullscreen entry/exit could not be verified through automation; graceful unavailable fallback observed",
+    "No production APIs or generation connected",
+    "Mock checks do not execute React or WebGL; browser checks separately cover observed interactions",
+    "WebGL fallback and system reduced-motion paths present in source; not independently simulated in browser"
+  ]
+}
