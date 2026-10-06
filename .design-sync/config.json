@@ -1,0 +1,12 @@
+{
+  "projectId": "538c2491-51e4-48dc-aef7-107c57c582e9",
+  "shape": "package",
+  "pkg": "growthiq-design-preview",
+  "globalName": "GrowthIQ",
+  "buildCmd": "npm run build && sh .design-sync/build-css.sh",
+  "cssEntry": "dist/growthiq-ds.css",
+  "guidelinesGlob": [
+    "DESIGN.md"
+  ],
+  "readmeHeader": ".design-sync/conventions.md"
+}

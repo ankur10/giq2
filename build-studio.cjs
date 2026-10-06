@@ -5,6 +5,6 @@ const outdir = path.join(__dirname, 'assets/studio');
 fs.mkdirSync(outdir, {recursive: true});
 // This directory contains only this build's generated React/Three.js assets.
 for (const file of fs.readdirSync(outdir)) {
-  if (/^(studio-spatial|growthiq-demo|chunk-[A-Z0-9]+)\.js(\.LEGAL\.txt)?$/.test(file)) fs.unlinkSync(path.join(outdir, file));
+  if (/^(studio-spatial|growthiq-demo|ask-results|chunk-[A-Z0-9]+)\.js(\.LEGAL\.txt)?$/.test(file)) fs.unlinkSync(path.join(outdir, file));
 }
-esbuild.buildSync({entryPoints:['studio-spatial.jsx','growthiq-demo.jsx'],bundle:true,minify:true,format:'esm',splitting:true,outdir,entryNames:'[name]',chunkNames:'chunk-[hash]',define:{'process.env.NODE_ENV':'"production"'},legalComments:'linked',logLevel:'info'});
+esbuild.buildSync({entryPoints:['studio-spatial.jsx','growthiq-demo.jsx','ask-results.jsx'],bundle:true,minify:true,format:'esm',splitting:true,outdir,entryNames:'[name]',chunkNames:'chunk-[hash]',define:{'process.env.NODE_ENV':'"production"'},legalComments:'linked',logLevel:'info'});
