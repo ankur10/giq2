@@ -40,6 +40,7 @@
   const routeInfo = {
     demo:['GrowthIQ Live','GrowthIQ Live','A guided journey through the full product.'],
     home:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
+    'domain-expert':['Ask Domain Expert','Ask Domain Expert','Connect with a human expert on the questions that matter to your business.'],
     ask:['Ask GrowthIQ','Ask GrowthIQ','From a question to a clearer business decision.'],
     markets:['Markets','Market explorer','Explore your ecosystem. Find the next opportunity.'],
     ecosystem:['Markets','Market explorer','See how your business segments connect.'],
@@ -65,7 +66,7 @@
     support:['Support','How can we help?','Manage your requests and get the support you need.'],
     ticket:['Support','Raise a support ticket','Tell us what happened. We’ll help you take the next step.']
   };
-  const nav = [['Your Briefing','home','home'],['Intelligence Studio','studio','document'],['Ask GrowthIQ','ask','ask'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['GrowthIQ Live','demo','globe'],['Support','support','support']];
+  const nav = [['Your Briefing','home','home'],['Intelligence Studio','studio','document'],['Ask GrowthIQ','ask','ask'],['Ask Domain Expert','domain-expert','customers'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['GrowthIQ Live','demo','globe'],['Support','support','support']];
   const marketRows = [
     ['Antimicrobial Coatings Market',10.8,7],['Automotive Conformal Coatings Market',10,3.5],['Bioadhesives Market',8.6,14.6],['Bonding Films Market',8.2,.985]
   ];
@@ -98,6 +99,7 @@
     let actions='';
     if(state.route==='home')actions=range()+btn('Saved signals','saved','document');
     if(['markets','ecosystem','my-markets'].includes(state.route))actions=link('Ask about a market','ask','ask','primary');
+    if(state.route==='domain-expert')actions='<button class="btn" data-expert-history>'+icon('document')+'Request history</button>';
     if(state.route==='support')actions=link('Raise a ticket','ticket','plus','primary');
     if(state.route==='ticket')actions=link('Back to support','support','support');
     if(state.route==='signals')actions=range();
@@ -263,7 +265,7 @@
     const field=(name,label,type='text',required=false,placeholder='')=>`<div class="field"><label for="ticket-${name}">${label}${required?'<span class="required">Required</span>':''}</label><input id="ticket-${name}" name="${name}" type="${type}" value="${e(draft[name]||'')}" ${required?'required':''} placeholder="${e(placeholder)}"><p class="field-error" id="error-${name}" hidden></p></div>`;
     return `<div class="ticket-layout"><form id="ticket-form" class="ticket-form" novalidate><div class="form-section-head"><h2>Ticket details</h2>${btn('Save draft & minimize','save-draft','document','quiet')}</div>${field('subject','Subject','text',true,'Briefly describe the issue')}<div class="field-grid"><div class="field"><label for="ticket-category">Category</label><select id="ticket-category" name="category"><option>General Query</option></select></div><div class="field"><label for="ticket-priority">Priority</label><select id="ticket-priority" name="priority"><option>Medium</option></select></div>${field('email','Email','email')}${field('name','Name')}</div><div class="field"><label for="ticket-description">Description <span class="required">Required</span></label><textarea id="ticket-description" name="description" required placeholder="What happened, and what did you expect?">${e(draft.description||'')}</textarea><p class="field-error" id="error-description" hidden></p></div><div class="field"><label for="ticket-attachments">Attachments</label><div class="attachment-area">${icon('attachment')}<span>Choose files to add more context</span><input id="ticket-attachments" name="attachments" type="file" multiple></div><div id="ticket-files" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div></div><div class="form-actions">${link('Cancel','support','','quiet')}<button class="btn primary" type="submit">Submit ticket ${icon('arrow')}</button></div><div id="ticket-result"></div></form><aside class="form-help"><h3>A little detail goes a long way</h3><p>A clear subject and a description of what happened help us understand your request.</p><p>Include screenshots or relevant documents if they help explain the issue.</p><div class="info-line">${icon('info')}Your existing support category and priority are retained.</div></aside></div>`;
   }
-  function view(){return ({demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers,signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route]()}
+  function view(){return ({'domain-expert':()=>window.GROWTHIQ_EXPERT.view(),demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers,signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route]()}
   function render(){unmountSpatial();document.getElementById('app').innerHTML=shell();syncNavigation();mountSpatial()}
   function renderView(){
     const focused=document.activeElement;

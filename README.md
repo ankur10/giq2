@@ -110,6 +110,7 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 | [ask-results-data.json](ask-results-data.json) | Answer, research outline, news and image fixtures captured on 6 October 2026; bundled at build time. Additional captured history and presentation mappings live in `ask-results.jsx`. |
 | [ask-thermo-contract.md](ask-thermo-contract.md), [ask-thermo.jsx](ask-thermo.jsx), [ask-thermo.css](ask-thermo.css), [ask-thermo-data.json](ask-thermo-data.json) | Thermo Fisher example, evidence inspection and proprietary-report access boundaries; static fixtures use the shared Ask Results SVG icons. |
 | [growthiq-live-contract.md](growthiq-live-contract.md) | Full-app demo chapters, presenter controls and workflow handoffs. |
+| [domain-expert-contract.md](domain-expert-contract.md), [domain-expert.js](domain-expert.js), [domain-expert.css](domain-expert.css) | Ask Domain Expert form, browser-only request history and future service integration boundaries. |
 | [index.html](index.html) | Entry point, font loading and stylesheet/script order. |
 | [app.js](app.js) | Main shell, hash routes, screens, event handling, local state and React mount/handoff integration. |
 | [data.js](data.js) | Captured reference records; replace with existing mainline data access when integrating. |
@@ -125,7 +126,7 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 
 The main prototype is vanilla HTML/CSS/JavaScript. React is mounted for the newer Studio variants, full-app demo and standalone Ask results preview; this is not a single React application. Edit the `.jsx` sources, not generated files in `assets/studio/` or `dist/`.
 
-The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
+The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css` → `domain-expert.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
 
 ## Integrating into the mainline repository
 
@@ -191,6 +192,7 @@ There is no hot reload. After editing files, run `npm run build` in another term
 | Ask GrowthIQ — Captured results | [/ask-results.html](http://127.0.0.1:8772/ask-results.html) |
 | Ask GrowthIQ — Thermo Fisher | [/ask-results?example=thermo](http://127.0.0.1:8772/ask-results?example=thermo) |
 | Main app | [/#home](http://127.0.0.1:8772/#home) |
+| Ask Domain Expert | [/#domain-expert](http://127.0.0.1:8772/#domain-expert) |
 | Studio V1 — Original | [/#studio](http://127.0.0.1:8772/#studio) |
 | Studio V2 — Guided | [/#studio-next](http://127.0.0.1:8772/#studio-next) |
 | Studio V3 — Spatial | [/#studio-v3](http://127.0.0.1:8772/#studio-v3) |
@@ -227,3 +229,7 @@ History delete controls are session-local preview actions with Undo; wire them t
 Open [/ask-results?example=thermo](http://127.0.0.1:8772/ask-results?example=thermo) for the captured growth-opportunities report, searchable proprietary-report navigation, and inline evidence panels. Use this extensionless route because the local `.html` redirect drops the query parameter. Its source files are `ask-thermo.jsx`, `ask-thermo.css`, and `ask-thermo-data.json`. See [the integration contract](ask-thermo-contract.md) for captured-data limitations, report access, and evidence states.
 
 The audit covers 49 answer info buttons and 25 visible opportunity controls: 74 captured controls, including 58 unavailable details and four mismatched responses. The four proprietary report links are retained; their bodies required sign-in and are not reproduced. Answer nodes, evidence and report references are static fixtures with no API calls. Preserve the existing KnowledgeStore authentication flow and service contracts when integrating.
+
+### Ask Domain Expert
+
+Open [/#domain-expert](http://127.0.0.1:8772/#domain-expert) or choose **Intelligence → Ask Domain Expert**. The form saves local preview requests and keeps an expandable history across reloads when browser storage is available; it does not send requests to a human expert. Unsaved form input survives navigation within the current page session. Files: `domain-expert.js` and `domain-expert.css`. See [integration notes](domain-expert-contract.md) before connecting the mainline request service.
