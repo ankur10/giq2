@@ -429,40 +429,54 @@ production-integration verification.
 - Do not apply Precision typography or control refinements to Advisory or Mineral; preserve layout breakpoints, data and workflows across all three options.
 - Do not describe mock-DOM checks as browser tests or claim visual approval without screenshots.
 
-## Isolated Ostrel Keynote (`#keynote`)
+## Product Keynote Proof (`#keynote`)
 
 ### Overview
 
-This route applies the approved supplied-video direction to a townhall presentation. It is a scoped addition, not a replacement for the workspace tokens above. The shipped sources are `keynote.css`, `keynote.jsx` and `keynote-scene.jsx`; the narrative and rehearsal contract remain in `keynote-contract.md`. A continuous network, an orange opportunity path and readable evidence support the presenter's explanation. Graphics are code-rendered; no generated or new raster assets ship with this route.
+This scoped presentation layer uses the established GrowthIQ shell, briefing reader and Ask composer. It is an ordinary extension of the existing product world. The former nine-scene movie adaptation is replaced by a presenter-controlled signal → significance → question flow. `keynote.css`, `keynote.jsx` and the keynote helpers in `app.js` implement it; `keynote-contract.md` records its scope. The implementation reuses `home()` and `ask()` rather than drawing substitute product screens. No new generated or raster assets are introduced.
 
 ### Colors
 
-Warm ivory paper (`--kn-paper`, #f5f2e9) supports navy reading ink and primary actions (`--kn-ink`, #172844). Dark orange (`--kn-orange`, #ad4b10) marks emphasized phrases, focus and selected progress; brighter orange (`--kn-bright`, #d9732b) is a chart fill. Muted copy (`--kn-muted`, #606877), fine rules (`--kn-line`, #d6d5cb) and pale blue chart context (`--kn-blue`, #d1d9e6) complete the recurring palette. The 3D path uses its own orange line (#bd5918) and node (#bf5c19) values. These values describe this route's source, not new global theme roles.
+Every surface, foreground, border, selection and action inherits the existing semantic theme roles. Advisory, Precision and Mineral remain available, along with the independent header contrast setting. The focused relevance panel uses accent-light, selected-border, ink and accent; the carried-context panel and presenter transport use surface and line. There is no keynote palette or replacement set of global tokens.
 
 ### Typography
 
-The keynote reuses local Source Serif 4 for narrative headlines, Source Sans 3 for prose and controls, and JetBrains Mono for sequence markers. Main headlines use weight (400), size (clamp(42px, 4.4vw, 84px)), line-height (1.09) and tracking (-.04em); denser scenes use smaller source-defined clamps. Narrative copy uses (clamp(18px, 1.45vw, 26px)/1.55) with a typical (33ch) limit. Through (600px), main headlines become (39px/1.13) and narrative copy (17px). These presentation sizes do not alter workspace typography.
+Existing local fonts and theme-specific font assignments remain in force. The following source sizes are scoped presentation adjustments, not additions to the global type ramp:
+
+- The signal heading uses (clamp(28px, 2.4vw, 40px)); the normal summary and context copy use (18px/1.65), and the context heading uses (21px).
+- The significance view reduces the signal heading to (clamp(26px, 2.1vw, 34px)) with a (40ch) limit and the summary to (16px). Its focal relevance copy grows to (clamp(19px, 1.7vw, 25px)/1.55).
+- The editable question uses (clamp(20px, 1.8vw, 28px)/1.5). Carried-context titles use (17px/600), with disclosure copy at (14px).
+- The presenter cue uses the existing serif variable at (23px/1.25), dropping to (20px) through (1100px) and (21px) through (767px). Step labels use sans serif at (13px), or (12px) on mobile.
+- Through (767px), the initial signal heading is (27px), while the significance heading retains its scoped clamp. Normal reading copy is (17px), focal relevance is (19px), and question text is (20px).
 
 ### Layout
 
-The desktop stage fills the viewport with an (82px) header, flexible scene and (98px) footer, inside (4.5vw) side padding. Narrative and graphics generally share two columns, changing by scene. Through (900px), scenes stack and the page scrolls naturally; the footer follows content so controls do not cover evidence. Through (600px), side padding becomes (20px), navigation spans the width and the final action path uses two columns.
+The actual product viewport scrolls independently of the fixed presenter transport. A ResizeObserver measures the transport, topbar and workspace to reserve their current height and align the transport with the workspace; the viewport height is the small viewport height less the measured header and controls. This keeps content reachable when controls wrap or the viewport changes. The route hides the ordinary footer, watch strip and Studio shortcut. The initial desktop signal index is capped at (440px) and scrolls; the selected record is placed first.
+
+In the significance view, the briefing filter row and index hide, the reader expands into a centered container with maximum width (1000px), and its relevance receives (24px) padding and a theme-aware boundary. The question view retains the native composer, its controls and a carried-context disclosure above it; introductory and suggested-prompt sections hide. The context panel is at most (860px) wide. Each presenter step resets the product scroll and brings the focal reader, relevance or composer into view; the audience can still scroll the product independently.
+
+The transport uses (19px 36px 12px) padding, with the cue and actions beside one another. Through (1100px), spacing tightens. Through (767px), it spans the viewport, actions stack below the cue and step navigation, the initial index and briefing filters hide, and reader padding becomes (22px 20px). Mobile relevance padding is (18px); the composer minimum height is (250px), compared with (190px) on desktop. Notes have a mobile height limit of (45vh) and their own overflow. At widths from (1500px), main content has a (1500px) maximum width and the transport uses (48px) horizontal padding.
 
 ### Elevation & Depth
 
-Ivory surfaces and fine rules organize the stage. The prepared-research panel has a restrained shadow; notes and the native evidence dialog have stronger overlay shadows. Spatial network motion explains connections and renders on demand. Manual pause or system reduced motion removes interpolation and entrances; simple graphics preserve the same semantic content.
+Theme-aware reading surfaces and fine borders retain the product's flat treatment. The presenter transport uses a restrained upward shadow (0 -8px 24px rgb(5 28 44 / .05)); on-screen notes use the stronger overlay shadow (0 12px 35px rgb(5 28 44 / .14)). The composer retains its inherited treatment.
+
+Reader movement lasts (620ms) and the question entrance (480ms), both using cubic-bezier(.16, 1, .3, 1). These short transitions follow manual step changes; nothing advances on a timer. Manual pause and system reduced motion suppress transitions, animations and smooth scrolling. No WebGL scene or simple-graphics mode belongs to this replacement proof.
 
 ### Shapes
 
-Controls, evidence panels and map labels use precise corners (2px where specified). Circular company markers, donut measures and overlapping intelligence lenses express relationships. These circles belong to the keynote's diagram language rather than a new workspace container style.
+Shared button, field and surface shapes remain in force. The relevance panel, carried context and notes use the existing radius variable. Small circular step markers identify sequence position; they are navigation indicators, not a new diagram or container language.
 
 ### Components
 
-Primary and next-scene actions pair navy with ivory; their hover navy is (#293f60). Primary/navigation actions are at least (48px) high on desktop, with navigation at (44px) on small screens. Interactive controls use an orange focus outline (3px) offset by (5px). Chapter navigation exposes the current scene; motion and simple graphics expose pressed state. Rehearsal notes use a navy overlay explicitly labelled visible on screen. Evidence opens in a native modal and restores focus to its opener; the prepared answer moves focus to its revealed heading. PRODUCT.md defines controls and the fictional-data boundary.
+The presenter transport combines a brief spoken cue, three directly selectable steps, a previous control and the next meaningful action. Primary actions retain primary/on-primary styling and a minimum height of (48px). The active step exposes aria-current; notes expose expanded state and motion pause exposes pressed state. Shared focus styling remains in force. Step changes move focus to the spoken cue without disturbing the product scroll position.
+
+The initial signal reader preserves its source-availability disclosure and product actions. The significance view emphasizes the same relevance block. The question view displays the selected signal with an expandable context disclosure above the editable native composer. The final action hands the edited question and selected record context to the standard Ask route; it does not reveal a prepared or generated answer. PRODUCT.md defines the captured-data and service boundaries.
 
 ### Do's and Don'ts
 
-**The Keynote Scope Rule.** Keep this palette, presentation scale and diagram language inside `#keynote`; preserve workspace theme behavior and the existing product tour.
+**The Product Continuity Rule.** Keep keynote changes scoped to the presenter layer and its focused product views; retain the shared themes, fonts, component behavior and existing product tour.
 
-**The Visible Evidence Rule.** Keep the fictional-story disclosure, distinct metric labels and prepared-answer wording attached to their content; presentation polish must not imply live research or a completed service.
+**The Visible Context Rule.** Keep captured-source availability and carried context accessible alongside the question. Presentation emphasis must not imply newly verified news or completed research.
 
-Do retain keyboard navigation, visible focus, motion controls and the non-WebGL fallback. Do not bundle the supplied video or introduce unsupported numerical claims. This documentation pass records source behavior; visual-review evidence belongs to the keynote finish review and does not replace the historical verification notes above.
+Do retain manual progression, working product controls, independent scrolling, visible focus and reduced-motion support. Do not restore the rejected movie palette, fictional story, cinematic slide layout or decorative 3D scene. Source and screenshot review for this extension do not replace the historical global verification notes above.

@@ -4,13 +4,13 @@ A frontend prototype of GrowthIQ with multiple Intelligence Studio designs and a
 
 ## Townhall keynote
 
-Open [The next growth story](http://127.0.0.1:8772/#keynote) after `npm start`. This is a separate nine-scene, presenter-controlled Ostrel story based on the supplied explainer video. It follows connected markets → battery fire protection → a changing customer → competitor signals → a focused research question → a specific customer conversation. The existing [GrowthIQ Live product tour](http://127.0.0.1:8772/#demo) remains available.
+Open [Signal to question](http://127.0.0.1:8772/#keynote) after `npm start`. This short product proof demonstrates a captured Sika/Akkim signal → its significance for H.B. Fuller → an editable Ask GrowthIQ question. It uses the existing briefing and Ask screens, with presenter-controlled focus, scrolling and transitions. Allow about 40–60 seconds; there is no timed playback. This is the opening proof, not the complete planned 90–120-second demo.
 
-Use **Right/Left** or **Page Down/Page Up** to advance or reverse, **1–9** to jump, **Home/End** for the first/last scene, **M** to pause motion, and **B** to blank the stage. **N** opens rehearsal notes that are visible on the presentation screen. Notes also contain Restart and Simple graphics controls. The presentation never advances on a timer. Fullscreen is available from the header. At the research scene, explicitly reveal the prepared perspective and inspect its supporting story evidence; captured product results open separately.
+Use **Right/Left** or **Page Down/Page Up** to move between the three beats, or select a beat directly. **M** pauses motion; **N** opens on-screen rehearsal notes. Fullscreen and exit are in the presenter bar. Continue in Ask GrowthIQ carries the edited question, signal summary and business relevance into the standard workspace. Keyboard shortcuts leave typing and open dialogs alone.
 
-Ostrel, Talmir and Quendra are fictional. The keynote labels the scenario as illustrative and the research answer as prepared. Its export is a text brief, not a generated report. The 22% electric-revenue and 70% electric-pipeline figures are different measures and are labeled accordingly. No model invocation, upload, subscription or outreach occurs.
+The source is an existing captured product record, not independently verified current news. Its original article URL was not captured. The proof ends at the question; no AI answer, report or commercial outcome is invented. Existing local preview actions remain functional. The [GrowthIQ Live tour](http://127.0.0.1:8772/#demo) remains separate.
 
-Implementation: `keynote.jsx` (presentation and controls), `keynote-scene.jsx` (lazy React Three Fiber scene), `keynote-story.js` (source-derived scenario), `keynote.css` (isolated styling), and [keynote-contract.md](keynote-contract.md) (story, boundaries and presenter guide). The build uses existing dependencies and local fonts. Rehearse on the actual projector and laptop before the event; browser checks do not establish venue frame rate or legibility. Run `node verification/check.cjs` for the mocked DOM checks; add `WRITE_REVIEW_SNAPSHOTS=1` only when intentionally refreshing their generated HTML snapshots.
+Implementation: `keynote.jsx` controls, `keynote.css` scoped presentation layout, and the keynote helpers in `app.js` reuse the native product renderers. [keynote-contract.md](keynote-contract.md) records scope and rehearsal cues. No new dependencies or runtime raster assets. The older `keynote-scene.jsx` and `keynote-story.js` are unused by the replacement bundle. Run `npm run build`, `npm run check`, and `node verification/check.cjs`; set `WRITE_REVIEW_SNAPSHOTS=1` only to intentionally regenerate mock-DOM snapshots. Browser checks do not establish actual projector legibility or venue performance.
 
 ## Purpose of this handoff
 
@@ -248,3 +248,7 @@ Open [/#domain-expert](http://127.0.0.1:8772/#domain-expert) or choose **Intelli
 ### Radar
 
 Open `/#radar` to create company, topic or event trackers, configure daily/weekly/monthly emails, and inspect a compact email preview inside a realistic message window, with sender details, two linked archive stories and preference controls. Edit, pause and resume saved trackers in **My radar**. This frontend preview persists locally and sends no emails. Source: `tracker.js` and `tracker.css`; [integration contract](tracker-contract.md) documents scheduling and backend handoff boundaries.
+
+### Reusable update highlight
+
+[highlightUpdate](ui/highlight-update.mjs) is a framework-independent animation helper used by the follow-up composer. [Integration instructions for Claude Code](ui/highlight-update.md) include React usage, configuration and acceptance checks.

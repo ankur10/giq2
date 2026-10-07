@@ -1,35 +1,27 @@
-# GrowthIQ keynote · Ostrel
+# GrowthIQ product keynote proof
 
-## Scope
-An isolated, presenter-controlled keynote at `#keynote`, based on the user-provided MnM_Growth_Explainer_Ostrel.mp4. Nine beats follow one illustrative growth opportunity from adjacent markets to a customer conversation. The existing #demo product tour and all workspaces remain available. No network research, generated answer, customer access, or backend action is claimed.
+## Approved scope
+The user rejected the movie-to-HTML direction. The movie supplied the narrative principle, not the presentation design. The approved first proof is signal → significance → question, controlled by the presenter, in the existing GrowthIQ product. It is the opening of a potential 90–120 second demo, not the complete four-beat demo.
 
-## Direction contract
-THESIS: Let a presenter trace an opportunity from an adjacent market into a specific commercial conversation. Spatial motion explains relationships; readable evidence carries the story.
-OWN-WORLD: Inherit the supplied video's warm ivory, navy, orange, serif headlines and restrained linework, using this repository's licensed fonts. Contrast must hold on a townhall projector.
-STORY: Question → narrow view → connected markets → battery/coatings chain → changing customer → competitor movement → joined intelligence → prepared research example → next conversation.
-FIRST VIEWPORT: Large question on the left, an Ostrel-centered network on the right, quiet brand and presentation controls above, an explicit Begin the story action below. A continuous spatial scene opens out, then gathers into an orange opportunity path.
-FORM: User-selected narrative and video reference, approved by “Go ahead”; direct code implementation of that established direction, no concept roll or new global identity.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+Mode: Operate with a presenter-controlled Experience layer. Established product world; direct code implementation of the explicitly selected flow, no new identity or concept tournament.
 
-## Content and behavior
-Ostrel Coatings, Talmir Motors and Quendra Chemicals are fictional. All scenario material is labeled illustrative. The customer comparison reproduces distinct measures: 22% electric revenue five years ago versus 70% electric pipeline today, never a like-for-like growth claim. The source video is identified in the evidence inspector with approximate timestamps. The research scene is a prepared synthesis of the video, not generated research; the product handoff opens existing captured Ask results separately. No new numerical market, revenue, time-saved or confidence claims.
+THESIS: Make a captured competitor signal useful by showing its business relevance and carrying it into an editable question.
+OWN-WORLD: Existing GrowthIQ shell, themes, local fonts, briefing reader, evidence disclosure and Ask composer. No separate movie-inspired palette, fullscreen narrative slides or decorative 3D landscape.
+FIRST VIEWPORT: The working briefing with Sika selected first. Actual navigation, filters and reader remain operable. A compact transport below the product gives the presenter the next action.
+SIGNATURE: The same reader expands into a focused relevance view; the next click opens the existing Ask composer with the signal retained above it. Product viewport and presenter controls have separate space. Motion is short and never auto-advances.
 
-Keyboard: arrows/Page Up/Page Down advance and reverse; Space advances outside interactive controls; Home/End first/last; 1–9 jump; N notes; M motion; B blank stage; Escape closes the evidence dialog, then notes/blank stage. Manual motion pause and system reduced motion remove animated camera travel and entrances. Notes are explicitly on-screen rehearsal notes, not private presenter notes. Native modal evidence inspection restores focus. Chapter and motion preference survive navigation in memory. Restart resets the story and exploration selection.
+## Evidence and behavior
+Uses the existing captured Sika/Akkim signal and relevance from data.js unchanged. These are captured product records, not independently verified current news. No source URL is invented. If a different signal is selected, the question is reset to that signal's context. No unrelated Ask result is shown as a response.
 
-The responsive fallback offers the same headings, evidence and actions without WebGL. 3D rendering is on demand with capped pixel ratio and temporary interpolation only. Local assets; no video copied into the runtime. A product tour link returns to #demo. Final brief download is explicitly an illustrative text brief.
+Step 1: Briefing, selected signal, native source disclosure and actions.
+Step 2: Same reader expands; business relevance is highlighted and brought into view.
+Step 3: Native editable Ask composer, carried-context disclosure, real preview controls. Continue in Ask GrowthIQ opens the standard Ask route with the edited question, summary and relevance in the query. Preview Start research retains its existing non-generating behavior.
 
-## Suggested rehearsal (about 6 minutes)
+Controls: next/previous, direct step selection, arrows/Page Up/Page Down, Space outside interactive controls, N on-screen notes, M motion pause, fullscreen and exit. Keyboard shortcuts leave editable fields and open dialogs alone. Notes are visible to the audience. Reduced motion suppresses travel; navigation remains manual. Step and edits survive navigation in page memory. Layout uses a scrollable product viewport with a separately measured presenter transport.
 
-| Scene | Time | Presenter cue |
-| --- | --- | --- |
-| The question | 0:00–0:25 | “Where will our next growth come from?” Introduce Ostrel as an illustrative coatings company. |
-| One window | 0:25–0:45 | Explain what a familiar market view leaves out. |
-| Connected markets | 0:45–1:20 | Widen the view. Select Battery packs. Pause to let the network register. |
-| Growth travels | 1:20–2:00 | Trace battery packs → fire protection → coatings → Ostrel. |
-| The customer shifts | 2:00–2:50 | Explain the new buyer, specification and project. Distinguish revenue from pipeline. |
-| Others are moving | 2:50–3:25 | Read Quendra’s three signals as movement worth investigating. |
-| Seen together | 3:25–4:00 | Select the customer and competitor lenses. Connect the evidence to one opportunity. |
-| A focused question | 4:00–5:00 | Reveal the prepared perspective and open a supporting evidence item. State that this is a prepared example. |
-| The next conversation | 5:00–6:00 | Follow the four-part path. End on the specific conversation, then pause. |
+## Suggested spoken sequence (about 40–60 seconds)
+1. “A competitor has acquired Akkim. This appears in my briefing because it could change the competitive picture for H.B. Fuller.”
+2. Advance. “GrowthIQ connects that headline to my business: regional competition, innovation, and partnerships.” Pause on the relevance.
+3. Advance. “Now I have a focused research question, with the original context attached.” Edit if useful; continue into Ask.
 
-No automated narration or background audio. Open Notes only during rehearsal unless the audience should see them. The original video remains in its user-provided location and is not bundled or uploaded.
+No live AI, invented research result, customer access, generated brief or commercial outcome is claimed by this proof. The former Ostrel story sources remain unused; they are not imported by the replacement keynote bundle.

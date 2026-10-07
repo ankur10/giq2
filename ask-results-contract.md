@@ -68,3 +68,13 @@ Build and syntax checks pass. Browser checks verified source width 900px in a 12
 Following the supplied Perplexity reference, the composer is now an isolated rounded floating surface rather than a full-width footer strip. It is capped at 760px, aligned with the reader on desktop, and inset 12px on mobile. Its measured height drives reader bottom padding through ResizeObserver so final content can scroll above it, including when attachment rows increase its height. File controls and the explicit preview-only indication remain. News rows and their divider lines are now capped at 680px, superseding earlier 900px/75% rules.
 
 Build and syntax checks pass; desktop/mobile rendering inspected. Desktop composer measured 760×79px with 127px reader bottom clearance. Screenshot: .impeccable/review/ask-results/floating-composer.jpg.
+
+## Scroll behavior
+
+The top navigation and question scroll with the document. Only the result tabs and adjacent copy/download controls stick to the viewport top. The history sidebar and floating follow-up composer remain available. Tab switches and answer outline links account for the sticky toolbar.
+
+Answer text ends with a compact list of the five existing recommended steps. Its border traces twice when scrolled into view, with reduced-motion support. Selecting a suggestion here or in the Recommended Next Steps tab fills and focuses the follow-up composer, expands its textarea to show the draft, announces the update, and fades a yellow highlight. No research is submitted automatically.
+
+Follow-up selection uses a stationary 4.4-second warm highlight: gentle onset, a short hold, then a gradual fade back to the focused composer border. Reduced-motion mode uses a shorter color-only cue. Repeated selections restart the feedback.
+
+Reusable highlight: `ui/highlight-update.mjs` exports `highlightUpdate(element, options)`. The composer now uses its pale-yellow defaults; duration remains 4.4 seconds. See `ui/highlight-update.md` for cross-repository and Claude Code integration instructions.

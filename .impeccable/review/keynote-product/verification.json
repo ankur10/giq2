@@ -1,0 +1,37 @@
+{
+  "route": "#keynote",
+  "scope": "First product proof: signal \u2192 significance \u2192 question",
+  "date": "2026-10-08",
+  "build": "passed",
+  "syntax": "passed",
+  "existing_mock_dom_checks": 87,
+  "browser": "Codex in-app browser",
+  "captures": {
+    "desktop": "1440x900, all three beats",
+    "user": "1280x720, all three beats",
+    "mobile": "390x844, all three beats"
+  },
+  "verified": [
+    "native briefing and Ask views render",
+    "step buttons and ArrowRight advance",
+    "ArrowLeft inside query does not change step",
+    "edited question persists through back/forward",
+    "Continue in Ask carries edited query, summary and relevance into standard Ask route",
+    "carried-context disclosure opens",
+    "notes open and close",
+    "manual pause and resume",
+    "fullscreen entry exposes exit control",
+    "no console errors observed"
+  ],
+  "limitations": [
+    "No live research service or generated result",
+    "System reduced-motion handling inspected in source, not OS-emulated",
+    "Venue projector and clicker hardware not tested"
+  ],
+  "detector": "One run; typography advisories only, documented as scoped product presentation sizes",
+  "finish_review": {
+    "disposition": "ship",
+    "scope": "Reviewer scored both material fixes resolved; verdict covers scored fixes",
+    "record": "finish-verdict.md"
+  }
+}

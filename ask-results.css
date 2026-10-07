@@ -69,3 +69,31 @@
 @media(max-width:1100px){.ar-composer{left:24px;width:calc(100% - 48px);max-width:760px}}
 @media(max-width:767px){.ar-composer{left:12px;bottom:12px;width:calc(100% - 24px);max-width:none;padding:9px 12px;border-radius:14px}.ar-composer textarea{font-size:14px}.ar-compose-bottom>span{font-size:9px}}
 .ar-news-row h2 svg{display:inline;width:13px;height:13px;vertical-align:-2px;margin-left:5px}
+
+/* Let the page header scroll away; only result navigation stays in view. */
+.ar-app,.ar-app.nav-expanded,.ar-app.history-closed{height:auto;min-height:100dvh;overflow:visible;grid-template-rows:58px minmax(0,1fr);--ar-sidebar-width:280px;--ar-tab-height:76px}
+.ar-app.history-closed{--ar-sidebar-width:0px}
+.ar-top{position:static;min-height:58px}
+.ar-history{position:sticky;top:0;align-self:start;height:100dvh;max-height:100dvh}
+.ar-workspace{display:block;min-height:calc(100dvh - 58px)}
+.ar-result-header{position:static;border-bottom:0;padding-bottom:16px}
+.ar-workspace>.ar-tab-bar{position:sticky;top:0;z-index:5;background:#fff;padding:0 36px;border-bottom:1px solid var(--line)}
+.ar-workspace>.ar-tab-bar .ar-tabs{margin-top:0;min-height:58px}
+.ar-reader{overflow:visible;scroll-margin-top:var(--ar-tab-height)}
+.ar-reader [data-section]{scroll-margin-top:calc(var(--ar-tab-height) + 20px)}
+.ar-composer{position:fixed;left:calc(var(--ar-sidebar-width) + 36px);width:calc((100vw - var(--ar-sidebar-width)) * .75 - 78px)}
+@media(max-width:1250px){.ar-app{--ar-tab-height:112px}.ar-workspace>.ar-tab-bar .ar-tabs{margin-top:0}.ar-composer{width:calc(100vw - var(--ar-sidebar-width) - 48px)}}
+@media(min-width:900px) and (max-width:1199px){.ar-app,.ar-app.nav-expanded{--ar-sidebar-width:250px}.ar-app.history-closed{--ar-sidebar-width:0px}.ar-workspace>.ar-tab-bar{padding-inline:24px}.ar-composer{left:calc(var(--ar-sidebar-width) + 24px)}}
+@media(max-width:899px){.ar-app,.ar-app.nav-expanded,.ar-app.history-closed{--ar-sidebar-width:0px}.ar-history{position:fixed;top:0;height:100dvh}.ar-composer{left:24px}}
+@media(max-width:767px){.ar-app,.ar-app.nav-expanded,.ar-app.history-closed{grid-template-rows:52px minmax(0,1fr)}.ar-top{min-height:52px}.ar-workspace>.ar-tab-bar{padding-inline:18px}.ar-workspace>.ar-tab-bar .ar-tabs{margin-top:0}.ar-composer{left:12px;width:calc(100% - 24px)}}
+.ar-outline,.ar-market-detail{top:calc(var(--ar-tab-height) + 16px)}
+
+.ar-mobile-history-close{display:none}@media(max-width:899px){.ar-mobile-history-close{display:flex;position:absolute;right:10px;top:8px}.ar-history .ar-back-home{padding-right:35px}}
+
+/* A brief invitation at the end of the answer, with one arrival cue. */
+@property --ar-border-turn{syntax:'<angle>';initial-value:0deg;inherits:false}
+.ar-next-compact{margin-top:32px;padding:17px 20px 8px;border:1px solid #b9cbd7;border-radius:12px;background:#f8fbfd;scroll-margin-bottom:160px}
+.ar-next-compact-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}.ar-next-compact-heading h2{font:600 16px/1.4 'Source Sans',sans-serif;margin:0}.ar-next-compact-heading>span{font-size:11px;color:var(--muted)}
+.ar-next-compact button{width:100%;display:grid;grid-template-columns:82px minmax(0,1fr) 16px;gap:12px;text-align:left;align-items:center;padding:10px 0;border-top:1px solid #e1e9ee;font-size:13px;line-height:1.45}.ar-next-compact button:hover{color:var(--accent);background:#edf4f8}.ar-next-kind{font-size:11px;color:var(--muted)}.ar-next-compact button svg{width:15px;height:15px}
+@media(prefers-reduced-motion:no-preference){.ar-next-compact.is-revealed{border-color:transparent;background:linear-gradient(#f8fbfd,#f8fbfd) padding-box,conic-gradient(from var(--ar-border-turn),#b9cbd7 0%,#b9cbd7 65%,#4484a4 80%,#d8b658 90%,#b9cbd7 100%) border-box;animation:ar-next-border 2.4s ease-in-out 2}@keyframes ar-next-border{to{--ar-border-turn:360deg}}}
+@media(max-width:767px){.ar-next-compact{padding:14px 14px 6px}.ar-next-compact-heading{display:block}.ar-next-compact-heading>span{display:block;margin-top:4px}.ar-next-compact button{grid-template-columns:minmax(0,1fr) 16px;gap:3px 8px}.ar-next-kind{grid-column:1}.ar-next-compact button>span:nth-child(2){grid-column:1}.ar-next-compact button svg{grid-column:2;grid-row:span 2}}

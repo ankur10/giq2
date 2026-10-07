@@ -185,3 +185,6 @@ a, summary { text-underline-offset: .2em; }
   .composer-bottom .btn.primary { min-height: 44px; }
   .studio-brief-panel .section-header .btn { min-height: 44px; }
 }
+
+/* Keep shared navigation visible outside the dedicated results workspace. */
+.shell .topbar { position: sticky; top: 0; z-index: 18; }
