@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-07",
+  "route": "#keynote",
+  "build": "npm run build passed",
+  "syntax": "npm run check passed",
+  "mock_dom_checks": 87,
+  "bundle_integration": "17 JS module imports resolve; keynote CSS and entry present; development contract excluded",
+  "browser": "Codex in-app browser",
+  "viewports": {
+    "1440x900": "All 9 scenes inspected; chain and network label spacing corrected",
+    "1920x1080": "All 9 scenes: no horizontal overflow or stage-content clipping",
+    "390x844": "All 9 scenes: no horizontal overflow; corrected mobile scroll reset and static footer; re-inspected scenes 5\u20139"
+  },
+  "verified_interactions": [
+    "chapter jump buttons",
+    "next and previous controls",
+    "ArrowRight and End keyboard navigation",
+    "manual motion pause",
+    "native evidence dialog open and close",
+    "prepared answer reveal",
+    "simple graphics view",
+    "blank-stage and resume controls",
+    "fullscreen UI enter and exit",
+    "product tour handoff",
+    "market selection updates focused context",
+    "customer lens updates its supporting insight"
+  ],
+  "export": "Download handler invoked and status accurately says download requested. IAB download event timed out; saved file not independently verified.",
+  "limits": [
+    "System reduced-motion preference covered in source, not OS-emulated",
+    "WebGL-unavailable branch shares simple-graphics rendering; actual context-loss event not induced",
+    "Venue projector legibility and frame rate not measured",
+    "No live AI or backend integration"
+  ],
+  "screenshots": "stage-0..8.jpg, desktop-0..8.jpg, mobile-0..8.jpg, desktop-answer.jpg, simple-graphics.jpg",
+  "detector": "One layout-animation warning fixed to transform; remaining palette/type advisories are intentional scoped video-reference styling.",
+  "console": "No application errors observed",
+  "review_fixes": [
+    "Mobile scene changes reset window scroll; mobile footer never covers evidence",
+    "Narrow-view adjacent labels hidden to keep Ostrel legible",
+    "Competitor category information placed below headings; redundant lens label removed",
+    "Download status reports request rather than unverified completion",
+    "Notes has an explicit accessible name"
+  ],
+  "finish_review": {
+    "disposition": "ship",
+    "scope": "Final verdict confirms the four material fixes from the full review; no material regressions found in the scored fixes.",
+    "record": "finish-verdict.md"
+  }
+}

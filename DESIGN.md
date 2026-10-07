@@ -428,3 +428,41 @@ production-integration verification.
 - Do not introduce a promotional hero or decorative card grid into the briefing.
 - Do not apply Precision typography or control refinements to Advisory or Mineral; preserve layout breakpoints, data and workflows across all three options.
 - Do not describe mock-DOM checks as browser tests or claim visual approval without screenshots.
+
+## Isolated Ostrel Keynote (`#keynote`)
+
+### Overview
+
+This route applies the approved supplied-video direction to a townhall presentation. It is a scoped addition, not a replacement for the workspace tokens above. The shipped sources are `keynote.css`, `keynote.jsx` and `keynote-scene.jsx`; the narrative and rehearsal contract remain in `keynote-contract.md`. A continuous network, an orange opportunity path and readable evidence support the presenter's explanation. Graphics are code-rendered; no generated or new raster assets ship with this route.
+
+### Colors
+
+Warm ivory paper (`--kn-paper`, #f5f2e9) supports navy reading ink and primary actions (`--kn-ink`, #172844). Dark orange (`--kn-orange`, #ad4b10) marks emphasized phrases, focus and selected progress; brighter orange (`--kn-bright`, #d9732b) is a chart fill. Muted copy (`--kn-muted`, #606877), fine rules (`--kn-line`, #d6d5cb) and pale blue chart context (`--kn-blue`, #d1d9e6) complete the recurring palette. The 3D path uses its own orange line (#bd5918) and node (#bf5c19) values. These values describe this route's source, not new global theme roles.
+
+### Typography
+
+The keynote reuses local Source Serif 4 for narrative headlines, Source Sans 3 for prose and controls, and JetBrains Mono for sequence markers. Main headlines use weight (400), size (clamp(42px, 4.4vw, 84px)), line-height (1.09) and tracking (-.04em); denser scenes use smaller source-defined clamps. Narrative copy uses (clamp(18px, 1.45vw, 26px)/1.55) with a typical (33ch) limit. Through (600px), main headlines become (39px/1.13) and narrative copy (17px). These presentation sizes do not alter workspace typography.
+
+### Layout
+
+The desktop stage fills the viewport with an (82px) header, flexible scene and (98px) footer, inside (4.5vw) side padding. Narrative and graphics generally share two columns, changing by scene. Through (900px), scenes stack and the page scrolls naturally; the footer follows content so controls do not cover evidence. Through (600px), side padding becomes (20px), navigation spans the width and the final action path uses two columns.
+
+### Elevation & Depth
+
+Ivory surfaces and fine rules organize the stage. The prepared-research panel has a restrained shadow; notes and the native evidence dialog have stronger overlay shadows. Spatial network motion explains connections and renders on demand. Manual pause or system reduced motion removes interpolation and entrances; simple graphics preserve the same semantic content.
+
+### Shapes
+
+Controls, evidence panels and map labels use precise corners (2px where specified). Circular company markers, donut measures and overlapping intelligence lenses express relationships. These circles belong to the keynote's diagram language rather than a new workspace container style.
+
+### Components
+
+Primary and next-scene actions pair navy with ivory; their hover navy is (#293f60). Primary/navigation actions are at least (48px) high on desktop, with navigation at (44px) on small screens. Interactive controls use an orange focus outline (3px) offset by (5px). Chapter navigation exposes the current scene; motion and simple graphics expose pressed state. Rehearsal notes use a navy overlay explicitly labelled visible on screen. Evidence opens in a native modal and restores focus to its opener; the prepared answer moves focus to its revealed heading. PRODUCT.md defines controls and the fictional-data boundary.
+
+### Do's and Don'ts
+
+**The Keynote Scope Rule.** Keep this palette, presentation scale and diagram language inside `#keynote`; preserve workspace theme behavior and the existing product tour.
+
+**The Visible Evidence Rule.** Keep the fictional-story disclosure, distinct metric labels and prepared-answer wording attached to their content; presentation polish must not imply live research or a completed service.
+
+Do retain keyboard navigation, visible focus, motion controls and the non-WebGL fallback. Do not bundle the supplied video or introduce unsupported numerical claims. This documentation pass records source behavior; visual-review evidence belongs to the keynote finish review and does not replace the historical verification notes above.

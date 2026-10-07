@@ -2,6 +2,16 @@
 
 A frontend prototype of GrowthIQ with multiple Intelligence Studio designs and a cinematic React Three Fiber demo. Uses captured product data; backend APIs and research generation are not connected.
 
+## Townhall keynote
+
+Open [The next growth story](http://127.0.0.1:8772/#keynote) after `npm start`. This is a separate nine-scene, presenter-controlled Ostrel story based on the supplied explainer video. It follows connected markets → battery fire protection → a changing customer → competitor signals → a focused research question → a specific customer conversation. The existing [GrowthIQ Live product tour](http://127.0.0.1:8772/#demo) remains available.
+
+Use **Right/Left** or **Page Down/Page Up** to advance or reverse, **1–9** to jump, **Home/End** for the first/last scene, **M** to pause motion, and **B** to blank the stage. **N** opens rehearsal notes that are visible on the presentation screen. Notes also contain Restart and Simple graphics controls. The presentation never advances on a timer. Fullscreen is available from the header. At the research scene, explicitly reveal the prepared perspective and inspect its supporting story evidence; captured product results open separately.
+
+Ostrel, Talmir and Quendra are fictional. The keynote labels the scenario as illustrative and the research answer as prepared. Its export is a text brief, not a generated report. The 22% electric-revenue and 70% electric-pipeline figures are different measures and are labeled accordingly. No model invocation, upload, subscription or outreach occurs.
+
+Implementation: `keynote.jsx` (presentation and controls), `keynote-scene.jsx` (lazy React Three Fiber scene), `keynote-story.js` (source-derived scenario), `keynote.css` (isolated styling), and [keynote-contract.md](keynote-contract.md) (story, boundaries and presenter guide). The build uses existing dependencies and local fonts. Rehearse on the actual projector and laptop before the event; browser checks do not establish venue frame rate or legibility. Run `node verification/check.cjs` for the mocked DOM checks; add `WRITE_REVIEW_SNAPSHOTS=1` only when intentionally refreshing their generated HTML snapshots.
+
 ## Purpose of this handoff
 
 Use this repository as a working visual and interaction reference when implementing the designs in the **mainline GrowthIQ repository**. The scope is frontend design: preserve the mainline app's existing content, capabilities, API contracts, authentication and permissions.
@@ -111,6 +121,7 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 | [ask-thermo-contract.md](ask-thermo-contract.md), [ask-thermo.jsx](ask-thermo.jsx), [ask-thermo.css](ask-thermo.css), [ask-thermo-data.json](ask-thermo-data.json) | Thermo Fisher example, evidence inspection and proprietary-report access boundaries; static fixtures use the shared Ask Results SVG icons. |
 | [growthiq-live-contract.md](growthiq-live-contract.md) | Full-app demo chapters, presenter controls and workflow handoffs. |
 | [domain-expert-contract.md](domain-expert-contract.md), [domain-expert.js](domain-expert.js), [domain-expert.css](domain-expert.css) | Ask Domain Expert form, browser-only request history and future service integration boundaries. |
+| [tracker-contract.md](tracker-contract.md), [tracker.js](tracker.js), [tracker.css](tracker.css) | Radar: company, topic and event tracker setup, browser-only records, source-backed archive email previews and future scheduling integration boundaries. |
 | [index.html](index.html) | Entry point, font loading and stylesheet/script order. |
 | [app.js](app.js) | Main shell, hash routes, screens, event handling, local state and React mount/handoff integration. |
 | [data.js](data.js) | Captured reference records; replace with existing mainline data access when integrating. |
@@ -126,7 +137,7 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 
 The main prototype is vanilla HTML/CSS/JavaScript. React is mounted for the newer Studio variants, full-app demo and standalone Ask results preview; this is not a single React application. Edit the `.jsx` sources, not generated files in `assets/studio/` or `dist/`.
 
-The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css` → `domain-expert.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
+The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css` → `domain-expert.css` → `tracker.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
 
 ## Integrating into the mainline repository
 
@@ -233,3 +244,7 @@ The audit covers 49 answer info buttons and 25 visible opportunity controls: 74 
 ### Ask Domain Expert
 
 Open [/#domain-expert](http://127.0.0.1:8772/#domain-expert) or choose **Intelligence → Ask Domain Expert**. The form saves local preview requests and keeps an expandable history across reloads when browser storage is available; it does not send requests to a human expert. Unsaved form input survives navigation within the current page session. Files: `domain-expert.js` and `domain-expert.css`. See [integration notes](domain-expert-contract.md) before connecting the mainline request service.
+
+### Radar
+
+Open `/#radar` to create company, topic or event trackers, configure daily/weekly/monthly emails, and inspect a compact email preview inside a realistic message window, with sender details, two linked archive stories and preference controls. Edit, pause and resume saved trackers in **My radar**. This frontend preview persists locally and sends no emails. Source: `tracker.js` and `tracker.css`; [integration contract](tracker-contract.md) documents scheduling and backend handoff boundaries.

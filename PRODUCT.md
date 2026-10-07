@@ -39,3 +39,11 @@ The three workspace canvases are lighter while reading panels remain white. An i
 
 ## Open Decisions
 Primary persona and production implementation stack were not explicitly specified. This local reference continues the already-delivered static HTML/CSS/JavaScript prototypes.
+
+## Ostrel Townhall Keynote
+
+The isolated `#keynote` route adapts the user-supplied Ostrel explainer into a presenter-controlled, nine-scene townhall story: question → familiar market view → connected markets → opportunity chain → customer shift → competitor signals → joined intelligence → prepared perspective → next conversation. It preserves the existing workspace and `#demo` tour. Its approved ivory/navy/orange presentation identity is local to this route; the workspace themes and brand commitments above remain in force elsewhere. The six-minute rehearsal and direction contract are in `keynote-contract.md`.
+
+Ostrel Coatings, Talmir Motors and Quendra Chemicals, their events and the buyer role are fictional. The customer scene compares **22% electric revenue five years ago** with **70% electric pipeline today**: these are distinct measures, not a growth calculation. Evidence inspectors identify the supplied video and approximate timestamps, and distinguish scenario evidence from independently verified research. The answer is a prepared synthesis; no model, external research, backend action or outreach runs. The final text download is an illustrative brief. Captured product results open separately and do not constitute a live response to the keynote question. The source video is neither bundled nor uploaded.
+
+Presenters can advance or reverse with the visible controls, arrow keys or Page Up/Page Down; Space advances outside interactive controls. Home/End and 1–9 select scenes, N toggles on-screen rehearsal notes, M pauses motion, B blanks the stage, and Escape closes the modal or notes/blank state. Fullscreen, restart and simple-graphics controls support rehearsal. Notes are visible to the audience, not private presenter notes. Chapter, motion and simple-graphics preferences survive route navigation in memory; restart resets the story and exploration selections. System reduced motion and manual pause suppress animated travel and entrances. The simple fallback retains the story, evidence and actions without WebGL.

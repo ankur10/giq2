@@ -2,7 +2,23 @@
   "scope": "Local JavaScript function and event-handler checks with a mocked DOM. Not browser or visual verification.",
   "checks": [
     {
+      "name": "Render keynote",
+      "status": "passed"
+    },
+    {
+      "name": "Render demo",
+      "status": "passed"
+    },
+    {
       "name": "Render home",
+      "status": "passed"
+    },
+    {
+      "name": "Render tracker",
+      "status": "passed"
+    },
+    {
+      "name": "Render domain-expert",
       "status": "passed"
     },
     {
@@ -43,6 +59,38 @@
     },
     {
       "name": "Render signals",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v3",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v4",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v5",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v3-workspace",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v4-workspace",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-v5-workspace",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-next",
+      "status": "passed"
+    },
+    {
+      "name": "Render studio-next-workspace",
       "status": "passed"
     },
     {
@@ -143,6 +191,38 @@
     },
     {
       "name": "Category filter retains keyboard focus",
+      "status": "passed"
+    },
+    {
+      "name": "All five Studio versions are linked under Intelligence Studio",
+      "status": "passed"
+    },
+    {
+      "name": "Every expressive Studio task retains its version route and subject",
+      "status": "passed"
+    },
+    {
+      "name": "Guided Studio starts with a brief rather than the capability catalog",
+      "status": "passed"
+    },
+    {
+      "name": "Guided objective restricts choices while retaining original scopes",
+      "status": "passed"
+    },
+    {
+      "name": "Guided directory searches original names and supports empty recovery",
+      "status": "passed"
+    },
+    {
+      "name": "Guided preparation carries subject and stays on separate route",
+      "status": "passed"
+    },
+    {
+      "name": "Returning to a guided deliverable preserves context and template selection",
+      "status": "passed"
+    },
+    {
+      "name": "Every guided task deep link resolves without replacing original links",
       "status": "passed"
     },
     {
