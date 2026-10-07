@@ -30,7 +30,8 @@ export const Sealed = forwardRef(function Sealed({sheets, extra = '', children, 
   useLayoutEffect(() => {
     const shadow = host.current.shadowRoot || host.current.attachShadow({mode: 'open'});
     const own = new CSSStyleSheet();
-    own.replaceSync(extra);
+    // Opened part-way through a step: show finished states at once (the stage sets data-settled on the host).
+    own.replaceSync(extra + ':host([data-settled="true"]) *{animation-delay:0s!important;animation-duration:.01s!important;transition-duration:.01s!important}');
     shadow.adoptedStyleSheets = [...sheets.map(name => cache.get(name)), own];
     setRoot(shadow);
   }, []);

@@ -15,5 +15,9 @@ const paths = {
   document: 'M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6',
   mail: 'M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm-2 1 9 7 9-7',
   g: 'M18 6a8 8 0 1 0 1 11v-5h-7',
+  list: 'M9 5h12M9 12h12M9 19h12M3 5h1m-1 7h1m-1 7h1', branch: 'M9 2h6v5H9zM2 17h6v5H2zm14 0h6v5h-6zM12 7v5H5v5m7-5h7v5',
+  sort: 'M8 3v18m-4-4 4 4 4-4m4-14v18m-4-14 4-4 4 4', info: 'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-1v6m0-10v.1',
+  attachment: 'm8 13 7-7a3 3 0 0 1 4 4L9 20a5 5 0 0 1-7-7L12 3', mic: 'M9 5a3 3 0 0 1 6 0v7a3 3 0 0 1-6 0ZM5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8',
+  download: 'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4', plus: 'M12 5v14M5 12h14', external: 'M14 3h7v7m0-7L10 14M10 5H4v15h15v-6',
 };
 export const Icon = ({name}) => <svg viewBox="0 0 24 24" aria-hidden="true"><path d={paths[name] || paths.document}/></svg>;

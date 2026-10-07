@@ -7,6 +7,7 @@ import World from './World.jsx';
 import Frame from './Frame.jsx';
 import {sheets as radarSheets} from './screens/RadarMail.jsx';
 import {sheets as appSheets} from './screens/Shell.jsx';
+import {sheets as answerSheets} from './screens/Answer.jsx';
 
 const params = new URLSearchParams(location.search);
 // ?step=<id or number> opens a chosen step; ?t=1 shows it finished; ?autoplay runs unattended.
@@ -42,11 +43,11 @@ function Stage() {
 
   const step = steps[state.step];
   return <div className="stage" ref={root} data-step={step.id} data-act={step.act} data-motion={params.get('motion') || 'auto'} data-settled={settled}>
-    <World step={step} settled={settled}/>
+    <World step={step} index={state.step} settled={settled} director={director}/>
     <Frame step={step}/>
   </div>;
 }
 
 // Screens measure themselves, so styles and fonts must be in place before the first render.
-Promise.all([loadSheets([...new Set([...radarSheets, ...appSheets])]), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
+Promise.all([loadSheets([...new Set([...radarSheets, ...appSheets, ...answerSheets])]), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
   .then(() => createRoot(document.getElementById('stage-root')).render(<Stage/>));

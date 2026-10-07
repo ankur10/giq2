@@ -7,9 +7,9 @@ import {briefing, cast} from '../story.mjs';
 export {sheets};
 
 // Your Briefing, as app.js home() and signalReading() render it.
-export default forwardRef(function Briefing(props, ref) {
+export default forwardRef(function Briefing({stepId, index, ...host}, ref) {
   const [current] = briefing.signals;
-  return <Sealed ref={ref} sheets={sheets} extra={extra} className="stage-screen" data-theme="advisory">
+  return <Sealed ref={ref} sheets={sheets} extra={extra} className="stage-screen" data-theme="advisory" {...host}>
     <Shell active="Your Briefing" title={briefing.title} subtitle={briefing.subtitle} actions={<><button className="btn date-button"><Icon name="calendar"/>{briefing.range}</button><button className="btn"><Icon name="document"/>Saved signals</button></>}>
       <div className="briefing-top"><div className="briefing-filters">{[['All signals', briefing.signals.length], ['Unread', briefing.signals.length], ['Saved', 0]].map(([label, n], i) => <button key={label} className={i === 0 ? 'selected' : undefined}>{label}<span>{n}</span></button>)}</div>
         <label className="category-control"><select className="select"><option>All categories</option></select></label></div>

@@ -7,8 +7,8 @@ export const sheets = ['styles.css', 'themes.css', 'refinements.css', 'tracker.c
 const extra = '.stage-mail-top{position:absolute;inset:0 0 auto;height:430px;pointer-events:none}:host{background:transparent!important;display:grid;place-items:center}.tracker-mail-window{position:relative;width:860px;box-shadow:0 30px 90px rgb(0 0 0 / .45)}.tracker-email-story{transition:background .5s,box-shadow .5s}.tracker-email-story[data-lit="true"]{box-shadow:-14px 0 0 #fff,-17px 0 0 #e07a26}';
 
 // The Radar digest as it arrives in the inbox: the product's own email markup from tracker.js.
-export default forwardRef(function RadarMail({stepId}, ref) {
-  return <Sealed ref={ref} sheets={sheets} extra={extra} className="stage-screen" data-theme="advisory">
+export default forwardRef(function RadarMail({stepId, index, ...host}, ref) {
+  return <Sealed ref={ref} sheets={sheets} extra={extra} className="stage-screen" data-theme="advisory" {...host}>
     <div className="tracker-mail-window" data-focus="mail">
       <span className="stage-mail-top" data-focus="mail-top"/>
       <div className="tracker-mail-toolbar"><span><Icon name="mail"/> Message</span><span className="tracker-mail-inbox">Inbox</span></div>

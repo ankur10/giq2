@@ -16,9 +16,22 @@ export const acts = [
     {id: 'briefing', screen: 'briefing', focus: 'reader', label: 'Your Briefing', clock: '6:44', duration: 10, cameraAt: 0.8, cursor: [{at: 0.1, to: 'radar:story-0-title', click: true}], carry: {from: 'radar:story-0-title', to: 'briefing:reader-title'}},
     {id: 'meaning', screen: 'briefing', focus: 'relevance', label: 'Your Briefing', clock: '6:44', duration: 12},
   ]},
+  {id: 'around', name: 'What’s really going on?', steps: [
+    {id: 'ecosystem', screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:51', duration: 10, pre: 'briefing', cameraAt: 2.3, cursor: [{at: 1.3, to: 'briefing:nav-markets', click: true}]},
+    {id: 'field', screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:52', duration: 15},
+    {id: 'market', screen: 'markets', focus: 'inspector', label: 'Markets', clock: '6:53', duration: 12},
+    {id: 'presence', screen: 'competitors', focus: 'presence', label: 'Competitors', clock: '6:56', duration: 12, pre: 'markets', cameraAt: 2.3, cursor: [{at: 1.3, to: 'markets:nav-competitors', click: true}]},
+    {id: 'benchmark', screen: 'benchmark', focus: 'chart', label: 'Benchmarking', clock: '6:59', duration: 12, cameraAt: 0.9, cursor: [{at: 0.2, to: 'competitors:compare-financials', click: true}]},
+  ]},
+  {id: 'ask', name: 'Ask', steps: [
+    {id: 'question', screen: 'ask', focus: 'composer', label: 'Ask GrowthIQ', clock: '7:05', duration: 12, pre: 'benchmark', cameraAt: 2.3, cursor: [{at: 1.3, to: 'benchmark:nav-ask', click: true}, {at: 4.4, to: 'ask:query', click: true}]},
+    {id: 'answer', screen: 'answer', focus: 'answer', label: 'Ask GrowthIQ', clock: '7:06', duration: 16, cameraAt: 0.9, cursor: [{at: 0.2, to: 'ask:send', click: true}]},
+    {id: 'sources', screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12},
+    {id: 'research', screen: 'answer', focus: 'research', label: 'Ask GrowthIQ', clock: '7:08', duration: 12, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-research', click: true}]},
+  ]},
 ];
 export const steps = acts.flatMap((act, index) => act.steps.map(step => ({...step, act: index})));
-export const screens = ['inbox', 'radar', 'briefing'];
+export const screens = ['inbox', 'radar', 'briefing', 'markets', 'competitors', 'benchmark', 'ask', 'answer'];
 
 export const inbox = {time: '6:42', day: 'Tuesday', app: 'GrowthIQ Radar', title: '3 things that moved overnight', preview: 'Kestrow Group acquires Thalic Cooling, and two more.'};
 
@@ -34,3 +47,47 @@ const signals = [
 export const radar = {subject: 'Your GrowthIQ Radar: 3 things that moved overnight', to: 'maya@norvane.example', time: '6:42', heading: 'Your market, in focus.', summary: 'Three developments worth your attention this morning.', schedule: 'Every day at 6:30', stories: signals};
 export const briefing = {title: 'Your growth briefing', subtitle: 'Your perspective on the markets, companies and moves that matter.', range: '1 Sep – 6 Oct 2026', signals,
   watch: [['Markets', '31', 'Industrial pumps, heat exchangers and more'], ['Competitors', '12', 'Kestrow Group and eleven others'], ['Customers', '24', 'Your customer intelligence workspace']]};
+
+// Figures below are invented for the story and are labelled as illustrative on screen.
+export const illustrative = 'Illustrative figures';
+export const markets = {title: 'Market explorer', subtitle: 'Explore your ecosystem. Find the next opportunity.',
+  segments: ['Industrial pumps', 'Heat exchangers', 'Flow control', 'Aftermarket services'],
+  // [market, CAGR %, TAM in USD billions]
+  rows: [['Data-centre liquid cooling', 24.6, 9.8], ['Hydrogen electrolyser systems', 19.2, 3.1], ['District heating', 6.7, 11.4], ['Industrial heat exchangers', 5.1, 18.2], ['Industrial pumps', 4.3, 62]],
+  selected: 0, mapped: 31,
+  inspector: 'Cooling for high-density computing, where air can no longer remove the heat. It depends on pumps, heat exchangers and flow control.'};
+// The 3D field in act 2: the path a need takes to reach Norvane, among its connected markets.
+export const field = {
+  nodes: [
+    {name: 'Norvane', role: 'company', pos: [0, 0, 0]},
+    {name: 'AI data centres', role: 'market', pos: [-6.4, 2.0, -1.2]},
+    {name: 'Liquid cooling', role: 'market', pos: [-4.2, 0.9, 0.6]},
+    {name: 'Pumps and heat exchange', role: 'market', pos: [-2.1, 0.3, 0.1]},
+    {name: 'District heating', role: 'market', pos: [5.4, 2.5, -1.3]},
+    {name: 'Hydrogen', role: 'market', pos: [4.3, -2.6, 1.0]},
+    {name: 'Water treatment', role: 'market', pos: [-5.2, -3.0, 0.4]},
+  ],
+  path: ['AI data centres', 'Liquid cooling', 'Pumps and heat exchange', 'Norvane'],
+};
+export const competitors = {title: 'Competitor intelligence', subtitle: 'Understand your peers. See where you overlap.',
+  companies: ['Norvane', 'Kestrow Group', 'Vantec Thermal', 'Halberg Flow', 'Ostmark Pumps'],
+  // One row per market; one yes/no per company, in the order above.
+  presence: [['Industrial pumps', [1, 1, 0, 1, 1]], ['Industrial heat exchangers', [1, 1, 1, 0, 0]], ['District heating', [1, 0, 1, 1, 0]], ['Data-centre liquid cooling', [0, 1, 1, 0, 0]], ['Hydrogen electrolyser systems', [0, 0, 1, 0, 0]]],
+  lit: 'Data-centre liquid cooling', note: 'Kestrow Group: present since the Thalic Cooling acquisition.'};
+export const benchmark = {title: 'Competitor benchmarking', subtitle: 'A clearer perspective on financial performance.', metric: 'Total revenue',
+  rows: [['Kestrow Group', 4120], ['Vantec Thermal', 2860], ['Norvane', 2310], ['Halberg Flow', 1940], ['Ostmark Pumps', 1120]], lit: 'Norvane'};
+export const ask = {title: 'Ask GrowthIQ', subtitle: 'From a question to a clearer business decision.', question: 'Should Norvane enter data-centre liquid cooling?',
+  prompts: [['Where to Play', 'Explore market opportunities.', 'market'], ['How to Win', 'Understand your competitive position.', 'competitor'], ['Customer Disruptions', 'Explore changes affecting customers.', 'customers'], ['Business Disruptions', 'Understand changes in your business environment.', 'signals']]};
+export const answer = {
+  tabs: ['Answer', 'Sources', 'Connected Market', 'Deep Research', 'News', 'Key Competitors'],
+  heading: 'Yes, as a component supplier first.',
+  intro: 'Data-centre liquid cooling is growing far faster than Norvane’s core markets, and it runs on pumps and heat exchange. Norvane can enter credibly by supplying coolant-distribution components before committing to full systems.',
+  points: [
+    ['The market', 'Growing at about 25% a year, against 4% for industrial pumps.'],
+    ['The competition', 'Kestrow Group has bought its way in. Vantec Thermal is already present.'],
+    ['The open question', 'Whether Norvane’s pumps meet the heat loads of dense AI racks has not been established.'],
+  ],
+  evidence: [['Your Briefing', 'Kestrow Group acquires Thalic Cooling'], ['Markets', 'Data-centre liquid cooling: size and growth'], ['Competitors', 'Market presence and financial comparison']],
+  research: {heading: 'Research scope', summary: 'Review the approach and deliverables before generating a report.', chapters: [
+    ['Market definition and size', 3], ['Demand drivers: AI rack density', 2], ['Technology: direct-to-chip and immersion', 3], ['Competitive landscape', 2], ['Entry options for Norvane', 3], ['Risks and dependencies', 2]]},
+};
