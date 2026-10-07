@@ -1,62 +1,52 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {beats, lenses, lensSeconds} from './story.mjs';
+import {steps} from './story.mjs';
 import {createDirector, actionForKey} from './director.mjs';
-import Overlay from './Overlay.jsx';
-import Scene from './Scene.jsx';
-import ProductLayer from './ProductLayer.jsx';
+import {loadSheets} from './Sealed.jsx';
+import World from './World.jsx';
+import Frame from './Frame.jsx';
+import {sheets as radarSheets} from './screens/RadarMail.jsx';
+import {sheets as appSheets} from './screens/Shell.jsx';
 
 const params = new URLSearchParams(location.search);
+// ?step=<id or number> opens a chosen step; ?t=1 shows it finished; ?autoplay runs unattended.
+const startStep = () => { const value = params.get('step'); if (!value) return 0; const byId = steps.findIndex(s => s.id === value); return byId > -1 ? byId : Number(value) - 1 || 0; };
 
 function Stage() {
-  const director = useMemo(() => createDirector({
-    beats,
-    autoplay: params.has('autoplay'),
-    start: Number(params.get('beat') || 1) - 1,
-    startProgress: Number(params.get('t') || 0),
-  }), []);
+  const director = useMemo(() => createDirector({steps, autoplay: params.has('autoplay'), start: startStep(), startProgress: Number(params.get('t') || 0)}), []);
   const [state, setState] = useState(director.state());
-  const [lensesShown, setLensesShown] = useState(0);
-  const [targets, setTargets] = useState(null);
-  // Opened part-way through a beat: CSS shows the finished state instead of replaying.
+  // Opened part-way through a step: show its finished state instead of replaying the motion.
   const [settled, setSettled] = useState(Number(params.get('t') || 0) >= 1);
-  useEffect(() => director.subscribe(() => setSettled(false)), [director]);
   const root = useRef(null);
 
-  useEffect(() => director.subscribe(setState), [director]);
+  useEffect(() => director.subscribe(next => { setSettled(false); setState(next); }), [director]);
   useEffect(() => {
     const onKey = event => {
       const action = actionForKey(event.key);
-      if (!action) return;
+      if (!action || event.metaKey || event.ctrlKey || event.altKey) return;
       event.preventDefault();
       if (action.type === 'fullscreen') { document.fullscreenElement ? document.exitFullscreen() : root.current.requestFullscreen?.(); return; }
-      if (action.type === 'jump') director.jump(action.beat); else director[action.type]();
+      if (action.type === 'skip') director.skip(action.direction);
+      else if (action.type === 'act') director.act(action.act);
+      else director[action.type]();
     };
     addEventListener('keydown', onKey);
     return () => removeEventListener('keydown', onKey);
   }, [director]);
-  // One clock for everything. The scene reads progress every frame; React only re-renders
-  // when a lens card should appear.
   useEffect(() => {
     let frame, previous = performance.now();
-    const loop = now => {
-      director.tick(Math.min(0.1, (now - previous) / 1000)); previous = now;
-      const s = director.state();
-      const seconds = s.progress * beats[s.beat].duration;
-      const shown = s.id === 'lenses' ? Math.max(0, Math.min(lenses.length, Math.floor((seconds - lensSeconds / 2) / lensSeconds) + 1)) : s.beat > 2 ? lenses.length : 0;
-      setLensesShown(current => current === shown ? current : shown);
-      frame = requestAnimationFrame(loop);
-    };
+    const loop = now => { director.tick(Math.min(0.1, (now - previous) / 1000)); previous = now; frame = requestAnimationFrame(loop); };
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
   }, [director]);
 
-  return <div className="stage" ref={root} data-beat={state.id} data-motion={params.get('motion') || 'auto'} data-settled={settled}>
-    <Scene director={director} targets={targets}/>
-    <ProductLayer state={state} onTargets={setTargets}/>
-    <Overlay state={state} lensesShown={lensesShown}/>
-    <ol className="stage-progress" aria-label="Beat">{beats.map((b, i) => <li key={b.id} aria-current={i === state.beat ? 'step' : undefined}/>)}</ol>
+  const step = steps[state.step];
+  return <div className="stage" ref={root} data-step={step.id} data-act={step.act} data-motion={params.get('motion') || 'auto'} data-settled={settled}>
+    <World step={step} settled={settled}/>
+    <Frame step={step}/>
   </div>;
 }
 
-createRoot(document.getElementById('stage-root')).render(<Stage/>);
+// Screens measure themselves, so styles and fonts must be in place before the first render.
+Promise.all([loadSheets([...new Set([...radarSheets, ...appSheets])]), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
+  .then(() => createRoot(document.getElementById('stage-root')).render(<Stage/>));

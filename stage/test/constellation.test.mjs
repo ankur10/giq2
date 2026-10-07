@@ -1,7 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {buildConstellation} from '../constellation.mjs';
-import {nodes, path} from '../story.mjs';
+
+const nodes = [
+  {name: 'Home', role: 'company', pos: [0, 0, 0]},
+  {name: 'A', role: 'market', pos: [-6, 2, -1]},
+  {name: 'B', role: 'market', pos: [-4, 1, 0.5]},
+  {name: 'C', role: 'market', pos: [-2, 0.3, 0.1]},
+];
+const path = ['A', 'B', 'C', 'Home'];
 
 const build = (seed = 7) => buildConstellation({seed, nodes, path});
 
@@ -34,7 +41,7 @@ test('every point has a link and links are valid, unique and not self-links', ()
   }
   assert.equal(linked.size, 320);
 });
-test('unnamed points keep clear of Ostrel so it reads as the centre', () => {
+test('unnamed points keep clear of the origin so the company reads as the centre', () => {
   const c = build();
   for (const p of c.points.slice(nodes.length)) assert.ok(Math.hypot(p.x, p.y, p.z) > 1.2);
 });
