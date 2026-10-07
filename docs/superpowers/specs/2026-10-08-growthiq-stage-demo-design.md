@@ -1,7 +1,7 @@
 # GrowthIQ stage demo: "Inside the AI layer"
 
 Date: 8 October 2026
-Status: design approved in conversation; awaiting review of this document before planning.
+Status: superseded by `2026-10-08-growthiq-stage-demo-v2-design.md`.
 
 ## Purpose
 
