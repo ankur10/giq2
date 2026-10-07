@@ -7,6 +7,8 @@ export const beats = [
   {id: 'brief', name: 'The brief', duration: 18},
   {id: 'pullback', name: 'Pull back', duration: 12},
 ];
+// Seconds each lens takes in beat 3: its sweep, what it lights, then its card.
+export const lensSeconds = 5;
 export const question = 'Where is Ostrel’s next growth?';
 export const closing = 'We see growth before it happens.';
 export const lenses = [
