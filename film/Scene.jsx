@@ -7,6 +7,10 @@ import {LineGeometry} from 'three/examples/jsm/lines/LineGeometry.js';
 import {LineMaterial} from 'three/examples/jsm/lines/LineMaterial.js';
 import {hero, camera, jitter, stopPoints, N, ORANGE, PALE, FOV} from './line.mjs';
 import {stops, card, span, mix} from './score.mjs';
+import {Sealed} from '../stage/Sealed.jsx';
+
+export const cardSheets = ['styles.css', 'themes.css', 'refinements.css'];
+const cardStyle = ':host{background:transparent!important;display:block}.fragment{width:400px;padding:20px 22px 22px;border-radius:10px;box-shadow:0 24px 70px rgb(0 0 0 / .45)}.fragment h2{margin:12px 0 14px;font:400 25px/1.2 var(--serif);letter-spacing:-.02em}.fragment .reader-context{margin:0;padding-top:14px}';
 
 const FIELD = 240, SAMPLES = 72;
 // A fixed scatter for the noise field, so every run of the film is the same picture.
@@ -28,7 +32,17 @@ function Film({beat, anchors, labels}) {
     const geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(FIELD * (SAMPLES - 1) * 6), 3));
     return {lines, geometry};
   }, []);
-  const dot = useRef(), nodes = useRef(), fieldMaterial = useRef(), dustMaterial = useRef();
+  const dot = useRef(), nodes = useRef(), fieldMaterial = useRef(), dustMaterial = useRef(), ghostMaterial = useRef();
+  // Other paths through the same space: the routes this line did not take.
+  const ghosts = useMemo(() => {
+    const random = seeded(41), array = [];
+    for (let g = 0; g < 16; g++) {
+      const knots = Array.from({length: 6}, (_, k) => new THREE.Vector3(-10 + k * 21 + (random() - 0.5) * 14, -6 + random() * 34, 8 - k * 18 + (random() - 0.5) * 26));
+      const points = new THREE.CatmullRomCurve3(knots).getPoints(70);
+      for (let i = 1; i < points.length; i++) array.push(points[i - 1].x, points[i - 1].y, points[i - 1].z, points[i].x, points[i].y, points[i].z);
+    }
+    return new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(array, 3));
+  }, []);
   // Faint points scattered along the route, so the run reads as speed and depth.
   const dust = useMemo(() => {
     const random = seeded(23), array = new Float32Array(900 * 3);
@@ -48,7 +62,7 @@ function Film({beat, anchors, labels}) {
     for (let i = 0; i < N - 1; i++) segments.set(h.positions.subarray(i * 3, i * 3 + 6), i * 6);
     line.geometry.attributes.instanceStart.data.needsUpdate = true;
     // Bright enough to glow, not so bright that the orange burns out to yellow.
-    const gain = h.color === ORANGE ? 1.32 : 1.05;
+    const gain = h.color === ORANGE ? 1.18 : 1.05;
     line.material.color.setRGB(h.color[0] * gain, h.color[1] * gain, h.color[2] * gain);
     line.material.opacity = h.opacity;
     line.material.resolution.set(size.width, size.height);
@@ -75,6 +89,7 @@ function Film({beat, anchors, labels}) {
     }
 
     dustMaterial.current.opacity = 0.55 * span(b, 46, 52) * (1 - span(b, 86, 92));
+    ghostMaterial.current.opacity = 0.2 * span(b, 47, 53) * (1 - span(b, 85, 91));
 
     // Points along the run, and the words fixed to them.
     stopPoints.forEach((point, i) => {
@@ -98,9 +113,10 @@ function Film({beat, anchors, labels}) {
 
   return <>
     <primitive object={line}/>
-    <mesh ref={dot}><sphereGeometry args={[0.085, 20, 20]}/><meshBasicMaterial color={[1.5, 0.7, 0.16]} toneMapped={false} transparent depthWrite={false}/></mesh>
+    <mesh ref={dot}><sphereGeometry args={[0.085, 20, 20]}/><meshBasicMaterial color={[1.3, 0.56, 0.1]} toneMapped={false} transparent depthWrite={false}/></mesh>
     <lineSegments geometry={field.geometry} frustumCulled={false}><lineBasicMaterial ref={fieldMaterial} color={PALE} transparent opacity={0} depthWrite={false}/></lineSegments>
     <points geometry={dust} frustumCulled={false}><pointsMaterial ref={dustMaterial} color={PALE} size={0.09} sizeAttenuation transparent opacity={0} depthWrite={false}/></points>
+    <lineSegments geometry={ghosts} frustumCulled={false}><lineBasicMaterial ref={ghostMaterial} color={PALE} transparent opacity={0} depthWrite={false}/></lineSegments>
     <instancedMesh ref={nodes} args={[null, null, stopPoints.length]} frustumCulled={false}><sphereGeometry args={[0.07, 14, 14]}/><meshBasicMaterial toneMapped={false}/></instancedMesh>
   </>;
 }
@@ -110,11 +126,13 @@ export default function Scene({beat, anchors}) {
   return <div className="film-layer">
     <Canvas dpr={[1, 1.75]} camera={{fov: FOV, position: [0, 0, 9], near: 0.1, far: 400}} gl={{antialias: true, alpha: true}}>
       <Film beat={beat} anchors={anchors} labels={labels}/>
-      <EffectComposer><Bloom mipmapBlur luminanceThreshold={0.62} luminanceSmoothing={0.2} intensity={1.15}/><Vignette darkness={0.6} offset={0.28}/></EffectComposer>
+      <EffectComposer><Bloom mipmapBlur luminanceThreshold={0.74} luminanceSmoothing={0.18} intensity={1.05}/><Vignette darkness={0.6} offset={0.28}/></EffectComposer>
     </Canvas>
     <div className="film-labels">
       {stops.map((stop, i) => <span key={stop.text} data-kind={stop.kind} ref={el => { labels.current[i] = el; }}>{stop.text}</span>)}
-      <span data-kind="card" ref={el => { labels.current.card = el; }}>{card.text}</span>
+      <div data-kind="card" ref={el => { labels.current.card = el; }}><Sealed sheets={cardSheets} extra={cardStyle} data-theme="advisory" className="film-fragment">
+        <div className="fragment surface"><span className="meta"><span className="tag blue">{card.tag}</span><span>{card.age}</span><span className="tag amber">{card.impact}</span></span><h2>{card.text}</h2><section className="reader-context"><h3>{card.why}</h3><p>{card.relevance}</p></section></div>
+      </Sealed></div>
     </div>
   </div>;
 }

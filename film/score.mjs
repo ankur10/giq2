@@ -25,7 +25,7 @@ export const words = [
   {id: 'mark', from: 148, to: 154, text: 'GrowthIQ', place: 'mark'},
   {id: 'closing', from: 153, to: 160, text: 'We see growth before it happens.', place: 'closing'},
 ];
-export const card = {from: 40, to: 47.5, text: 'A rival buys a cooling start-up.'};
+export const card = {from: 40, to: 47.5, text: 'A rival buys a cooling start-up.', tag: 'Competitor', age: '6h ago', impact: 'High impact', why: 'What this means for you', relevance: 'They will now sell into a market that runs on what you make.'};
 // The run: the line reaches each of these on its beat. The first four are the chain of
 // reasoning; the next five are product areas it passes through.
 export const stops = [
@@ -47,7 +47,9 @@ export const evidence = [
   {at: 112, text: 'From your briefing'}, {at: 113, text: 'From your markets'}, {at: 114, text: 'From your competitors'},
   {at: 116, text: 'One question sent to an expert'},
 ];
-export const pages = [{at: 124, word: 'Model.'}, {at: 128, word: 'Profile.'}, {at: 132, word: 'Plan.'}];
+export const pages = [{at: 124, word: 'Model.', title: 'Market model', kind: 'Excel workbook'}, {at: 128, word: 'Profile.', title: 'Competitor profile', kind: 'Research study'}, {at: 132, word: 'Plan.', title: 'Market-entry plan', kind: 'Research study'}];
+// The one full product screen in the film, shown inside the frame the line draws at the close.
+export const productWindow = {from: 146.5, to: 152.4, image: 'assets/reel/briefing.jpg'};
 
 export const clamp = t => Math.max(0, Math.min(1, t));
 export const span = (b, from, to) => clamp((b - from) / (to - from));

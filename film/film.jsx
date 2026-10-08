@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {beatAt, DURATION} from './score.mjs';
 import {defaultAnchors} from './line.mjs';
-import Scene from './Scene.jsx';
+import Scene, {cardSheets} from './Scene.jsx';
+import {loadSheets} from '../stage/Sealed.jsx';
 import Type from './Type.jsx';
 
 const params = new URLSearchParams(location.search);
@@ -36,5 +37,5 @@ function Film() {
   </div>;
 }
 
-Promise.all([document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
+Promise.all([loadSheets(cardSheets), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
   .then(() => createRoot(document.getElementById('film-root')).render(<Film/>));

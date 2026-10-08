@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {words, question, answer, evidence, pages, span} from './score.mjs';
+import {words, question, answer, evidence, pages, productWindow, span} from './score.mjs';
 import {pageRects, frameRect} from './line.mjs';
 
 // What the words on screen should be at a given beat. Kept small so the page only re-renders
@@ -12,6 +12,7 @@ function view(b) {
     answer: b >= answer.from && b < answer.to + 1, answerLeaving: b >= answer.to,
     evidence: evidence.filter(e => b >= e.at).length,
     pages: pages.filter(p => b >= p.at).length, stacked: b >= 136, pagesGone: b >= 146,
+    window: b >= productWindow.from && b < productWindow.to,
   };
 }
 const vh = units => units * 100 + 'vh';
@@ -44,7 +45,7 @@ export default function Type({beat, anchors}) {
       <ul>{evidence.map((e, i) => <li key={e.text} data-on={i < v.evidence}>{e.text}</li>)}</ul>
     </div>
     <div className="film-pages" data-stacked={v.stacked} data-gone={v.pagesGone}>{pages.map((page, i) => <div key={page.word} className="film-page" data-on={i < v.pages} style={{...box(pageRects[i]), '--shift': vh(-pageRects[i].x - 0.15), '--tilt': (i - 1) * 4 + 'deg'}}>
-      <i/><i/><i/><i/><strong>{page.word}</strong></div>)}</div>
-    <div className="film-window" style={box(frameRect)}/>
+      <small>{page.kind}</small><b>{page.title}</b><i/><i/><i/><i/><strong>{page.word}</strong></div>)}</div>
+    <div className="film-window" data-on={v.window} style={box(frameRect)}><img src={productWindow.image} alt=""/></div>
   </div>;
 }

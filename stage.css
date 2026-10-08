@@ -101,3 +101,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
 /* Close */
 .stage-closing{position:absolute;left:0;right:0;top:50%;margin:-.6em 0 0;text-align:center;font:400 clamp(38px,4.6vw,92px)/1.15 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;opacity:0}
 .stage-closing[data-on="true"]{animation:stage-rise 1.8s var(--out) 2s both}
+
+/* Capture mode (?still=<screen>): the screen alone, square-cornered, nothing over it */
+.stage[data-still="true"] .stage-spot,.stage[data-still="true"] .stage-frame,.stage[data-still="true"] .stage-cursor,.stage[data-still="true"] .stage-veil,.stage[data-still="true"] .stage-scene{display:none}
+.stage[data-still="true"] .stage-panel-app .stage-screen{border-radius:0;box-shadow:none}

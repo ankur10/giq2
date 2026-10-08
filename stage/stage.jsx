@@ -43,7 +43,7 @@ function Stage() {
   }, [director]);
 
   const step = steps[state.step];
-  return <div className="stage" ref={root} data-step={step.id} data-act={step.act} data-motion={params.get('motion') || 'auto'} data-settled={settled}>
+  return <div className="stage" ref={root} data-step={step.id} data-act={step.act} data-motion={params.get('motion') || 'auto'} data-settled={settled} data-still={params.has('still')}>
     <World step={step} index={state.step} settled={settled} director={director}/>
     <Frame step={step}/>
   </div>;

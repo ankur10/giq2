@@ -71,8 +71,10 @@ export function hero(b, anchors = defaultAnchors) {
 
   if (b < 48) {
     // A trace across the screen. After the spike it gathers in to its peak.
-    const half = 60 * (1 - inOut(span(b, 44, 48)));
-    for (let i = 0; i < N; i++) { const v = i / (N - 1) * 2 - 1, x = XS + Math.sign(v) * Math.abs(v) ** 2.2 * half; put(i, [x, traceY(x, b), 0]); }
+    // Points are spread evenly while the pulse crosses the screen, then crowd towards the
+    // peak once the camera has pulled back, so both shapes stay smooth.
+    const half = mix(13, 60, span(b, 8, 14)) * (1 - inOut(span(b, 44, 48))), crowd = mix(1, 2.2, span(b, 14, 30));
+    for (let i = 0; i < N; i++) { const v = i / (N - 1) * 2 - 1, x = XS + Math.sign(v) * Math.abs(v) ** crowd * half; put(i, [x, traceY(x, b), 0]); }
     if (b < 32) { const fade = span(b, 14, 22); color = ORANGE.map((c, i) => mix(c, PALE[i], fade)); opacity = mix(1, 0.55, fade); }
     opacity *= span(b, 0, 1.2);
     // The eye follows the peak; the run starts from it.

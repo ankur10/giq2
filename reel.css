@@ -1,0 +1,28 @@
+/* GrowthIQ showcase reel: real product screens, one feature at a time. */
+@font-face{font-family:"Source Serif 4";src:url(assets/serif.woff2) format("woff2");font-weight:200 900;font-display:block}
+@font-face{font-family:"Source Sans 3";src:url(assets/sans.woff2) format("woff2");font-weight:200 900;font-display:block}
+@font-face{font-family:"JetBrains Mono";src:url(assets/mono.woff2) format("woff2");font-weight:200 900;font-display:block}
+
+html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
+.reel{--orange:#e8701a;--out:cubic-bezier(.16,1,.3,1);--beat:.6s;position:fixed;inset:0;overflow:hidden;color:#fff;font-family:"Source Serif 4",Georgia,serif;background:radial-gradient(120% 90% at 50% 45%,#14213d 0%,#0d1730 45%,#070b16 100%);cursor:none}
+.reel-layer{position:absolute;inset:0}
+.reel-layer canvas{display:block}
+.reel-type{pointer-events:none}
+.reel-start{position:absolute;left:0;right:0;bottom:9vh;margin:0;text-align:center;font:500 2vh "Source Sans 3",sans-serif;letter-spacing:.08em;color:rgb(255 255 255 / .5)}
+
+.reel-mark{position:absolute;left:0;right:0;top:50%;margin:-8vh 0 0;text-align:center;font-size:14vh;font-weight:700;letter-spacing:-.03em;opacity:0;transform:scale(.96);transition:opacity var(--beat),transform calc(var(--beat) * 3) var(--out)}
+.reel-mark[data-on="true"]{opacity:1;transform:none}
+
+/* Captions sit on the side the card leaves free */
+.reel-caption{position:absolute;top:50%;width:27vw;transform:translateY(-50%)}
+.reel-caption[data-side="1"]{left:5.5vw}
+.reel-caption[data-side="-1"]{left:67.5vw}
+.reel-caption>*{opacity:0;transform:translateY(1.6vh);transition:opacity calc(var(--beat) * .6),transform calc(var(--beat) * 1.6) var(--out)}
+.reel-caption[data-on="true"] small,.reel-caption[data-on="true"] h2,.reel-caption p[data-on="true"]{opacity:1;transform:none}
+.reel-caption small{display:block;margin-bottom:2.2vh;padding-left:1.6vh;border-left:3px solid var(--orange);font:500 2vh "JetBrains Mono",monospace;letter-spacing:.06em;color:rgb(255 255 255 / .6)}
+.reel-caption h2{margin:0;font-size:8vh;font-weight:400;line-height:1.02;letter-spacing:-.025em;text-wrap:balance}
+.reel-caption p{margin:2.6vh 0 0;font:400 3.5vh/1.35 "Source Sans 3",sans-serif;color:rgb(255 255 255 / .8);text-wrap:balance}
+
+.reel-close .reel-mark{margin-top:-13vh;font-size:11vh}
+.reel-line{position:absolute;left:0;right:0;top:50%;margin:3vh 0 0;text-align:center;font-size:6.4vh;letter-spacing:-.02em;opacity:0;transform:translateY(1.4vh);transition:opacity calc(var(--beat) * 1.4),transform calc(var(--beat) * 3) var(--out)}
+.reel-line[data-on="true"]{opacity:1;transform:none}

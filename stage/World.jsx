@@ -42,6 +42,9 @@ class Guard extends React.Component {
   render() { return this.state.failed ? null : this.props.children; }
 }
 
+// ?still=<screen> shows that screen alone at its natural size, for capturing clean screenshots.
+const still = new URLSearchParams(location.search).get('still');
+
 export default function World({step, index, settled, director}) {
   const [field3D, setField3D] = useState(canRender3D);
   const world = useRef(null), panels = useRef({}), sealed = useRef({}), live = useRef({s: 1, x: 0, y: 0});
@@ -67,6 +70,7 @@ export default function World({step, index, settled, director}) {
       const cameraAt = step.cameraAt || 0;
       // Some steps first pull back to show the whole screen being left, so a click in its
       // navigation is visible, then travel on.
+      if (still) { const s = innerWidth / PANEL.w, only = {s, x: -layout[still][0] * s, y: -layout[still][1] * s}; live.current = only; setCamera(only); setSpot(null); return; }
       let before = live.current;
       if (step.pre && !settled) { before = frame(whole(step.pre), {w: 0.94, h: 0.94}); live.current = before; setCamera(before); setSpot(null); }
       // Measured when the camera leaves, not before: a screen may have changed its view by then.
