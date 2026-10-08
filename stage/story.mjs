@@ -6,45 +6,47 @@ export const closing = 'We see growth before it happens.';
 // Step fields: screen and focus say where the camera looks ("screen:region"); cursor actions and
 // carry are timed in seconds from the start of the step; cameraAt delays the camera move.
 // arrivals are cards that fly in from the direction of the screen they came from.
+// duration is the target when a presenter narrates live; min is how long the step's own
+// visuals take, which the narrated version uses as a floor.
 export const acts = [
   {id: 'open', name: 'Cold open', steps: [
-    {id: 'clock', screen: 'inbox', focus: null, label: '', clock: '', duration: 8},
-    {id: 'notify', screen: 'inbox', focus: null, label: '', clock: '', duration: 12},
+    {id: 'clock', min: 5, screen: 'inbox', focus: null, label: '', clock: '', duration: 8},
+    {id: 'notify', min: 4, screen: 'inbox', focus: null, label: '', clock: '', duration: 12},
   ]},
   {id: 'finds', name: 'It finds you', steps: [
-    {id: 'digest', screen: 'radar', focus: 'mail-top', spot: false, label: 'Radar', clock: '6:43', duration: 10, cameraAt: 0.9, cursor: [{at: 0.1, to: 'inbox:notification', click: true}]},
-    {id: 'headline', screen: 'radar', focus: 'story-0', label: 'Radar', clock: '6:43', duration: 10, cursor: [{at: 1.6, to: 'radar:story-0-title'}]},
-    {id: 'briefing', screen: 'briefing', focus: 'reader', label: 'Your Briefing', clock: '6:44', duration: 10, cameraAt: 0.8, cursor: [{at: 0.1, to: 'radar:story-0-title', click: true}], carry: {from: 'radar:story-0-title', to: 'briefing:reader-title'}},
-    {id: 'meaning', screen: 'briefing', focus: 'relevance', label: 'Your Briefing', clock: '6:44', duration: 12},
+    {id: 'digest', min: 5, screen: 'radar', focus: 'mail-top', spot: false, label: 'Radar', clock: '6:43', duration: 10, cameraAt: 0.9, cursor: [{at: 0.1, to: 'inbox:notification', click: true}]},
+    {id: 'headline', min: 4, screen: 'radar', focus: 'story-0', label: 'Radar', clock: '6:43', duration: 10, cursor: [{at: 1.6, to: 'radar:story-0-title'}]},
+    {id: 'briefing', min: 5, screen: 'briefing', focus: 'reader', label: 'Your Briefing', clock: '6:44', duration: 10, cameraAt: 0.8, cursor: [{at: 0.1, to: 'radar:story-0-title', click: true}], carry: {from: 'radar:story-0-title', to: 'briefing:reader-title'}},
+    {id: 'meaning', min: 4, screen: 'briefing', focus: 'relevance', label: 'Your Briefing', clock: '6:44', duration: 12},
   ]},
   {id: 'around', name: 'What’s really going on?', steps: [
-    {id: 'ecosystem', screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:51', duration: 10, pre: 'briefing', cameraAt: 2.3, cursor: [{at: 1.3, to: 'briefing:nav-markets', click: true}]},
-    {id: 'field', screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:52', duration: 15},
-    {id: 'market', screen: 'markets', focus: 'inspector', label: 'Markets', clock: '6:53', duration: 12},
-    {id: 'presence', screen: 'competitors', focus: 'presence', label: 'Competitors', clock: '6:56', duration: 12, pre: 'markets', cameraAt: 2.3, cursor: [{at: 1.3, to: 'markets:nav-competitors', click: true}]},
-    {id: 'benchmark', screen: 'benchmark', focus: 'chart', label: 'Benchmarking', clock: '6:59', duration: 12, cameraAt: 0.9, cursor: [{at: 0.2, to: 'competitors:compare-financials', click: true}]},
+    {id: 'ecosystem', min: 6, screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:51', duration: 10, pre: 'briefing', cameraAt: 2.3, cursor: [{at: 1.3, to: 'briefing:nav-markets', click: true}]},
+    {id: 'field', min: 12, screen: 'markets', focus: 'ecosystem', spot: false, label: 'Markets', clock: '6:52', duration: 15},
+    {id: 'market', min: 4.5, screen: 'markets', focus: 'inspector', label: 'Markets', clock: '6:53', duration: 12},
+    {id: 'presence', min: 6.5, screen: 'competitors', focus: 'presence', label: 'Competitors', clock: '6:56', duration: 12, pre: 'markets', cameraAt: 2.3, cursor: [{at: 1.3, to: 'markets:nav-competitors', click: true}]},
+    {id: 'benchmark', min: 6, screen: 'benchmark', focus: 'chart', label: 'Benchmarking', clock: '6:59', duration: 12, cameraAt: 0.9, cursor: [{at: 0.2, to: 'competitors:compare-financials', click: true}]},
   ]},
   {id: 'ask', name: 'Ask', steps: [
-    {id: 'question', screen: 'ask', focus: 'composer', label: 'Ask GrowthIQ', clock: '7:05', duration: 12, pre: 'benchmark', cameraAt: 2.3, cursor: [{at: 1.3, to: 'benchmark:nav-ask', click: true}, {at: 4.4, to: 'ask:query', click: true}]},
-    {id: 'answer', screen: 'answer', focus: 'answer', label: 'Ask GrowthIQ', clock: '7:06', duration: 16, cameraAt: 0.9, cursor: [{at: 0.2, to: 'ask:send', click: true}]},
-    {id: 'sources', screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12, arrivals: [{at: 2.2, from: 'briefing', to: 'answer:evidence-0'}, {at: 3.2, from: 'markets', to: 'answer:evidence-1'}, {at: 4.2, from: 'competitors', to: 'answer:evidence-2'}]},
-    {id: 'research', screen: 'answer', focus: 'research', label: 'Ask GrowthIQ', clock: '7:08', duration: 12, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-research', click: true}]},
+    {id: 'question', min: 9.5, screen: 'ask', focus: 'composer', label: 'Ask GrowthIQ', clock: '7:05', duration: 12, pre: 'benchmark', cameraAt: 2.3, cursor: [{at: 1.3, to: 'benchmark:nav-ask', click: true}, {at: 4.4, to: 'ask:query', click: true}]},
+    {id: 'answer', min: 10, screen: 'answer', focus: 'answer', label: 'Ask GrowthIQ', clock: '7:06', duration: 16, cameraAt: 0.9, cursor: [{at: 0.2, to: 'ask:send', click: true}]},
+    {id: 'sources', min: 8, screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12, arrivals: [{at: 2.2, from: 'briefing', to: 'answer:evidence-0'}, {at: 3.2, from: 'markets', to: 'answer:evidence-1'}, {at: 4.2, from: 'competitors', to: 'answer:evidence-2'}]},
+    {id: 'research', min: 7, screen: 'answer', focus: 'research', label: 'Ask GrowthIQ', clock: '7:08', duration: 12, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-research', click: true}]},
   ]},
   {id: 'deeper', name: 'Go deeper', steps: [
-    {id: 'flag', screen: 'answer', focus: 'open-question', label: 'Ask GrowthIQ', clock: '7:12', duration: 10, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-answer', click: true}]},
-    {id: 'expert', screen: 'expert', focus: 'expert-form', label: 'Ask Domain Expert', clock: '7:14', duration: 13, cameraAt: 0.6, carry: {from: 'answer:open-question-text', to: 'expert:details'}, cursor: [{at: 6.5, to: 'expert:submit', click: true}]},
-    {id: 'customers', screen: 'customers', focus: 'customer-list', label: 'Customers', clock: '7:20', duration: 12, pre: 'expert', cameraAt: 2.3, cursor: [{at: 1.3, to: 'expert:nav-customers', click: true}, {at: 4.6, to: 'customers:filter', click: true}]},
+    {id: 'flag', min: 7, screen: 'answer', focus: 'open-question', label: 'Ask GrowthIQ', clock: '7:12', duration: 10, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-answer', click: true}]},
+    {id: 'expert', min: 10, screen: 'expert', focus: 'expert-form', label: 'Ask Domain Expert', clock: '7:14', duration: 13, cameraAt: 0.6, carry: {from: 'answer:open-question-text', to: 'expert:details'}, cursor: [{at: 6.5, to: 'expert:submit', click: true}]},
+    {id: 'customers', min: 8.5, screen: 'customers', focus: 'customer-list', label: 'Customers', clock: '7:20', duration: 12, pre: 'expert', cameraAt: 2.3, cursor: [{at: 1.3, to: 'expert:nav-customers', click: true}, {at: 4.6, to: 'customers:filter', click: true}]},
   ]},
   {id: 'real', name: 'Make it real', steps: [
-    {id: 'studio', screen: 'studio', focus: 'starts', label: 'Intelligence Studio', clock: '8:05', duration: 10, pre: 'customers', cameraAt: 2.3, cursor: [{at: 1.3, to: 'customers:nav-studio', click: true}]},
-    {id: 'brief', screen: 'studio', focus: 'deliverable', label: 'Intelligence Studio', clock: '8:07', duration: 10, pre: 'studio', cameraAt: 2.8, cursor: [{at: 1.2, to: 'studio:start-0', click: true}]},
-    {id: 'build', screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '8:30', duration: 16},
-    {id: 'pack', screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '9:00', duration: 10},
+    {id: 'studio', min: 6, screen: 'studio', focus: 'starts', label: 'Intelligence Studio', clock: '8:05', duration: 10, pre: 'customers', cameraAt: 2.3, cursor: [{at: 1.3, to: 'customers:nav-studio', click: true}]},
+    {id: 'brief', min: 6.5, screen: 'studio', focus: 'deliverable', label: 'Intelligence Studio', clock: '8:07', duration: 10, pre: 'studio', cameraAt: 2.8, cursor: [{at: 1.2, to: 'studio:start-0', click: true}]},
+    {id: 'build', min: 13.5, screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '8:30', duration: 16},
+    {id: 'pack', min: 5.5, screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '9:00', duration: 10},
   ]},
   {id: 'close', name: 'Close', steps: [
-    {id: 'tracker', screen: 'radarapp', focus: 'tracker-row', label: 'Radar', clock: '9:00', duration: 10, cameraAt: 0.3, cursor: [{at: 2.4, to: 'radarapp:resume', click: true}]},
-    {id: 'morning', screen: 'all', focus: null, label: '', clock: '9:00', duration: 8},
-    {id: 'end', screen: 'all', focus: null, label: '', clock: '', duration: 10},
+    {id: 'tracker', min: 6, screen: 'radarapp', focus: 'tracker-row', label: 'Radar', clock: '9:00', duration: 10, cameraAt: 0.3, cursor: [{at: 2.4, to: 'radarapp:resume', click: true}]},
+    {id: 'morning', min: 5, screen: 'all', focus: null, label: '', clock: '9:00', duration: 8},
+    {id: 'end', min: 8, screen: 'all', focus: null, label: '', clock: '', duration: 10},
   ]},
 ];
 export const steps = acts.flatMap((act, index) => act.steps.map(step => ({...step, act: index})));

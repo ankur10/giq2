@@ -82,3 +82,17 @@ test('keys map to actions', () => {
   assert.equal(actionForKey('8'), null);
   assert.equal(actionForKey('x'), null);
 });
+test('seek puts the demo where a clock says it should be', () => {
+  const d = createDirector({steps});
+  const seen = [];
+  d.subscribe(s => seen.push(s.id));
+  d.seek(3);
+  assert.deepEqual([at(d), d.state().seconds], ['a1', 3]);
+  d.seek(10 + 4 + 2.5);
+  assert.deepEqual([at(d), d.state().seconds], ['b1', 2.5]);
+  d.seek(10.5);
+  assert.deepEqual([at(d), d.state().seconds], ['a2', 0.5]);
+  d.seek(9999);
+  assert.deepEqual([at(d), d.state().progress], ['c1', 1]);
+  assert.deepEqual(seen, ['b1', 'a2', 'c1']);
+});

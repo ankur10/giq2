@@ -76,3 +76,11 @@ About 4 minutes 45 seconds. One press of the clicker per line below. All compani
 ## If time is short
 
 Skip act 2 or act 4 with **]**. The story still holds: the answer in act 3 states the market and the competition itself.
+
+## Narrated version
+
+`stage.html?narrated` plays the whole demo by itself, with a voice-over and a quiet music bed, in about 3 minutes 10 seconds. Press space to begin (browsers need a key press before they will play sound), R to restart, F for fullscreen.
+
+- The lines are in `stage/narration.mjs`. Each is a separate audio file in `assets/stage/voice/`, named after its step.
+- The files in the repo are a draft, generated with the Mac's built-in speech voice by `node tools/make-voiceover.mjs`.
+- To use a real voice, record each line, save it over the file of the same name, and run `node tools/make-voiceover.mjs --measure`. That re-reads the lengths, and every step's timing adjusts to fit its line.

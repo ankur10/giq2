@@ -105,3 +105,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
 /* Capture mode (?still=<screen>): the screen alone, square-cornered, nothing over it */
 .stage[data-still="true"] .stage-spot,.stage[data-still="true"] .stage-frame,.stage[data-still="true"] .stage-cursor,.stage[data-still="true"] .stage-veil,.stage[data-still="true"] .stage-scene{display:none}
 .stage[data-still="true"] .stage-panel-app .stage-screen{border-radius:0;box-shadow:none}
+
+/* Narrated mode */
+.stage-start{position:absolute;left:0;right:0;bottom:9vh;margin:0;text-align:center;font:500 2vh "Source Sans 3",sans-serif;letter-spacing:.08em;color:rgb(255 255 255 / .55)}
+.stage-sync{position:absolute;left:0;top:0;width:10px;height:10px;background:#fff;visibility:hidden}

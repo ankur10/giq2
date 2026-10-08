@@ -27,6 +27,15 @@ export function createDirector({steps, autoplay = false, start = 0, startProgres
     },
     act(index) { const target = firstOf(index); return target < 0 ? false : go(target); },
     restart() { step = 0; elapsed = 0; emit(); },
+    // Puts the demo where a clock says it should be: used when sound sets the pace.
+    seek(seconds) {
+      let index = 0, left = Math.max(0, seconds);
+      while (index < last && left >= steps[index].duration) left -= steps[index++].duration;
+      const changed = index !== step;
+      step = index; elapsed = left;
+      if (changed) emit();
+      return changed;
+    },
     tick(seconds) {
       elapsed += seconds;
       if (autoplay && step < last && elapsed >= steps[step].duration) go(step + 1);
