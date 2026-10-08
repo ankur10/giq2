@@ -26,12 +26,15 @@ test('the narrated demo runs between two and three quarter and four and a half m
   const total = script.reduce((sum, s) => sum + s.duration, 0);
   assert.ok(total > 165 && total < 270, 'total ' + total);
 });
-test('the bed marks every step and resolves its motif only at the close', () => {
-  const list = music(script);
-  assert.equal(list.filter(e => e.kind === 'pluck').length, script.length);
+test('the bed builds with the story and resolves its motif only at the close', () => {
+  const list = music(script), starts = startTimes(script), beat = 0.6;
+  const first = kind => Math.min(...list.filter(e => e.kind === kind).map(e => e.at)) * beat;
+  assert.ok(first('pluck') >= starts[1], 'no pulse under the opening line');
+  assert.ok(first('kick') >= starts[4], 'drums wait for the product');
+  const last = starts.at(-1) + 1.9;
+  assert.ok(list.filter(e => e.kind === 'kick' || e.kind === 'pluck').every(e => e.at * beat < last), 'the close is one held chord');
   const bells = list.filter(e => e.kind === 'bell' && e.gain === 0.16).map(e => e.note);
   assert.deepEqual([bells[2], bells[5], bells[8]], [76, 76, 78]);
-  assert.equal(list.filter(e => e.kind === 'kick').length, 0, 'no drum under the voice');
 });
 test('quickening the picture never squeezes a line or runs a step faster than asked', () => {
   const fast = quickened(script, 1.5), starts = startTimes(fast);
