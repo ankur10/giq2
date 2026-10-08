@@ -8,6 +8,7 @@ import Frame from './Frame.jsx';
 import {sheets as radarSheets} from './screens/RadarMail.jsx';
 import {sheets as appSheets} from './screens/Shell.jsx';
 import {sheets as answerSheets} from './screens/Answer.jsx';
+import {sheets as expertSheets} from './screens/Expert.jsx';
 
 const params = new URLSearchParams(location.search);
 // ?step=<id or number> opens a chosen step; ?t=1 shows it finished; ?autoplay runs unattended.
@@ -49,5 +50,5 @@ function Stage() {
 }
 
 // Screens measure themselves, so styles and fonts must be in place before the first render.
-Promise.all([loadSheets([...new Set([...radarSheets, ...appSheets, ...answerSheets])]), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
+Promise.all([loadSheets([...new Set([...radarSheets, ...appSheets, ...answerSheets, ...expertSheets])]), document.fonts.load('16px "Source Sans 3"'), document.fonts.load('16px "Source Serif 4"')])
   .then(() => createRoot(document.getElementById('stage-root')).render(<Stage/>));

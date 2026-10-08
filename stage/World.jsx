@@ -7,6 +7,11 @@ import Competitors from './screens/Competitors.jsx';
 import Benchmark from './screens/Benchmark.jsx';
 import Ask from './screens/Ask.jsx';
 import Answer from './screens/Answer.jsx';
+import Expert from './screens/Expert.jsx';
+import Customers from './screens/Customers.jsx';
+import Studio from './screens/Studio.jsx';
+import Pack from './screens/Pack.jsx';
+import RadarApp from './screens/RadarApp.jsx';
 
 // The 3D field is only needed in act 2, so it loads on its own.
 const Scene = lazy(() => import('./Scene.jsx'));
@@ -14,9 +19,9 @@ const FIELD = ['ecosystem', 'field', 'market'];
 
 export const PANEL = {w: 1440, h: 900};
 // Screens in the order Maya uses them. `app` screens are product windows and get a frame.
-const SCREENS = [['inbox', Inbox], ['radar', RadarMail], ['briefing', Briefing, true], ['markets', Markets, true], ['competitors', Competitors, true], ['benchmark', Benchmark, true], ['ask', Ask, true], ['answer', Answer, true]];
+const SCREENS = [['inbox', Inbox], ['radar', RadarMail], ['briefing', Briefing, true], ['markets', Markets, true], ['competitors', Competitors, true], ['benchmark', Benchmark, true], ['ask', Ask, true], ['answer', Answer, true], ['expert', Expert, true], ['customers', Customers, true], ['studio', Studio, true], ['pack', Pack], ['radarapp', RadarApp, true]];
 // Laid out in rows that snake back and forth, so each screen sits beside the one before it.
-const PER_ROW = 4;
+const PER_ROW = 5;
 const layout = Object.fromEntries(SCREENS.map(([id], i) => { const row = Math.floor(i / PER_ROW), column = i % PER_ROW; return [id, [(row % 2 ? PER_ROW - 1 - column : column) * 1900, row * 1300]]; }));
 const MOVE = 1.4;
 
@@ -46,7 +51,8 @@ export default function World({step, index, settled, director}) {
       return {x: (r.left - m.e) / m.a, y: (r.top - m.f) / m.a, w: r.width / m.a, h: r.height / m.a};
     };
     const run = () => {
-      const whole = name => ({x: layout[name][0], y: layout[name][1], w: PANEL.w, h: PANEL.h});
+      const everything = () => { const xs = Object.values(layout).map(p => p[0]), ys = Object.values(layout).map(p => p[1]); return {x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) + PANEL.w - Math.min(...xs), h: Math.max(...ys) + PANEL.h - Math.min(...ys)}; };
+      const whole = name => name === 'all' ? everything() : {x: layout[name][0], y: layout[name][1], w: PANEL.w, h: PANEL.h};
       const cameraAt = step.cameraAt || 0;
       // Some steps first pull back to show the whole screen being left, so a click in its
       // navigation is visible, then travel on.
@@ -56,7 +62,7 @@ export default function World({step, index, settled, director}) {
       later(cameraAt, () => {
         const target = step.focus && find(step.screen + ':' + step.focus);
         const rect = target ? worldRect(target) : whole(step.screen);
-        const after = frame(rect, target ? {w: 0.8, h: 0.7} : {w: 0.94, h: 0.94});
+        const after = frame(rect, target ? {w: 0.8, h: 0.7} : step.screen === 'all' ? {w: 0.9, h: 0.72} : {w: 0.94, h: 0.94});
         live.current = after; setCamera(after); setSpot(target && step.spot !== false ? project(rect, after) : null);
         // A click made before the camera leaves belongs to the screen being left.
         if (!(step.cursor ?? []).some(action => action.at >= cameraAt)) setCursor(c => ({...c, on: false}));
@@ -75,7 +81,7 @@ export default function World({step, index, settled, director}) {
         const source = getComputedStyle(from), style = getComputedStyle(to);
         const size = parseFloat(style.fontSize) * after.s;
         hidden.push(from, to); from.style.visibility = to.style.visibility = 'hidden';
-        setFlyer({text: to.textContent, a, b, start: parseFloat(source.fontSize) * before.s / size, moving: false,
+        setFlyer({text: to.value ?? to.textContent, a, b, start: parseFloat(source.fontSize) * before.s / size, moving: false,
           // The serif has an optical-size axis; pin it to the destination's own size so the text wraps identically when scaled up.
           font: {fontVariationSettings: `"opsz" ${parseFloat(style.fontSize)}`, fontFamily: style.fontFamily, fontWeight: style.fontWeight, fontSize: size, lineHeight: style.lineHeight === 'normal' ? 1.2 : parseFloat(style.lineHeight) / parseFloat(style.fontSize), letterSpacing: parseFloat(style.letterSpacing) * after.s || 0, color: style.color}});
         frameId = requestAnimationFrame(() => requestAnimationFrame(() => setFlyer(f => f && {...f, moving: true})));
@@ -95,7 +101,7 @@ export default function World({step, index, settled, director}) {
       </div>)}
     </div>
     <div className="stage-spot" data-on={!!spot} style={spot ? {left: spot.x - 18, top: spot.y - 18, width: spot.w + 36, height: spot.h + 36} : undefined}/>
-    <div className="stage-veil" data-on={step.id === 'field'}/>
+    <div className="stage-veil" data-on={step.id === 'field' || step.id === 'end'}/>
     <div className="stage-scene" data-on={step.id === 'field'}><Suspense fallback={null}>{fieldOn && <Scene director={director}/>}</Suspense></div>
     {flyer && <div className="stage-flyer" style={{left: flyer.b.x, top: flyer.b.y, width: flyer.b.w, ...flyer.font, transform: flyer.moving ? 'none' : `translate(${flyer.a.x - flyer.b.x}px, ${flyer.a.y - flyer.b.y}px) scale(${flyer.start})`}}>{flyer.text}</div>}
     <div className="stage-cursor" data-on={cursor.on} style={{transform: `translate(${cursor.x}px, ${cursor.y}px)`}}>

@@ -29,9 +29,26 @@ export const acts = [
     {id: 'sources', screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12},
     {id: 'research', screen: 'answer', focus: 'research', label: 'Ask GrowthIQ', clock: '7:08', duration: 12, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-research', click: true}]},
   ]},
+  {id: 'deeper', name: 'Go deeper', steps: [
+    {id: 'flag', screen: 'answer', focus: 'open-question', label: 'Ask GrowthIQ', clock: '7:12', duration: 10, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-answer', click: true}]},
+    {id: 'expert', screen: 'expert', focus: 'expert-form', label: 'Ask Domain Expert', clock: '7:14', duration: 13, cameraAt: 0.6, carry: {from: 'answer:open-question-text', to: 'expert:details'}, cursor: [{at: 6.5, to: 'expert:submit', click: true}]},
+    {id: 'customers', screen: 'customers', focus: 'customer-list', label: 'Customers', clock: '7:20', duration: 12, pre: 'expert', cameraAt: 2.3, cursor: [{at: 1.3, to: 'expert:nav-customers', click: true}, {at: 4.6, to: 'customers:filter', click: true}]},
+  ]},
+  {id: 'real', name: 'Make it real', steps: [
+    {id: 'studio', screen: 'studio', focus: 'starts', label: 'Intelligence Studio', clock: '8:05', duration: 10, pre: 'customers', cameraAt: 2.3, cursor: [{at: 1.3, to: 'customers:nav-studio', click: true}]},
+    {id: 'brief', screen: 'studio', focus: 'deliverable', label: 'Intelligence Studio', clock: '8:07', duration: 10, pre: 'studio', cameraAt: 2.8, cursor: [{at: 1.2, to: 'studio:start-0', click: true}]},
+    {id: 'build', screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '8:30', duration: 16},
+    {id: 'pack', screen: 'pack', focus: null, label: 'Intelligence Studio', clock: '9:00', duration: 10},
+  ]},
+  {id: 'close', name: 'Close', steps: [
+    {id: 'tracker', screen: 'radarapp', focus: 'tracker-row', label: 'Radar', clock: '9:00', duration: 10, cameraAt: 0.3, cursor: [{at: 2.4, to: 'radarapp:resume', click: true}]},
+    {id: 'morning', screen: 'all', focus: null, label: '', clock: '9:00', duration: 8},
+    {id: 'end', screen: 'all', focus: null, label: '', clock: '', duration: 10},
+  ]},
 ];
 export const steps = acts.flatMap((act, index) => act.steps.map(step => ({...step, act: index})));
-export const screens = ['inbox', 'radar', 'briefing', 'markets', 'competitors', 'benchmark', 'ask', 'answer'];
+// 'all' is not a screen: it asks the camera to show every screen at once.
+export const screens = ['inbox', 'radar', 'briefing', 'markets', 'competitors', 'benchmark', 'ask', 'answer', 'expert', 'customers', 'studio', 'pack', 'radarapp'];
 
 export const inbox = {time: '6:42', day: 'Tuesday', app: 'GrowthIQ Radar', title: '3 things that moved overnight', preview: 'Kestrow Group acquires Thalic Cooling, and two more.'};
 
@@ -91,3 +108,23 @@ export const answer = {
   research: {heading: 'Research scope', summary: 'Review the approach and deliverables before generating a report.', chapters: [
     ['Market definition and size', 3], ['Demand drivers: AI rack density', 2], ['Technology: direct-to-chip and immersion', 3], ['Competitive landscape', 2], ['Entry options for Norvane', 3], ['Risks and dependencies', 2]]},
 };
+export const expert = {title: 'Ask Domain Expert', subtitle: 'Connect with a human expert on the questions that matter to your business.',
+  heading: 'What would you like an expert’s perspective on?', lead: 'Share your question and the business decision behind it.',
+  subject: 'Can our pumps handle AI rack heat loads?', region: 'Data-centre liquid cooling', details: answer.points[2][1], email: radar.to,
+  sent: ['Request sent', 'Your question is with the domain expert team. Replies go to ' + radar.to + '.'],
+  guide: ['Bring the question.', 'Add expert judgment.', 'Ask for a domain expert’s perspective on a market, an industry or a business decision.']};
+export const customers = {title: 'Customer intelligence', subtitle: 'Your customer workspace, powered by SalesPlay.', filter: 'Building data centres',
+  // [customer, what they are, what Norvane supplies, latest signal]
+  rows: [['Arden Compute', 'Data-centre builder', 'Industrial pumps', 'Two new data-centre campuses announced'], ['Brightmoor Chemicals', 'Speciality chemicals', 'Heat exchangers', 'Plant upgrade under review'], ['Calloway Water', 'Water utility', 'Industrial pumps', 'Five-year framework renewed'],
+    ['Fennick Foods', 'Food processing', 'Flow control', 'New line commissioned'], ['Halden Energy', 'District heating', 'Heat exchangers', 'Network extension approved'], ['Tresco Paper', 'Pulp and paper', 'Industrial pumps', 'Maintenance contract extended']],
+  match: 'Arden Compute'};
+export const studio = {title: 'Intelligence Studio', subtitle: 'Research, model and build your next strategic work product.',
+  // Names, outputs and outlines follow the product's own capability list in studio-data.js.
+  starts: [
+    {doc: 'Market model', name: 'Build a market model', output: 'Excel workbook', blurb: 'Size an opportunity. Explore the segments behind it.', subject: 'Data-centre liquid cooling', label: 'Market or industry', outline: ['Market size & CAGR forecasts', 'Product & geography segmentation', 'Applications & end users', 'Excel-ready market data']},
+    {doc: 'Competitor profile', name: 'Research a competitor', output: 'Research study', blurb: 'Understand positioning, revenue and strategy.', subject: 'Kestrow Group', label: 'Competitor', outline: ['Revenue', 'Positioning', 'SWOT', 'Strategy']},
+    {doc: 'Market-entry strategy', name: 'Develop a market-entry strategy', output: 'Research study', blurb: 'Evaluate entry models, partners and market risks.', subject: 'Norvane in data-centre liquid cooling', label: 'Target market', outline: ['Entry models', 'Partnerships', 'Regulatory factors', 'Risk mitigation']},
+  ],
+  context: 'From Ask GrowthIQ: ' + answer.intro, capabilities: 22,
+  pack: {title: 'Board pack', subtitle: 'Data-centre liquid cooling', time: 'Ready at 9:00'}};
+export const tracker = {title: 'Radar', subtitle: 'Stay informed about what matters to you.', scope: 'Data-centre liquid cooling', kind: 'Topics', focus: 'Deals, capacity announcements and new entrants', frequency: 'Daily', schedule: radar.schedule, email: radar.to};
