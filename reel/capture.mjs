@@ -10,7 +10,8 @@ import path from 'node:path';
 const site = process.argv[2] || 'https://giq2.ankurj.com/';
 const out = process.argv[3] || path.join(import.meta.dirname, '..', 'assets', 'reel');
 const SIZE = {width: 1440, height: 900, deviceScaleFactor: 2};
-// [file, path on the site, regions as {name: selector}, optional {click, scroll} selectors]
+// [file, path on the site, regions as {name: selector}, optional {click, scroll, fill}]
+// `fill` types example text into a form so it is not captured empty. Nothing is submitted.
 const screens = [
   ['radar', '#radar', {mail: '.tracker-mail-window', body: '.tracker-email-body'}],
   ['briefing', '#home', {reader: '.signal-reader', index: '.signal-index'}],
@@ -19,10 +20,10 @@ const screens = [
   ['ecosystem', '#ecosystem', {ecosystem: '.ecosystem'}],
   ['competitors', '#competitors', {presence: '.table-panel', grid: '.presence-table'}],
   ['my-competitors', '#my-competitors', {table: '.table-panel'}],
-  ['benchmark', '#benchmark', {chart: '.table-panel', bars: '.chart-area'}, {click: '[data-chart="chart"]', scroll: '.benchmark-modes'}],
+  ['benchmark', '#benchmark', {panel: '.table-panel', table: '.table-panel .table-wrap'}, {scroll: '.benchmark-modes'}],
   ['ask', '#ask', {composer: '.composer'}],
   ['answer', 'ask-results.html', {answer: '.ar-answer-grid article', workspace: '.ar-workspace'}],
-  ['expert', '#domain-expert', {form: '.expert-form-panel'}],
+  ['expert', '#domain-expert', {form: '.expert-form-panel'}, {fill: {'#expert-subject': 'Where is demand for bio-based packaging adhesives heading?', '#expert-region': 'Europe', '#expert-details': 'We are deciding whether to add bio-based hot-melt capacity for packaging converters. Which end markets are likely to move first, and what should we watch over the next twelve months?'}}],
   ['customers', '#customers', {access: '.access-layout'}],
   ['studio', '#studio', {starts: '.studio-starts'}],
   ['brief', '#studio/market-model', {deliverable: '.studio-deliverable', brief: '.studio-brief-panel'}],
@@ -36,6 +37,8 @@ for (const [file, route, regions, before = {}] of screens) {
   await page.goto(new URL(route, site).href, {waitUntil: 'networkidle0'});
   await page.evaluate(() => document.fonts.ready);
   if (before.click) await page.click(before.click);
+  for (const [selector, text] of Object.entries(before.fill ?? {})) await page.type(selector, text);
+  if (before.fill) await page.evaluate(() => document.activeElement.blur());
   // Bring a region that starts low on the page up into the capture.
   if (before.scroll) await page.evaluate(selector => scrollTo(0, document.querySelector(selector).getBoundingClientRect().top + scrollY - 96), before.scroll);
   await new Promise(resolve => setTimeout(resolve, 1200));

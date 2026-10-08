@@ -18,10 +18,10 @@ const list = [
   {id: 'signals', image: 'signals', entry: 'depth', name: 'Live Signals', line: 'Deals, launches and partnerships, as they happen.', panels: [{region: 'reader', at: 3}]},
   {id: 'markets', image: 'markets', entry: 'side', name: 'Markets', line: 'The markets around you, sized and ranked by growth.', panels: [{region: 'table', at: 2.6}, {region: 'inspector', at: 4}]},
   {id: 'competitors', image: 'competitors', entry: 'rise', name: 'Competitors', line: 'Who plays where, market by market.', panels: [{region: 'grid', at: 3, pan: {axis: 'x', view: 0.5}}]},
-  {id: 'benchmark', image: 'benchmark', entry: 'depth', name: 'Benchmarking', line: 'Your rivals’ numbers, side by side.', panels: [{region: 'bars', at: 3}]},
+  {id: 'benchmark', image: 'benchmark', entry: 'depth', name: 'Benchmarking', line: 'Your rivals’ numbers, side by side.', panels: [{region: 'table', at: 3, pan: {axis: 'x', view: 0.56}}]},
   {id: 'answer', image: 'answer', entry: 'side', name: 'Ask GrowthIQ', line: 'A question in. A sourced answer out.', panels: [{region: 'answer', at: 3, pan: {axis: 'y', view: 0.5}}]},
   {id: 'expert', image: 'expert', entry: 'rise', name: 'Ask Domain Expert', line: 'When the question needs a person.', panels: [{region: 'form', at: 3}]},
-  {id: 'studio', image: 'studio', entry: 'depth', name: 'Intelligence Studio', line: 'Models, profiles and strategies, ready to hand over.', panels: [{region: 'starts', at: 3}]},
+  {id: 'studio', image: 'studio', entry: 'depth', name: 'Intelligence Studio', line: 'Models, profiles and strategies, ready to hand over.', panels: [{region: 'starts', at: 3, pan: {axis: 'x', view: 0.5}}]},
 ];
 export const shots = list.map((shot, i) => ({...shot, from: INTRO + i * SHOT, to: INTRO + (i + 1) * SHOT, side: i % 2 ? -1 : 1,
   panels: shot.panels.map(panel => ({...panel, rect: regions[shot.image][panel.region].rect, background: regions[shot.image][panel.region].bg}))}));

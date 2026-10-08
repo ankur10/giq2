@@ -3,7 +3,8 @@ import {Canvas, useFrame, useLoader} from '@react-three/fiber';
 import * as THREE from 'three';
 import {shots, wall, close, images, phase, span, mix, inOut, out} from './shots.mjs';
 
-const CARD_HEIGHT = 4.6, PIXELS = [1440, 900], CARD_COLOUR = '#f7f8f9';
+// Sized so the whole card, with its margin, fits in the frame beside the caption.
+const CARD_HEIGHT = 4.2, PIXELS = [1440, 900], CARD_COLOUR = '#f7f8f9';
 // Even margins, in scene units: around the screen on its card, and around a lifted region.
 const CARD_MARGIN = 0.11, PANEL_MARGIN = 0.1, RADIUS = 0.08;
 // The largest a lifted panel may grow to, before perspective.
@@ -39,7 +40,7 @@ function Shot({shot, texture, beat}) {
     const p = phase(shot, beat());
     group.current.visible = p.visible;
     if (!p.visible) return;
-    const side = shot.side, drift = Math.sin(clock.elapsedTime * 0.5 + shot.from) * 0.02, x = side * 1.9, tilt = -side * 0.13;
+    const side = shot.side, drift = Math.sin(clock.elapsedTime * 0.5 + shot.from) * 0.02, x = side * 1.83, tilt = -side * 0.13;
     // Three ways to arrive; every shot leaves the same way, off to the side it came to rest on.
     const from = shot.entry === 'rise' ? {position: [x, -8, -1], rotation: [0.7, tilt, 0]} : shot.entry === 'depth' ? {position: [x * 0.4, 0.6, -26], rotation: [0.02, tilt * 3, 0]} : {position: [side * 15, 0, -3], rotation: [0.02, side * 1.0, 0]};
     const to = {position: [x, 0, 0], rotation: [0.02, tilt, 0]};
