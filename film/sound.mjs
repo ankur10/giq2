@@ -64,9 +64,9 @@ export function events() {
   return list.sort((a, b) => a.at - b.at);
 }
 
-export function compose(ctx, destination, start, list = events()) {
+export function compose(ctx, destination, start, list = events(), level = LEVEL) {
   const t = beat => start + beat * BEAT;
-  const master = ctx.createGain(); master.gain.value = LEVEL;
+  const master = ctx.createGain(); master.gain.value = level;
   const limiter = ctx.createDynamicsCompressor(); limiter.threshold.value = -9; limiter.ratio.value = 6; limiter.attack.value = 0.004; limiter.release.value = 0.2;
   master.connect(limiter).connect(destination);
   // A generated room: decaying noise as the impulse response.
@@ -118,9 +118,9 @@ export function compose(ctx, destination, start, list = events()) {
 }
 
 // The whole score rendered to a 16-bit stereo WAV, for putting under an exported video.
-export async function renderWav(sampleRate = 44100) {
-  const ctx = new OfflineAudioContext(2, Math.ceil((BEATS * BEAT + TAIL) * sampleRate), sampleRate);
-  compose(ctx, ctx.destination, 0);
+export async function renderWav(sampleRate = 44100, list = events(), beats = BEATS, level = LEVEL) {
+  const ctx = new OfflineAudioContext(2, Math.ceil((beats * BEAT + TAIL) * sampleRate), sampleRate);
+  compose(ctx, ctx.destination, 0, list, level);
   const buffer = await ctx.startRendering(), frames = buffer.length, view = new DataView(new ArrayBuffer(44 + frames * 4));
   const text = (offset, s) => [...s].forEach((c, i) => view.setUint8(offset + i, c.charCodeAt(0)));
   text(0, 'RIFF'); view.setUint32(4, 36 + frames * 4, true); text(8, 'WAVEfmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 2, true);
