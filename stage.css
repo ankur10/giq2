@@ -108,4 +108,4 @@ html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
 
 /* Narrated mode */
 .stage-start{position:absolute;left:0;right:0;bottom:9vh;margin:0;text-align:center;font:500 2vh "Source Sans 3",sans-serif;letter-spacing:.08em;color:rgb(255 255 255 / .55)}
-.stage-sync{position:absolute;left:0;top:0;width:10px;height:10px;background:#fff;visibility:hidden}
+.stage-sync{position:absolute;left:0;top:0;width:10px;height:10px;background:#f0f;visibility:hidden}
