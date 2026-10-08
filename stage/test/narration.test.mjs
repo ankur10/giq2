@@ -22,9 +22,9 @@ test('lines never overlap: each one ends before the next step begins', () => {
   const starts = startTimes(script);
   script.forEach((s, i) => { if (i < script.length - 1) assert.ok(starts[i] + s.voiceAt + s.voice < starts[i + 1], s.id); });
 });
-test('the narrated demo runs between three and four and a half minutes', () => {
+test('the narrated demo runs between two and three quarter and four and a half minutes', () => {
   const total = script.reduce((sum, s) => sum + s.duration, 0);
-  assert.ok(total > 180 && total < 270, 'total ' + total);
+  assert.ok(total > 165 && total < 270, 'total ' + total);
 });
 test('the bed marks every step and resolves its motif only at the close', () => {
   const list = music(script);

@@ -4,7 +4,7 @@ import {compose, toWav, TAIL} from '../film/sound.mjs';
 import {BEAT} from '../film/score.mjs';
 import {startTimes} from './narration.mjs';
 
-export const MUSIC_LEVEL = 1.3, VOICE_LEVEL = 0.85;
+export const MUSIC_LEVEL = 1.1, VOICE_LEVEL = 0.72;
 const D2 = 38, Bb2 = 46, C3 = 48, D3 = 50, F3 = 53, G3 = 55, A3 = 57, C4 = 60, D4 = 62, E4 = 64, F4 = 65, Fs4 = 66, A4 = 69, D5 = 74, E5 = 76, Fs5 = 78, A5 = 81;
 // One chord per act, so the bed moves with the story: unsettled at first, resolved at the close.
 const CHORDS = [[D3, A3, F4], [Bb2, F3, D4], [F3, C4, A4], [C3, G3, E4], [D3, A3, F4], [F3, C4, A4], [D3, A3, Fs4, A4]];
