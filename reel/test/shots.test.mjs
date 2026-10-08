@@ -8,15 +8,12 @@ test('shots follow one another with no gaps and start on a bar', () => {
   assert.equal(wall.from, shots.at(-1).to);
   assert.equal(close.to, BEATS);
 });
-test('every shot has a card region and a focus region inside its image', () => {
-  for (const s of shots) for (const rect of [s.cropRect, s.focusRect]) {
-    assert.ok(Array.isArray(rect) && rect.length === 4, s.id);
-    const [x, y, w, h] = rect;
-    assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 1.001 && y + h <= 1.001, s.id + ' ' + rect);
+test('every shot lifts a region that lies inside its capture and has a background colour', () => {
+  for (const s of shots) {
+    const [x, y, w, h] = s.focusRect;
+    assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 1.001 && y + h <= 1.001, s.id + ' ' + s.focusRect);
+    assert.match(s.focusBackground, /^rgb/, s.id);
   }
-});
-test('the focus sits inside the card it lifts from', () => {
-  for (const s of shots) { const [cx, cy, cw, ch] = s.cropRect, [x, y, w, h] = s.focusRect; assert.ok(x >= cx - 0.001 && y >= cy - 0.001 && x + w <= cx + cw + 0.001 && y + h <= cy + ch + 0.001, s.id); }
 });
 test('a shot is hidden outside its eight beats and settled in the middle', () => {
   const s = shots[2];

@@ -1,28 +1,27 @@
 // The showcase reel as data: which product screens appear, in what order, and what is said
-// about each. Images are captures of the product screens; regions.json records where the
-// named parts of each capture sit, as fractions of the image.
+// about each. Images are captures of the deployed product (see capture.mjs); regions.json
+// records where the named parts of each capture sit, as fractions of the image, and the
+// background colour behind each.
 import regions from './regions.json' with {type: 'json'};
 
 export const BPM = 100;
 export const BEAT = 60 / BPM;
 const INTRO = 8, SHOT = 8, WALL = 8, CLOSE = 8;
 
-// crop: the part of the capture shown as the card (null for the whole screen).
-// focus: the part that lifts off the card towards the viewer.
+// focus: the named part of the capture that lifts off the card towards the viewer.
 const list = [
-  {id: 'radar', image: 'radar', crop: 'mail', focus: 'story-0', name: 'Radar', line: 'What moved overnight, in your inbox.'},
-  {id: 'briefing', image: 'briefing', crop: null, focus: 'relevance', name: 'Your Briefing', line: 'Not just the news. What it means for you.'},
-  {id: 'markets', image: 'markets', crop: null, focus: 'inspector', name: 'Markets', line: 'Every market around your business, sized.'},
-  {id: 'competitors', image: 'competitors', crop: null, focus: 'presence', name: 'Competitors', line: 'Who is already there.'},
-  {id: 'benchmark', image: 'benchmark', crop: null, focus: 'chart', name: 'Benchmarking', line: 'How you compare.'},
-  {id: 'answer', image: 'answer', crop: null, focus: 'answer', name: 'Ask GrowthIQ', line: 'Ask the question. Get the answer, with its evidence.'},
-  {id: 'expert', image: 'expert', crop: null, focus: 'expert-form', name: 'Ask Domain Expert', line: 'When the question needs a person.'},
-  {id: 'customers', image: 'customers', crop: null, focus: 'customer-list', name: 'Customers', line: 'Which of your customers are moving.'},
-  {id: 'studio', image: 'studio', crop: null, focus: 'starts', name: 'Intelligence Studio', line: 'From an answer to a finished work product.'},
+  {id: 'radar', image: 'radar', focus: 'mail', name: 'Radar', line: 'What moved, in your inbox.'},
+  {id: 'briefing', image: 'briefing', focus: 'reader', name: 'Your Briefing', line: 'Not just the news. What it means for you.'},
+  {id: 'signals', image: 'signals', focus: 'reader', name: 'Live Signals', line: 'Every development, as it happens.'},
+  {id: 'markets', image: 'markets', focus: 'inspector', name: 'Markets', line: 'Every market around your business, sized.'},
+  {id: 'competitors', image: 'competitors', focus: 'presence', name: 'Competitors', line: 'Who is already there.'},
+  {id: 'benchmark', image: 'benchmark', focus: 'chart', name: 'Benchmarking', line: 'How you compare.'},
+  {id: 'answer', image: 'answer', focus: 'answer', name: 'Ask GrowthIQ', line: 'Ask the question. Get the answer, with its evidence.'},
+  {id: 'expert', image: 'expert', focus: 'form', name: 'Ask Domain Expert', line: 'When the question needs a person.'},
+  {id: 'studio', image: 'studio', focus: 'starts', name: 'Intelligence Studio', line: 'From an answer to a finished work product.'},
 ];
-const whole = [0, 0, 1, 1];
 export const shots = list.map((shot, i) => ({...shot, from: INTRO + i * SHOT, to: INTRO + (i + 1) * SHOT, side: i % 2 ? -1 : 1,
-  cropRect: shot.crop ? regions[shot.image][shot.crop] : whole, focusRect: regions[shot.image][shot.focus]}));
+  focusRect: regions[shot.image][shot.focus].rect, focusBackground: regions[shot.image][shot.focus].bg}));
 export const wall = {from: INTRO + list.length * SHOT, to: INTRO + list.length * SHOT + WALL, images: Object.keys(regions)};
 export const close = {from: wall.to, to: wall.to + CLOSE, mark: 'GrowthIQ', line: 'We see growth before it happens.'};
 export const BEATS = close.to;
