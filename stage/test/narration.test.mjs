@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {lines, narratedSteps, startTimes} from '../narration.mjs';
+import {lines, narratedSteps, quickened, startTimes} from '../narration.mjs';
 import {steps} from '../story.mjs';
 import {music} from '../soundtrack.mjs';
 
@@ -32,4 +32,12 @@ test('the bed marks every step and resolves its motif only at the close', () => 
   const bells = list.filter(e => e.kind === 'bell' && e.gain === 0.16).map(e => e.note);
   assert.deepEqual([bells[2], bells[5], bells[8]], [76, 76, 78]);
   assert.equal(list.filter(e => e.kind === 'kick').length, 0, 'no drum under the voice');
+});
+test('quickening the picture never squeezes a line or runs a step faster than asked', () => {
+  const fast = quickened(script, 1.5), starts = startTimes(fast);
+  fast.forEach((s, i) => {
+    assert.ok(s.rate >= 1 && s.rate <= 1.52, s.id + ' rate ' + s.rate);
+    if (i < fast.length - 1) assert.ok(starts[i] + s.voiceAt + s.voice + 0.5 < starts[i + 1], s.id + ' holds its line');
+  });
+  assert.ok(fast.reduce((sum, s) => sum + s.duration, 0) < script.reduce((sum, s) => sum + s.duration, 0) * 0.82);
 });

@@ -23,11 +23,12 @@ export function music(script) {
   });
   // A soft note as each step begins, and a low thump for each document that lands.
   script.forEach((step, i) => add('pluck', starts[i] + 0.15, {note: STEP_NOTES[i % STEP_NOTES.length], gain: 0.085}));
-  const at = id => starts[script.findIndex(s => s.id === id)];
-  [1.6, 5.6, 9.6].forEach(offset => add('thump', at('build') + offset));
+  // Moments inside a step keep their place in the picture when the step has been quickened.
+  const at = (id, offset = 0) => { const i = script.findIndex(s => s.id === id); return starts[i] + offset / (script[i].rate ?? 1); };
+  [1.6, 5.6, 9.6].forEach(offset => add('thump', at('build', offset)));
   // The three-note motif: left open at the notification and the answer, resolved at the close.
-  [[at('notify') + 0.3, E5], [at('answer') + 2.5, E5], [at('end') + 1.9, Fs5]].forEach(([seconds, lastNote]) => [D5, A5, lastNote].forEach((note, i) => add('bell', seconds + i * 0.3, {note, gain: 0.16})));
-  add('bell', at('end') + 1.9, {note: D2 + 24, gain: 0.12});
+  [[at('notify', 0.3), E5], [at('answer', 2.5), E5], [at('end', 1.9), Fs5]].forEach(([seconds, lastNote]) => [D5, A5, lastNote].forEach((note, i) => add('bell', seconds + i * 0.3, {note, gain: 0.16})));
+  add('bell', at('end', 1.9), {note: D2 + 24, gain: 0.12});
   return list.sort((a, b) => a.at - b.at);
 }
 

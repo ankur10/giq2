@@ -9,7 +9,7 @@ import {sheets as radarSheets} from './screens/RadarMail.jsx';
 import {sheets as appSheets} from './screens/Shell.jsx';
 import {sheets as answerSheets} from './screens/Answer.jsx';
 import {sheets as expertSheets} from './screens/Expert.jsx';
-import {narratedSteps} from './narration.mjs';
+import {narratedSteps, quickened} from './narration.mjs';
 import {play, render, loadVoices, totalSeconds} from './soundtrack.mjs';
 import voice from './voice.json';
 
@@ -20,7 +20,7 @@ const params = new URLSearchParams(location.search);
 // timings without sound, for recording.
 const narrated = params.has('narrated'), silent = params.has('silent');
 const script = narrated ? narratedSteps(steps, voice) : steps;
-if (narrated) window.renderScore = async () => { const bytes = new Uint8Array(await (await render(script)).arrayBuffer()); let text = ''; for (let i = 0; i < bytes.length; i += 32768) text += String.fromCharCode(...bytes.subarray(i, i + 32768)); return btoa(text); };
+if (narrated) window.renderScore = async (speed = 1) => { const bytes = new Uint8Array(await (await render(speed === 1 ? script : quickened(script, speed))).arrayBuffer()); let text = ''; for (let i = 0; i < bytes.length; i += 32768) text += String.fromCharCode(...bytes.subarray(i, i + 32768)); return btoa(text); };
 const startStep = () => { const value = params.get('step'); if (!value) return 0; const byId = steps.findIndex(s => s.id === value); return byId > -1 ? byId : Number(value) - 1 || 0; };
 
 function Stage() {

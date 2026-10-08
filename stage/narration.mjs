@@ -39,5 +39,15 @@ export function narratedSteps(steps, voice) {
     return {...step, voiceAt: at, voice: spoken, duration: Math.round(Math.max(step.min ?? 5, at + spoken + 0.9) * 10) / 10};
   });
 }
+// The narrated steps with the picture run faster (`speed` times) while the voice keeps its own
+// pace: each step shrinks as far as its line allows. `rate` is how much faster that step's
+// picture ends up running, between 1 and `speed`.
+export function quickened(script, speed) {
+  return script.map(step => {
+    const voiceAt = step.voiceAt / speed;
+    const duration = Math.round(Math.max(step.duration / speed, step.voice ? voiceAt + step.voice + 0.6 : 0) * 10) / 10;
+    return {...step, voiceAt, duration, rate: step.duration / duration};
+  });
+}
 // When each step starts, in seconds from the beginning.
 export const startTimes = steps => steps.reduce((times, step, i) => [...times, i ? times[i - 1] + steps[i - 1].duration : 0], []);
