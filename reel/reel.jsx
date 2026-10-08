@@ -5,10 +5,13 @@ import Scene from './Scene.jsx';
 import {compose, renderWav} from '../film/sound.mjs';
 import {events, LEVEL} from './sound.mjs';
 import {BEATS} from './shots.mjs';
+import {installStepper} from '../film/stepper.mjs';
 
 const params = new URLSearchParams(location.search);
 // ?t=<seconds> shows one frozen frame; ?autostart begins without a key press, for recording.
-const frozen = params.has('t') ? Number(params.get('t')) : null;
+let frozen = params.has('t') ? Number(params.get('t')) : null;
+// An export script steps the clock frame by frame through window.seekTo (see tools/export-video.mjs).
+installStepper(seconds => { frozen = seconds; });
 // Sound needs a key press to begin, so a recording run (?autostart) and ?mute are silent.
 const silent = frozen !== null || params.has('autostart') || params.has('mute');
 // Lets an export script fetch the rendered score.
@@ -55,8 +58,6 @@ function Reel() {
       <div className="reel-close"><p className="reel-mark" data-on={v.mark}>{close.mark}</p><p className="reel-line" data-on={v.closing}>{close.line}</p></div>
     </div>
     {!started && <p className="reel-start">Press space to begin</p>}
-    {/* ?sync flashes a corner marker on the first frames so an export can line sound up with picture. */}
-    {started && params.has('sync') && <i className="reel-sync"/>}
   </div>;
 }
 

@@ -26,6 +26,3 @@ html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
 .reel-close .reel-mark{margin-top:-13vh;font-size:11vh}
 .reel-line{position:absolute;left:0;right:0;top:50%;margin:3vh 0 0;text-align:center;font-size:6.4vh;letter-spacing:-.02em;opacity:0;transform:translateY(1.4vh);transition:opacity calc(var(--beat) * 1.4),transform calc(var(--beat) * 3) var(--out)}
 .reel-line[data-on="true"]{opacity:1;transform:none}
-
-.reel-sync{position:absolute;left:0;top:0;width:10px;height:10px;background:#fff;animation:reel-sync .1s steps(1) forwards}
-@keyframes reel-sync{to{visibility:hidden}}
