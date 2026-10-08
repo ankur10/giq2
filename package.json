@@ -8,7 +8,7 @@
     "build": "npm run build:studio && node build-site.cjs",
     "build:studio": "node build-studio.cjs",
     "check": "node --check app.js",
-    "test": "node --test stage/test/*.test.mjs"
+    "test": "node --test stage/test/*.test.mjs film/test/*.test.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.0.0",

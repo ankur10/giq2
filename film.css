@@ -1,0 +1,52 @@
+/* GrowthIQ film: "Follow the line". */
+@font-face{font-family:"Source Serif 4";src:url(assets/serif.woff2) format("woff2");font-weight:200 900;font-display:block}
+@font-face{font-family:"Source Sans 3";src:url(assets/sans.woff2) format("woff2");font-weight:200 900;font-display:block}
+
+html,body{height:100%;margin:0;overflow:hidden;background:#070b16}
+.film{--orange:#e8701a;--out:cubic-bezier(.16,1,.3,1);--beat:.6s;position:fixed;inset:0;overflow:hidden;color:#fff;font-family:"Source Serif 4",Georgia,serif;background:radial-gradient(120% 90% at 50% 45%,#14213d 0%,#0d1730 45%,#070b16 100%);cursor:none}
+.film-layer{position:absolute;inset:0}
+.film-layer canvas{display:block}
+.film-type,.film-labels{pointer-events:none}
+.film-start{position:absolute;left:0;right:0;bottom:9vh;margin:0;text-align:center;font:500 2vh "Source Sans 3",sans-serif;letter-spacing:.08em;color:rgb(255 255 255 / .5)}
+
+/* Words fixed to points in space */
+.film-labels{position:absolute;inset:0}
+.film-labels span{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;transition:opacity calc(var(--beat) * .5)}
+.film-labels span[data-on="true"]{opacity:1}
+.film-labels span[data-kind="chain"]{margin:-2.1em 0 0 .7em;font-size:5.4vh;letter-spacing:-.02em}
+.film-labels span[data-kind="station"]{margin:1em 0 0 -1.2em;font:500 3.1vh "Source Sans 3",sans-serif;letter-spacing:.02em;color:rgb(255 255 255 / .82)}
+.film-labels span[data-kind="card"]{margin:-1.6em 0 0 3.4vh;padding:1.6vh 2.4vh 1.8vh;border:1px solid rgb(255 255 255 / .2);border-radius:8px;background:rgb(255 255 255 / .07);backdrop-filter:blur(10px);font:400 3.8vh "Source Sans 3",sans-serif;transform-origin:0 50%}
+
+/* Words on the screen itself */
+.film-word{position:absolute;left:0;right:0;margin:0;text-align:center;letter-spacing:-.02em;opacity:0;transform:translateY(1.2vh);transition:opacity var(--beat),transform calc(var(--beat) * 2) var(--out)}
+.film-word[data-on="true"]{opacity:1;transform:none}
+.film-word[data-place="centre"]{top:22vh;font-size:8vh}
+.film-word[data-place="low"]{top:11vh;left:8vw;right:auto;text-align:left;font-size:7.4vh}
+.film-word[data-place="number"]{top:16vh;left:9vw;right:auto;text-align:left;font-size:14vh}
+.film-word[data-place="mark"]{top:50%;margin-top:-6vh;font-size:11vh;font-weight:700;letter-spacing:-.03em}
+.film-word[data-place="closing"]{top:42vh;font-size:7.4vh}
+
+/* Stillness: the question, the answer, the evidence */
+.film-question{position:absolute;left:0;right:0;top:50%;margin:-4.6vh 0 0;text-align:center;font-size:8.6vh;letter-spacing:-.02em;white-space:pre;opacity:0;transition:opacity calc(var(--beat) * .9)}
+.film-question[data-on="true"]{opacity:1}
+.film-untyped{visibility:hidden}
+.film-answer{position:absolute;left:0;right:0;top:50%;margin-top:-9vh;text-align:center;opacity:0;transition:opacity var(--beat)}
+.film-answer[data-on="true"]{opacity:1}
+.film-answer p{margin:0;font-size:8.6vh;letter-spacing:-.02em}
+.film-answer ul{display:flex;justify-content:center;gap:1.6vh;margin:8.5vh 0 0;padding:0;list-style:none;font:500 2.9vh "Source Sans 3",sans-serif}
+.film-answer li{padding:1vh 1.8vh;border:1px solid rgb(255 255 255 / .22);border-radius:6px;background:rgb(255 255 255 / .06);opacity:0;transform:translateY(1.4vh) scale(.94);transition:opacity calc(var(--beat) * .4),transform calc(var(--beat) * .8) var(--out)}
+.film-answer li[data-on="true"]{opacity:1;transform:none}
+.film-answer li:last-child{border-color:var(--orange)}
+
+/* Work: three pages */
+.film-page{position:absolute;box-sizing:border-box;padding:3.4vh 2.6vh 0;border-radius:4px;background:#fff;opacity:0;transform:translate(0,0);transition:opacity calc(var(--beat) * .6),transform calc(var(--beat) * 4) var(--out)}
+.film-page[data-on="true"]{opacity:1}
+.film-page i{display:block;height:1.1vh;margin-bottom:1.9vh;border-radius:2px;background:#dfe5ec}
+.film-page i:first-child{width:62%;height:2vh;background:#14213d;margin-bottom:3vh}
+.film-page i:nth-child(3){width:84%}.film-page i:nth-child(4){width:70%}
+.film-page strong{position:absolute;left:0;right:0;top:calc(100% + 2.4vh);text-align:center;font-size:4.6vh;font-weight:400;color:#fff;transition:opacity var(--beat)}
+.film-pages[data-stacked="true"] .film-page{transform:translate(var(--shift),0) rotate(var(--tilt))}
+.film-pages[data-stacked="true"] .film-page strong{opacity:0}
+.film-pages{transition:opacity calc(var(--beat) * 2)}
+.film-pages[data-gone="true"]{opacity:0}
+.film-window{position:absolute}
