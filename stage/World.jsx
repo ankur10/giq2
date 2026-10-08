@@ -33,12 +33,23 @@ function frame(rect, fill) {
 
 // The screens laid out in space, the camera that moves between them, the spotlight that dims
 // everything but the region in question, the scripted cursor and the text carried between screens.
+// The 3D field needs WebGL; without it act 2 simply stays on the product's own ecosystem view.
+const canRender3D = (() => { try { return !!document.createElement('canvas').getContext('webgl2') && !new URLSearchParams(location.search).has('flat'); } catch { return false; } })();
+class Guard extends React.Component {
+  state = {failed: false};
+  static getDerivedStateFromError() { return {failed: true}; }
+  componentDidCatch() { this.props.onFail(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+
 export default function World({step, index, settled, director}) {
+  const [field3D, setField3D] = useState(canRender3D);
   const world = useRef(null), panels = useRef({}), sealed = useRef({}), live = useRef({s: 1, x: 0, y: 0});
   const [camera, setCamera] = useState(live.current);
   const [spot, setSpot] = useState(null);
   const [cursor, setCursor] = useState({x: 0, y: 0, on: false, click: 0});
   const [flyer, setFlyer] = useState(null);
+  const [arrivals, setArrivals] = useState([]);
 
   useEffect(() => {
     const timers = [], hidden = [];
@@ -87,10 +98,20 @@ export default function World({step, index, settled, director}) {
         frameId = requestAnimationFrame(() => requestAnimationFrame(() => setFlyer(f => f && {...f, moving: true})));
         later(cameraAt + MOVE + 0.1, () => { hidden.splice(0).forEach(el => { el.style.visibility = ''; }); setFlyer(null); });
       });
+      // Evidence gathered earlier arrives from the direction of the screen it was seen on.
+      setArrivals([]);
+      if (!settled) for (const [n, arrival] of (step.arrivals ?? []).entries()) later(arrival.at, () => {
+        const to = find(arrival.to); if (!to) return;
+        const r = project(worldRect(to), live.current), here = layout[step.screen], there = layout[arrival.from];
+        const dx = there[0] - here[0], dy = there[1] - here[1], length = Math.hypot(dx, dy) || 1, reach = Math.max(innerWidth, innerHeight) * 0.9;
+        setArrivals(list => [...list, {key: n, rect: r, html: to.innerHTML, offset: [dx / length * reach, dy / length * reach], moving: false}]);
+        requestAnimationFrame(() => requestAnimationFrame(() => setArrivals(list => list.map(a => a.key === n ? {...a, moving: true} : a))));
+        later(arrival.at + 1.5, () => setArrivals(list => list.filter(a => a.key !== n)));
+      });
     };
     // Screens mount their sealed content a tick after the world does.
     frameId = requestAnimationFrame(run);
-    return () => { timers.forEach(clearTimeout); cancelAnimationFrame(frameId); hidden.forEach(el => { el.style.visibility = ''; }); setFlyer(null); };
+    return () => { timers.forEach(clearTimeout); cancelAnimationFrame(frameId); hidden.forEach(el => { el.style.visibility = ''; }); setFlyer(null); setArrivals([]); };
   }, [step.id]);
 
   const fieldOn = FIELD.includes(step.id);
@@ -101,9 +122,10 @@ export default function World({step, index, settled, director}) {
       </div>)}
     </div>
     <div className="stage-spot" data-on={!!spot} style={spot ? {left: spot.x - 18, top: spot.y - 18, width: spot.w + 36, height: spot.h + 36} : undefined}/>
-    <div className="stage-veil" data-on={step.id === 'field' || step.id === 'end'}/>
-    <div className="stage-scene" data-on={step.id === 'field'}><Suspense fallback={null}>{fieldOn && <Scene director={director}/>}</Suspense></div>
-    {flyer && <div className="stage-flyer" style={{left: flyer.b.x, top: flyer.b.y, width: flyer.b.w, ...flyer.font, transform: flyer.moving ? 'none' : `translate(${flyer.a.x - flyer.b.x}px, ${flyer.a.y - flyer.b.y}px) scale(${flyer.start})`}}>{flyer.text}</div>}
+    <div className="stage-veil" data-on={(step.id === 'field' && field3D) || step.id === 'end'}/>
+    <div className="stage-scene" data-on={step.id === 'field' && field3D}>{field3D && <Guard onFail={() => setField3D(false)}><Suspense fallback={null}>{fieldOn && <Scene director={director}/>}</Suspense></Guard>}</div>
+    {arrivals.map(a => <div key={a.key} className="stage-arrival" data-moving={a.moving} style={{left: a.rect.x, top: a.rect.y, width: a.rect.w, height: a.rect.h, '--dx': a.offset[0] + 'px', '--dy': a.offset[1] + 'px'}} dangerouslySetInnerHTML={{__html: a.html}}/>)}
+    {flyer && <div className="stage-flyer" data-moving={flyer.moving} style={{left: flyer.b.x, top: flyer.b.y, width: flyer.b.w, ...flyer.font, transform: flyer.moving ? 'none' : `translate(${flyer.a.x - flyer.b.x}px, ${flyer.a.y - flyer.b.y}px) scale(${flyer.start})`}}>{flyer.text}</div>}
     <div className="stage-cursor" data-on={cursor.on} style={{transform: `translate(${cursor.x}px, ${cursor.y}px)`}}>
       {cursor.click > 0 && <span className="stage-click" key={cursor.click}/>}
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v16l4.5-4 2.8 6.2 2.6-1.2-2.8-6.1H18z"/></svg>

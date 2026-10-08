@@ -4,7 +4,7 @@ import Shell, {sheets, extra} from './Shell.jsx';
 import {Icon} from './icons.jsx';
 import {competitors} from '../story.mjs';
 
-const own = '.presence-table tr[data-lit="true"]>*{background:#fff4e8}.presence-table tr[data-lit="true"]>th{box-shadow:inset 3px 0 0 #e07a26}.stage-note{margin:0;padding:12px 18px;font-size:13px;color:var(--muted)}';
+const own = '[data-focus="presence"]{max-width:940px}.presence-table{font-size:14px}.presence-table th{font-size:12px}.presence-table tr[data-lit="true"]>*{background:#fff4e8}.presence-table tr[data-lit="true"]>th{box-shadow:inset 3px 0 0 #e07a26}.stage-note{margin:0;padding:12px 18px;font-size:13px;color:var(--muted)}';
 
 // Competitor intelligence, as app.js competitors() renders it: who is present in which market.
 export default forwardRef(function Competitors({stepId, index, ...host}, ref) {

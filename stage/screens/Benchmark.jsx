@@ -7,7 +7,7 @@ import {benchmark, illustrative} from '../story.mjs';
 
 const own = '.financial-bar{transform-origin:bottom;transform:scaleY(0)}.financial-bar-value{opacity:0}'
   + '[data-risen="true"] .financial-bar{animation:rise 1.1s cubic-bezier(.16,1,.3,1) calc(1.9s + var(--i) * .14s) both}[data-risen="true"] .financial-bar-value{animation:show .5s calc(2.7s + var(--i) * .14s) both}'
-  + '.financial-bar-group[data-lit="true"] .financial-bar{background:#e07a26!important}.chart-area{padding-top:8px}.financial-bar-group[data-lit="true"] .financial-bar-label{font-weight:650;color:var(--ink)}'
+  + '.financial-bar-group[data-lit="true"] .financial-bar{background:#e07a26!important}.chart-area{padding-top:8px;max-width:720px}.financial-bar-label{font-size:13px}.financial-bar-value{font-size:13px}.financial-bar-group[data-lit="true"] .financial-bar-label{font-weight:650;color:var(--ink)}'
   + '@keyframes rise{to{transform:none}}@keyframes show{to{opacity:1}}';
 
 // Competitor benchmarking, as app.js benchmarking() renders its chart view.

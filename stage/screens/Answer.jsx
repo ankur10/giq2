@@ -17,9 +17,10 @@ const extra = ':host{background:#fff!important;display:block}svg{width:16px;heig
   + '[data-phase="0"] .ar-reader>*{opacity:0}'
   + '[data-phase="1"] .ar-answer-start{animation:type 1.4s steps(34,end) 2.6s both}[data-phase="1"] .ar-answer-intro{animation:rise .8s ' + out + ' 4.2s both}[data-phase="1"] .points li{animation:rise .8s ' + out + ' calc(5.2s + var(--i) * .5s) both}'
   + '[data-phase="0"] .ar-source-group,[data-phase="1"] .ar-source-group{opacity:0}'
-  + '[data-phase="2"] .ar-source-group>h2{animation:rise .7s ' + out + ' 1.2s both}[data-phase="2"] .ar-source-row{animation:dock 1.2s ' + out + ' calc(1.7s + var(--i) * .7s) both}'
+  + '[data-phase="2"] .ar-source-group>h2{animation:rise .7s ' + out + ' 1.2s both}[data-phase="2"] .ar-source-row{animation:land .6s ' + out + ' calc(3.25s + var(--i) * 1s) both}'
   + '@keyframes type{from{clip-path:inset(-10% 100% -10% -2%)}to{clip-path:inset(-10% -2% -10% -2%)}}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}'
-  + '@keyframes dock{from{opacity:0;transform:translateX(-520px);box-shadow:inset 4px 0 0 #e07a26}60%{opacity:1;box-shadow:inset 4px 0 0 #e07a26}to{opacity:1;transform:none;box-shadow:inset 0 0 0 #e07a26}}'
+  + '@keyframes land{from{opacity:0;box-shadow:inset 4px 0 0 #e07a26}to{opacity:1;box-shadow:inset 0 0 0 #e07a26}}'
+  + '[data-focus="answer"]{position:relative}[data-phase="1"] [data-focus="answer"]::before{content:"Researching…";position:absolute;left:0;top:4px;font-size:17px;color:var(--muted);animation:think 2.5s both}@keyframes think{0%{opacity:0}25%,80%{opacity:1}100%{opacity:0}}'
   + '.ar-research{max-width:920px;margin:0;animation:rise .7s ' + out + ' both}.ar-chapter>summary{padding:15px 0}';
 
 // The Ask GrowthIQ result view (ask-results.css classes): the answer writes itself, the evidence
@@ -45,7 +46,7 @@ export default forwardRef(function Answer({stepId, index, ...host}, ref) {
           : <article>
               <div data-focus="answer"><h1 className="ar-answer-start">{answer.heading}</h1><p className="ar-answer-intro">{answer.intro}</p>
                 <ul className="points">{answer.points.map(([title, text], i) => <li key={title} style={{'--i': i}} data-open={i === 2} data-lit={i === 2 && lit} data-focus={i === 2 ? 'open-question' : undefined}><strong>{title}</strong><span data-focus={i === 2 ? 'open-question-text' : undefined}>{text}</span></li>)}</ul></div>
-              <section className="ar-source-group" data-focus="evidence"><h2>Evidence</h2>{answer.evidence.map(([from, title], i) => <div className="ar-source-row" key={from} style={{'--i': i}}><span><strong>From {from}</strong><small>{title}</small></span></div>)}</section>
+              <section className="ar-source-group" data-focus="evidence"><h2>Evidence</h2>{answer.evidence.map(([from, title], i) => <div className="ar-source-row" key={from} style={{'--i': i}} data-focus={'evidence-' + i}><span><strong>From {from}</strong><small>{title}</small></span></div>)}</section>
             </article>}</div>
       </div>
     </div>

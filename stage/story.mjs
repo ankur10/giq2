@@ -5,6 +5,7 @@ export const closing = 'We see growth before it happens.';
 
 // Step fields: screen and focus say where the camera looks ("screen:region"); cursor actions and
 // carry are timed in seconds from the start of the step; cameraAt delays the camera move.
+// arrivals are cards that fly in from the direction of the screen they came from.
 export const acts = [
   {id: 'open', name: 'Cold open', steps: [
     {id: 'clock', screen: 'inbox', focus: null, label: '', clock: '', duration: 8},
@@ -26,7 +27,7 @@ export const acts = [
   {id: 'ask', name: 'Ask', steps: [
     {id: 'question', screen: 'ask', focus: 'composer', label: 'Ask GrowthIQ', clock: '7:05', duration: 12, pre: 'benchmark', cameraAt: 2.3, cursor: [{at: 1.3, to: 'benchmark:nav-ask', click: true}, {at: 4.4, to: 'ask:query', click: true}]},
     {id: 'answer', screen: 'answer', focus: 'answer', label: 'Ask GrowthIQ', clock: '7:06', duration: 16, cameraAt: 0.9, cursor: [{at: 0.2, to: 'ask:send', click: true}]},
-    {id: 'sources', screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12},
+    {id: 'sources', screen: 'answer', focus: 'evidence', label: 'Ask GrowthIQ', clock: '7:07', duration: 12, arrivals: [{at: 2.2, from: 'briefing', to: 'answer:evidence-0'}, {at: 3.2, from: 'markets', to: 'answer:evidence-1'}, {at: 4.2, from: 'competitors', to: 'answer:evidence-2'}]},
     {id: 'research', screen: 'answer', focus: 'research', label: 'Ask GrowthIQ', clock: '7:08', duration: 12, pre: 'answer', cameraAt: 3, cursor: [{at: 1.4, to: 'answer:tab-research', click: true}]},
   ]},
   {id: 'deeper', name: 'Go deeper', steps: [
@@ -87,12 +88,12 @@ export const field = {
   path: ['AI data centres', 'Liquid cooling', 'Pumps and heat exchange', 'Norvane'],
 };
 export const competitors = {title: 'Competitor intelligence', subtitle: 'Understand your peers. See where you overlap.',
-  companies: ['Norvane', 'Kestrow Group', 'Vantec Thermal', 'Halberg Flow', 'Ostmark Pumps'],
+  companies: ['Norvane', 'Kestrow Group', 'Vantec Thermal', 'Halberg Flow'],
   // One row per market; one yes/no per company, in the order above.
-  presence: [['Industrial pumps', [1, 1, 0, 1, 1]], ['Industrial heat exchangers', [1, 1, 1, 0, 0]], ['District heating', [1, 0, 1, 1, 0]], ['Data-centre liquid cooling', [0, 1, 1, 0, 0]], ['Hydrogen electrolyser systems', [0, 0, 1, 0, 0]]],
+  presence: [['Industrial pumps', [1, 1, 0, 1]], ['Industrial heat exchangers', [1, 1, 1, 0]], ['District heating', [1, 0, 1, 1]], ['Data-centre liquid cooling', [0, 1, 1, 0]]],
   lit: 'Data-centre liquid cooling', note: 'Kestrow Group: present since the Thalic Cooling acquisition.'};
 export const benchmark = {title: 'Competitor benchmarking', subtitle: 'A clearer perspective on financial performance.', metric: 'Total revenue',
-  rows: [['Kestrow Group', 4120], ['Vantec Thermal', 2860], ['Norvane', 2310], ['Halberg Flow', 1940], ['Ostmark Pumps', 1120]], lit: 'Norvane'};
+  rows: [['Kestrow Group', 4120], ['Vantec Thermal', 2860], ['Norvane', 2310], ['Halberg Flow', 1940]], lit: 'Norvane'};
 export const ask = {title: 'Ask GrowthIQ', subtitle: 'From a question to a clearer business decision.', question: 'Should Norvane enter data-centre liquid cooling?',
   prompts: [['Where to Play', 'Explore market opportunities.', 'market'], ['How to Win', 'Understand your competitive position.', 'competitor'], ['Customer Disruptions', 'Explore changes affecting customers.', 'customers'], ['Business Disruptions', 'Understand changes in your business environment.', 'signals']]};
 export const answer = {

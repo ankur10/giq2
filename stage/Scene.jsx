@@ -15,7 +15,7 @@ const {nodes, path} = field;
 // need that started in AI data centres is traced to the company.
 function Field({director, labels}) {
   const c = useMemo(() => buildConstellation({nodes, path}), []);
-  const group = useRef(), mesh = useRef(), links = useRef(), pathLine = useRef();
+  const group = useRef(), mesh = useRef(), halos = useRef(), links = useRef(), pathLine = useRef();
   const scratch = useMemo(() => ({m: new THREE.Matrix4(), q: new THREE.Quaternion(), s: new THREE.Vector3(), p: new THREE.Vector3(), v: new THREE.Vector3(), col: new THREE.Color()}), []);
   const SEGMENTS = 40;
   const linkGeometry = useMemo(() => {
@@ -53,6 +53,12 @@ function Field({director, labels}) {
       mesh.current.setMatrixAt(i, scratch.m.compose(scratch.p, scratch.q, scratch.s));
       mesh.current.setColorAt(i, scratch.col.multiplyScalar(glow));
     });
+    onPath.forEach((i, place) => {
+      const lit = c.points[i].role !== 'company' && drawn > place / onPath.length ? 1 : 0, breath = 1 + Math.sin(time * 1.8 + place) * 0.12;
+      scratch.p.set(c.points[i].x, c.points[i].y, c.points[i].z); scratch.s.setScalar(lit * (place === 1 ? 1.5 : 1) * breath);
+      halos.current.setMatrixAt(place, scratch.m.compose(scratch.p, scratch.q, scratch.s));
+    });
+    halos.current.instanceMatrix.needsUpdate = true;
     mesh.current.instanceMatrix.needsUpdate = true;
     mesh.current.instanceColor.needsUpdate = true;
     links.current.material.opacity = 0.14 * span(t, 0.6, 3);
@@ -71,6 +77,7 @@ function Field({director, labels}) {
 
   return <group ref={group}>
     <instancedMesh ref={mesh} args={[null, null, c.points.length]} frustumCulled={false}><sphereGeometry args={[0.042, 12, 12]}/><meshBasicMaterial toneMapped={false} transparent depthWrite={false}/></instancedMesh>
+    <instancedMesh ref={halos} args={[null, null, path.length]} frustumCulled={false}><sphereGeometry args={[0.34, 24, 24]}/><meshBasicMaterial color={ORANGE} transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false}/></instancedMesh>
     <lineSegments ref={links} geometry={linkGeometry} frustumCulled={false}><lineBasicMaterial color={COOL} transparent opacity={0} depthWrite={false}/></lineSegments>
     <lineSegments ref={pathLine} geometry={pathGeometry} frustumCulled={false}><lineBasicMaterial color={ORANGE.clone().multiplyScalar(1.5)} toneMapped={false} transparent depthWrite={false}/></lineSegments>
   </group>;
