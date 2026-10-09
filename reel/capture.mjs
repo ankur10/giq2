@@ -1,8 +1,8 @@
 // Captures the reel's product screens from the deployed app and records where each named
 // region sits on its capture, with the background colour behind it.
 //
-// Not part of the build. It needs Chrome and puppeteer-core, which this repo does not depend on:
-//   npm install --no-save puppeteer-core && node reel/capture.mjs [site] [out-dir]
+// Not part of the build. It needs Chrome:
+//   node reel/capture.mjs [site] [out-dir]
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import path from 'node:path';

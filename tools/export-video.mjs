@@ -1,6 +1,5 @@
 // Exports the film or the reel as an mp4 with its score, frame by frame, so picture and sound
-// are exact. Not part of the build: it needs Chrome, ffmpeg and puppeteer-core.
-//   npm install --no-save puppeteer-core
+// are exact. Not part of the build: it needs Chrome and ffmpeg.
 //   node tools/export-video.mjs <film|reel> <from-second> <to-second> <out.mp4> [site]
 // A long piece can be exported as several ranges at once and joined afterwards; each range
 // first steps silently through the two seconds before it, so anything mid-transition at its

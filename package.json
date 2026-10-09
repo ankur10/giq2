@@ -8,7 +8,11 @@
     "build": "npm run build:studio && node build-site.cjs",
     "build:studio": "node build-studio.cjs",
     "check": "node --check app.js",
-    "test": "node --test stage/test/*.test.mjs film/test/*.test.mjs reel/test/*.test.mjs"
+    "test": "node --test stage/test/*.test.mjs film/test/*.test.mjs reel/test/*.test.mjs",
+    "voice": "node tools/make-voiceover.mjs",
+    "video:narrated": "node tools/export-narrated.mjs",
+    "video:export": "node tools/export-video.mjs",
+    "video:sheet": "node tools/contact-sheet.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.0.0",
@@ -19,6 +23,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
+    "puppeteer-core": "^25.13.0",
     "serve": "^14.2.6"
   }
 }
