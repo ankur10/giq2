@@ -12,3 +12,6 @@ ds-bundle/
 
 # local secrets
 .env
+
+# exported videos
+out/
