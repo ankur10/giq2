@@ -2,15 +2,31 @@
 
 A frontend prototype of GrowthIQ with multiple Intelligence Studio designs and a cinematic React Three Fiber demo. Uses captured product data; backend APIs and research generation are not connected.
 
+## My Feed
+
+Open [My Feed](http://127.0.0.1:8772/#feed) after `npm start`. It is the default no-hash home and brand-link destination. A question composer and mixed editorial feed lead; a supporting panel offers work, draft and project shortcuts. The panel stacks below the feed on mobile. [My Work](http://127.0.0.1:8772/#work) remains the task/project management page, and [Your Briefing](http://127.0.0.1:8772/#home) remains at `#home`. See [my-feed-contract.md](my-feed-contract.md).
+
+Filter by For you, Markets, Research, Radar or Saved. Bookmarks persist in this browser under `growthiq-feed-saved-v1`; failed writes keep the change for the visit and show a notice. Question text survives filter and bookmark changes. Submitting it or choosing **Explore the implications** prepares editable text in Ask GrowthIQ; it does not execute research. Research links open captured Jabil/Thermo results; the Radar item is an archive digest example. Live delivery, personalized ranking and expert replies are not connected.
+
+The supporting panel reads My Work's snapshot adapter. Project shortcuts select a project at `#work`, and work/draft shortcuts open activity details there. Mainline integration must map these adapters, bookmarks and stable feed item IDs to confirmed authenticated services, and map question handoff to the existing Ask flow. Configure the post-login destination through the mainline auth/router; this preview has no login service. Preserve provenance and actual activity statuses without adding endpoints or treating examples as live results.
+
+## My Work
+
+Open [My Work](http://127.0.0.1:8772/#work) after `npm start`. It remains the task/project management page alongside the new My Feed home. This extension uses the existing shell, themes and controls for a project-filtered activity list with search, type filters, activity details, project assignment and dismissible attention items. New work links to the existing Ask, Studio, Radar and Domain Expert flows. See [my-work-contract.md](my-work-contract.md) for behavior and recorded review scope.
+
+Projects, assignments, dismissed attention and example visibility persist in this browser under `growthiq-my-work-v1`. The list reads existing local Radar records, expert requests and saved questions; questions remain drafts. Six labeled examples illustrate activity states and can be hidden. They do not represent live jobs, sent requests or scheduled email delivery. Storage failures leave changes in memory with a warning.
+
+Mainline integration must use authenticated project/activity services and the existing router, permissions and API contracts. Configure the production post-login destination there: this prototype has no authentication flow. Task-specific navigation, automatic project assignment when starting work, cross-device persistence, authoritative date sorting, live status updates and retries need confirmed mainline support. Opening Ask does not automatically restore a saved question.
+
 ## Townhall keynote
 
-Open [Signal to question](http://127.0.0.1:8772/#keynote) after `npm start`. This short product proof demonstrates a captured Sika/Akkim signal → its significance for H.B. Fuller → an editable Ask GrowthIQ question. It uses the existing briefing and Ask screens, with presenter-controlled focus, scrolling and transitions. Allow about 40–60 seconds; there is no timed playback. This is the opening proof, not the complete planned 90–120-second demo.
+Open [From a signal to a decision](http://127.0.0.1:8772/#keynote) after `npm start`. This desktop product film plays once for 22 seconds: the camera approaches Your Briefing, a captured Sika/Akkim signal lifts out of the interface, its significance for H.B. Fuller comes forward, and the camera travels to Ask GrowthIQ. It is a short cinematic proof with captured product screens and crisp foreground text.
 
-Use **Right/Left** or **Page Down/Page Up** to move between the three beats, or select a beat directly. **M** pauses motion; **N** opens on-screen rehearsal notes. Fullscreen and exit are in the presenter bar. Continue in Ask GrowthIQ carries the edited question, signal summary and business relevance into the standard workspace. Keyboard shortcuts leave typing and open dialogs alone.
+Use **Space** to play/pause outside controls, **Right/Left** or **Page Down/Page Up** to select shots, **Home/R** to rewind, and **End** for the final composition. The transport also provides play/pause, previous/next, a scrubber and fullscreen. Reduced motion uses manually selected still compositions. **Continue in the product** opens the actual editable Ask workspace with the prepared question, signal summary and business relevance.
 
-The source is an existing captured product record, not independently verified current news. Its original article URL was not captured. The proof ends at the question; no AI answer, report or commercial outcome is invented. Existing local preview actions remain functional. The [GrowthIQ Live tour](http://127.0.0.1:8772/#demo) remains separate.
+The photographed interfaces are representations within the film. The final handoff returns to working product controls. The source is an existing captured record, not independently verified current news; its original article URL was not captured. No AI answer, report or commercial outcome is invented. The [GrowthIQ Live tour](http://127.0.0.1:8772/#demo) remains separate.
 
-Implementation: `keynote.jsx` controls, `keynote.css` scoped presentation layout, and the keynote helpers in `app.js` reuse the native product renderers. [keynote-contract.md](keynote-contract.md) records scope and rehearsal cues. No new dependencies or runtime raster assets. The older `keynote-scene.jsx` and `keynote-story.js` are unused by the replacement bundle. Run `npm run build`, `npm run check`, and `node verification/check.cjs`; set `WRITE_REVIEW_SNAPSHOTS=1` only to intentionally regenerate mock-DOM snapshots. Browser checks do not establish actual projector legibility or venue performance.
+Implementation: `keynote.jsx` controls and foreground choreography; `keynote-film.jsx` React Three Fiber camera and screen planes; `keynote.css` desktop stage; `app.js` real product handoff. `assets/keynote/` contains locally captured product screenshots with embedded provenance. [keynote-contract.md](keynote-contract.md) records scope and timing. No dependencies were added. The older `keynote-scene.jsx` and `keynote-story.js` are unused. Run `npm run build`, `npm run check`, and `node verification/check.cjs`; set `WRITE_REVIEW_SNAPSHOTS=1` only to intentionally regenerate mock-DOM snapshots. Desktop browser validation does not establish projector legibility or venue GPU performance.
 
 ## Purpose of this handoff
 
@@ -122,6 +138,8 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 | [growthiq-live-contract.md](growthiq-live-contract.md) | Full-app demo chapters, presenter controls and workflow handoffs. |
 | [domain-expert-contract.md](domain-expert-contract.md), [domain-expert.js](domain-expert.js), [domain-expert.css](domain-expert.css) | Ask Domain Expert form, browser-only request history and future service integration boundaries. |
 | [tracker-contract.md](tracker-contract.md), [tracker.js](tracker.js), [tracker.css](tracker.css) | Radar: company, topic and event tracker setup, browser-only records, source-backed archive email previews and future scheduling integration boundaries. |
+| [my-feed-contract.md](my-feed-contract.md), [my-feed.js](my-feed.js), [my-feed.css](my-feed.css) | My Feed: default home, filtered captured content, local bookmarks, Ask question handoff and My Work shortcuts. Routing and question handoff live in `app.js`; runtime inclusion lives in `index.html` and `build-site.cjs`. |
+| [my-work-contract.md](my-work-contract.md), [my-work.js](my-work.js), [my-work.css](my-work.css) | My Work: project/activity list, local persistence and labeled fixtures. Routing/navigation lives in `app.js`; runtime inclusion lives in `index.html` and `build-site.cjs`. |
 | [index.html](index.html) | Entry point, font loading and stylesheet/script order. |
 | [app.js](app.js) | Main shell, hash routes, screens, event handling, local state and React mount/handoff integration. |
 | [data.js](data.js) | Captured reference records; replace with existing mainline data access when integrating. |
@@ -137,7 +155,7 @@ The mainline repository owns runtime behavior and service contracts; the selecte
 
 The main prototype is vanilla HTML/CSS/JavaScript. React is mounted for the newer Studio variants, full-app demo and standalone Ask results preview; this is not a single React application. Edit the `.jsx` sources, not generated files in `assets/studio/` or `dist/`.
 
-The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css` → `domain-expert.css` → `tracker.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
+The CSS cascade is intentional: `styles.css` → `themes.css` → `refinements.css` → `studio-next.css` → `studio-variants.css` → `growthiq-demo.css` → `domain-expert.css` → `tracker.css` → `my-work.css` → `my-feed.css`. When migrating, consolidate these into the mainline styling system while preserving the final computed appearance; copying only the base stylesheet will miss later refinements.
 
 ## Integrating into the mainline repository
 

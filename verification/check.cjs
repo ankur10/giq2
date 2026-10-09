@@ -7,6 +7,8 @@ vm.runInContext(fs.readFileSync(root+'/studio-data.js','utf8'),ctx);
 vm.runInContext(fs.readFileSync(root+'/theme.js','utf8'),ctx);
 vm.runInContext(fs.readFileSync(root+'/domain-expert.js','utf8'),ctx);
 vm.runInContext(fs.readFileSync(root+'/tracker.js','utf8'),ctx);
+vm.runInContext(fs.readFileSync(root+'/my-work.js','utf8'),ctx);
+vm.runInContext(fs.readFileSync(root+'/my-feed.js','utf8'),ctx);
 let code=fs.readFileSync(root+'/app.js','utf8');code=code.replace('  route();\n  window.GROWTHIQ_PREVIEW','  window.__check={state,routeInfo,view,shell,home,marketView,competitors,benchmarking,signals,ask,route,studio,studioWorkspace,studioDraft,studioTask,openStudioTask,reviewStudioBrief,persistStudioDraft,commandResults,studioNext,studioNextState,S};\n  route();\n  window.GROWTHIQ_PREVIEW');vm.runInContext(code,ctx);const t=ctx.window.__check;
 const results=[];const test=(name,fn)=>{fn();results.push({name,status:'passed'})};
 fs.mkdirSync(root+'/verification',{recursive:true});

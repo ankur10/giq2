@@ -38,6 +38,8 @@
   };
   const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.document}</svg>`;
   const routeInfo = {
+    feed:['My Feed','My Feed','A fresh perspective. A useful next step.'],
+    work:['My Work','My Work','A home for your questions, research and next steps.'],
     keynote:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
     demo:['GrowthIQ Live','GrowthIQ Live','A guided journey through the full product.'],
     home:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
@@ -68,7 +70,7 @@
     support:['Support','How can we help?','Manage your requests and get the support you need.'],
     ticket:['Support','Raise a support ticket','Tell us what happened. We’ll help you take the next step.']
   };
-  const nav = [['Your Briefing','home','home'],['Intelligence Studio','studio','document'],['Ask GrowthIQ','ask','ask'],['Ask Domain Expert','domain-expert','customers'],['Radar','radar','signals'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['Keynote','keynote','spark'],['GrowthIQ Live','demo','globe'],['Support','support','support']];
+  const nav = [['My Feed','feed','home'],['My Work','work','grid'],['Your Briefing','home','home'],['Intelligence Studio','studio','document'],['Ask GrowthIQ','ask','ask'],['Ask Domain Expert','domain-expert','customers'],['Radar','radar','signals'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['Keynote','keynote','spark'],['GrowthIQ Live','demo','globe'],['Support','support','support']];
   const marketRows = [
     ['Antimicrobial Coatings Market',10.8,7],['Automotive Conformal Coatings Market',10,3.5],['Bioadhesives Market',8.6,14.6],['Bonding Films Market',8.2,.985]
   ];
@@ -115,7 +117,7 @@
   function shell(){
     const info=routeInfo[state.route];
     document.title=`GrowthIQ · ${info[1]}`;
-    return `<div class="shell" data-route="${state.route}"><button class="navigation-scrim" data-action="nav" aria-label="Close navigation"></button><aside class="sidebar" aria-label="Workspace navigation"><a href="#home" class="brand"><span class="brand-mark">${icon('g')}</span><span>Growth<span class="word-iq">IQ</span></span></a><button class="workspace-button" data-action="workspace"><span class="company-mark">HF</span><span class="workspace-name">H.B. Fuller<small>Your workspace</small></span>${icon('down')}</button><p class="nav-label">Intelligence</p><nav class="nav" aria-label="Main navigation">${nav.map(([label,r,ic])=>`${r==='markets'?'<p class="nav-label">Explore</p>':r==='support'?'<p class="nav-label">Help</p>':''}<a href="#${r}" ${info[0]===label?'class="active" aria-current="page"':''}>${icon(ic)}<span>${label}</span>${r==='customers'?'<span class="badge">Beta</span>':''}</a>${r==='studio'&&info[0]==='Intelligence Studio'?studioVersionNav():''}`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-note"><span class="dot"></span> H.B. Fuller intelligence</div><button class="profile" data-action="profile" style="width:100%;text-align:left"><span class="avatar">AJ</span><span><strong>Ankur</strong><small>H.B. Fuller</small></span>${icon('down')}</button></div></aside><div class="workspace"><div class="topbar"><button class="icon-button mobile-trigger" data-action="nav" aria-label="Open navigation" aria-expanded="false">${icon('menu')}</button><div class="breadcrumbs"><span class="root-crumb">H.B. Fuller</span><span class="root-separator">${icon('chevron')}</span><strong>${e(info[0])}</strong>${info[0]==='Competitors'&&state.route==='benchmark'?icon('chevron')+'<span>Benchmarking</span>':''}</div><div class="top-tools">${fullDemoSession.visited?'<a class="demo-return" href="#demo">Return to demo</a>':''}<label class="theme-control"><span class="theme-swatch" aria-hidden="true"></span><span class="sr-only">Colour theme</span><select data-theme-select aria-label="Colour theme">${window.GROWTHIQ_THEMES.choices.map(t=>`<option value="${t.id}" ${window.GROWTHIQ_THEMES.current()===t.id?'selected':''}>${t.name}</option>`).join('')}</select></label><button class="header-toggle" type="button" data-header-toggle aria-label="Dark header" aria-pressed="${window.GROWTHIQ_THEMES.header()==='dark'}" title="Toggle dark header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M5 6h14v1H5z" fill="currentColor" stroke="none"/></svg><span>Dark header</span></button><button class="command-trigger" data-action="command" aria-label="Search GrowthIQ">${icon('search')}<span>Search GrowthIQ</span><kbd>⌘ K</kbd></button><a class="icon-button help-trigger" href="#support" aria-label="Help and support">${icon('support')}</a></div></div><main id="main" class="main" tabindex="-1">${header()}<div id="view">${view()}</div></main><footer class="footer"><div><a href="#support">Help & support</a><a href="https://growthiq-stage.mnmgs.com/pages/privacy_policy" target="_blank" rel="noreferrer">Privacy</a><a href="https://growthiq-stage.mnmgs.com/pages/terms_of_use" target="_blank" rel="noreferrer">Terms</a></div><button class="preview-label" data-action="about">${icon('info')}Design preview</button></footer></div></div>`;
+    return `<div class="shell" data-route="${state.route}"><button class="navigation-scrim" data-action="nav" aria-label="Close navigation"></button><aside class="sidebar" aria-label="Workspace navigation"><a href="#feed" class="brand"><span class="brand-mark">${icon('g')}</span><span>Growth<span class="word-iq">IQ</span></span></a><button class="workspace-button" data-action="workspace"><span class="company-mark">HF</span><span class="workspace-name">H.B. Fuller<small>Your workspace</small></span>${icon('down')}</button><p class="nav-label">Intelligence</p><nav class="nav" aria-label="Main navigation">${nav.map(([label,r,ic])=>`${r==='markets'?'<p class="nav-label">Explore</p>':r==='support'?'<p class="nav-label">Help</p>':''}<a href="#${r}" ${info[0]===label?'class="active" aria-current="page"':''}>${icon(ic)}<span>${label}</span>${r==='customers'?'<span class="badge">Beta</span>':''}</a>${r==='studio'&&info[0]==='Intelligence Studio'?studioVersionNav():''}`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-note"><span class="dot"></span> H.B. Fuller intelligence</div><button class="profile" data-action="profile" style="width:100%;text-align:left"><span class="avatar">AJ</span><span><strong>Ankur</strong><small>H.B. Fuller</small></span>${icon('down')}</button></div></aside><div class="workspace"><div class="topbar"><button class="icon-button mobile-trigger" data-action="nav" aria-label="Open navigation" aria-expanded="false">${icon('menu')}</button><div class="breadcrumbs"><span class="root-crumb">H.B. Fuller</span><span class="root-separator">${icon('chevron')}</span><strong>${e(info[0])}</strong>${info[0]==='Competitors'&&state.route==='benchmark'?icon('chevron')+'<span>Benchmarking</span>':''}</div><div class="top-tools">${fullDemoSession.visited?'<a class="demo-return" href="#demo">Return to demo</a>':''}<label class="theme-control"><span class="theme-swatch" aria-hidden="true"></span><span class="sr-only">Colour theme</span><select data-theme-select aria-label="Colour theme">${window.GROWTHIQ_THEMES.choices.map(t=>`<option value="${t.id}" ${window.GROWTHIQ_THEMES.current()===t.id?'selected':''}>${t.name}</option>`).join('')}</select></label><button class="header-toggle" type="button" data-header-toggle aria-label="Dark header" aria-pressed="${window.GROWTHIQ_THEMES.header()==='dark'}" title="Toggle dark header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M5 6h14v1H5z" fill="currentColor" stroke="none"/></svg><span>Dark header</span></button><button class="command-trigger" data-action="command" aria-label="Search GrowthIQ">${icon('search')}<span>Search GrowthIQ</span><kbd>⌘ K</kbd></button><a class="icon-button help-trigger" href="#support" aria-label="Help and support">${icon('support')}</a></div></div><main id="main" class="main" tabindex="-1">${header()}<div id="view">${view()}</div></main><footer class="footer"><div><a href="#support">Help & support</a><a href="https://growthiq-stage.mnmgs.com/pages/privacy_policy" target="_blank" rel="noreferrer">Privacy</a><a href="https://growthiq-stage.mnmgs.com/pages/terms_of_use" target="_blank" rel="noreferrer">Terms</a></div><button class="preview-label" data-action="about">${icon('info')}Design preview</button></footer></div></div>`;
   }
   function home(){
     const shown=D.signals.map((r,id)=>({...r,id})).filter(r=>(state.category==='all'||state.category===r.category)&&(state.briefFilter!=='unread'||!state.read.includes(r.id))&&(state.briefFilter!=='saved'||state.pinned.includes(r.id)));
@@ -167,49 +169,14 @@
     return `<div class="toolbar"><div class="tool-group">${search('Search live signals')}<label><span class="sr-only">News type</span><select class="select" data-news-filter="newsType">${['All types','Contract','Mergers & Acquisitions','Joint Ventures Collaborations Partnerships'].map(t=>`<option ${state.newsType===t?'selected':''}>${t}</option>`).join('')}</select></label><label><span class="sr-only">Region</span><select class="select" data-news-filter="newsRegion">${['All regions','Asia-Pacific','Europe','Middle East & Africa'].map(t=>`<option ${state.newsRegion===t?'selected':''}>${t}</option>`).join('')}</select></label></div><span class="meta">${rows.length} signals</span></div><div class="reading-workspace live-workspace"><section class="signal-index" aria-label="Live signal results">${rows.map(r=>`<button class="signal-choice ${r.id===state.activeNews?'selected':''}" data-select-news="${r.id}" aria-pressed="${r.id===state.activeNews}"><span class="meta">30 Sep 2026<span class="rating">Rating ${r.rating}/5</span></span><strong>${e(r.title)}</strong><span class="signal-choice-foot">${e(r.summary)} ${icon('arrow')}</span></button>`).join('')}${!rows.length?noMatches():''}</section><article class="signal-reader" aria-label="Selected live signal">${current?`<div class="reader-top"><span class="meta">30 September 2026</span>${tag('Rating '+current.rating+'/5')}</div><h2>${e(current.title)}</h2><section class="reader-context"><h3>Companies involved</h3><p>${e(current.summary)}</p></section><section class="reader-context"><h3>Signal context</h3><p>${e(current.meta)}</p></section><details class="evidence-disclosure"><summary>Source availability ${icon('down')}</summary><p>The original article URL and full text were not captured. The title, company context and rating above reproduce the available GrowthIQ record.</p></details><div class="reader-actions"><button class="btn primary" data-studio-task="signal-analysis" data-studio-news="${current.id}">Analyze this signal ${icon('arrow')}</button><button class="btn quiet" data-research-news="${current.id}">Ask GrowthIQ</button><button class="btn" data-feedback="like" data-id="${current.id}" aria-pressed="${state.feedback[current.id]==='like'}">${icon('like')}${state.feedback[current.id]==='like'?'Useful':'Mark useful'}</button></div><div class="reader-bottom"><span>Signal ${rows.indexOf(current)+1} of ${rows.length}</span><button class="row-action" data-next-news>Next signal ${icon('arrow')}</button></div>`:'<div class="reading-empty"><h2>Focus your feed.</h2><p>Change your search or filters to explore available signals.</p></div>'}</article></div>`;
   }
 
-  const keynoteSession={step:0};
-  function keynoteQuestion(){
-    const signal=D.signals[state.activeSignal];
-    return state.activeSignal===2
-      ? 'How should H.B. Fuller respond to Sika’s acquisition of Akkim? Identify the markets and customer segments to investigate, and the evidence we need before choosing a response.'
-      : 'What should H.B. Fuller investigate in response to this development? '+signal.title;
-  }
-  function keynoteProduct(step){
-    if(step<2)return home();
-    if(keynoteSession.questionSignal!==state.activeSignal){keynoteSession.question=keynoteQuestion();keynoteSession.questionSignal=state.activeSignal}
-    state.question=keynoteSession.question;
-    const signal=D.signals[state.activeSignal];
-    return `<div class="kp-carried-context"><span>${icon('signals')}From your briefing</span><strong>${e(signal.title)}</strong><details><summary>View carried context</summary><p>${e(signal.summary)}</p><p>${e(signal.relevance)}</p><p>Captured GrowthIQ record. The original article URL was not available.</p></details></div>`+ask();
-  }
-  function keynoteView(){
-    if(!keynoteSession.started){state.activeSignal=2;state.category='all';state.briefFilter='all';keynoteSession.started=true}
-    return `<section id="keynote-root" aria-label="Product keynote proof"><div id="keynote-product">${keynoteProduct(keynoteSession.step)}</div><div id="keynote-controls"></div></section>`;
-  }
-  function showKeynoteStep(step){
-    const shell=document.querySelector('.shell');
-    const oldStep=Number(shell.dataset.keynoteStep??-1);
-    if((oldStep===2)!==(step===2)){
-      if(oldStep===2)keynoteSession.question=document.getElementById('research-query')?.value||'';
-      document.getElementById('keynote-product').innerHTML=keynoteProduct(step);
-    }
-    shell.dataset.keynoteStep=String(step);
-    if(step===0){const index=document.querySelector('.signal-index');const selected=index?.querySelector('.selected');if(selected)index.prepend(selected)}
-    const info=routeInfo[step===2?'ask':'home'];
-    const pageHeader=document.querySelector('.page-header');
-    pageHeader.querySelector('h1').textContent=info[1];
-    pageHeader.querySelector('p').textContent=info[2];
-    document.querySelector('.breadcrumbs strong').textContent=info[0];
-    document.querySelectorAll('.nav>a').forEach(a=>{const active=a.getAttribute('href')===(step===2?'#ask':'#home');a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-    document.title='GrowthIQ · Signal to question';
-    return document.querySelector(step===2?'.composer':step===1?'.reader-context':'.signal-reader');
-  }
+  function keynoteView(){return '<section id="keynote-root" aria-label="Cinematic GrowthIQ keynote"></section>'}
   async function mountKeynote(){
-    const target=document.getElementById('keynote-controls');if(!target?.isConnected)return;
+    const target=document.getElementById('keynote-root');if(!target?.isConnected)return;
     const ticket=++spatialMountTicket;
     try{const module=await import('./assets/studio/keynote.js');if(ticket!==spatialMountTicket||!target.isConnected)return;
-      spatialUnmount=module.mount(target,{session:keynoteSession,onStep:showKeynoteStep,
-        onContinue(){keynoteSession.question=document.getElementById('research-query')?.value||keynoteSession.question;const r=D.signals[state.activeSignal];state.question=keynoteSession.question+'\n\nContext from Your Briefing: '+r.title+'\n'+r.summary+'\n\nRelevance to H.B. Fuller: '+r.relevance;location.hash='#ask'}});
-    }catch{if(ticket===spatialMountTicket&&target.isConnected)target.innerHTML='<p>The presenter controls could not load. <a href="#home">Continue in your briefing</a>.</p>';}
+      document.title='GrowthIQ · Product film';
+      spatialUnmount=module.mount(target,{signal:D.signals[2],onContinue(question){const r=D.signals[2];state.question=question+'\n\nContext from Your Briefing: '+r.title+'\n'+r.summary+'\n\nRelevance to H.B. Fuller: '+r.relevance;location.hash='#ask'}});
+    }catch{if(ticket===spatialMountTicket&&target.isConnected)target.innerHTML='<div class="kf-fallback"><div><h2>The product film could not load</h2><a href="#home">Open your briefing</a></div></div>';}
   }
   const fullDemoSession={};
   function fullDemoView(){return '<section id="studio-spatial-root" aria-label="GrowthIQ Live"><div class="spatial-loading"><h2>Opening GrowthIQ Live…</h2><p>Preparing the full-product presentation.</p><a href="#home">Open your briefing</a></div></section>'}
@@ -312,7 +279,7 @@
     const field=(name,label,type='text',required=false,placeholder='')=>`<div class="field"><label for="ticket-${name}">${label}${required?'<span class="required">Required</span>':''}</label><input id="ticket-${name}" name="${name}" type="${type}" value="${e(draft[name]||'')}" ${required?'required':''} placeholder="${e(placeholder)}"><p class="field-error" id="error-${name}" hidden></p></div>`;
     return `<div class="ticket-layout"><form id="ticket-form" class="ticket-form" novalidate><div class="form-section-head"><h2>Ticket details</h2>${btn('Save draft & minimize','save-draft','document','quiet')}</div>${field('subject','Subject','text',true,'Briefly describe the issue')}<div class="field-grid"><div class="field"><label for="ticket-category">Category</label><select id="ticket-category" name="category"><option>General Query</option></select></div><div class="field"><label for="ticket-priority">Priority</label><select id="ticket-priority" name="priority"><option>Medium</option></select></div>${field('email','Email','email')}${field('name','Name')}</div><div class="field"><label for="ticket-description">Description <span class="required">Required</span></label><textarea id="ticket-description" name="description" required placeholder="What happened, and what did you expect?">${e(draft.description||'')}</textarea><p class="field-error" id="error-description" hidden></p></div><div class="field"><label for="ticket-attachments">Attachments</label><div class="attachment-area">${icon('attachment')}<span>Choose files to add more context</span><input id="ticket-attachments" name="attachments" type="file" multiple></div><div id="ticket-files" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div></div><div class="form-actions">${link('Cancel','support','','quiet')}<button class="btn primary" type="submit">Submit ticket ${icon('arrow')}</button></div><div id="ticket-result"></div></form><aside class="form-help"><h3>A little detail goes a long way</h3><p>A clear subject and a description of what happened help us understand your request.</p><p>Include screenshots or relevant documents if they help explain the issue.</p><div class="info-line">${icon('info')}Your existing support category and priority are retained.</div></aside></div>`;
   }
-  function view(){return ({radar:()=>window.GROWTHIQ_TRACKER.view(),'domain-expert':()=>window.GROWTHIQ_EXPERT.view(),keynote:keynoteView,demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers,signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route]()}
+  function view(){return ({feed:()=>window.GROWTHIQ_FEED.view(),work:()=>window.GROWTHIQ_WORK.view(),radar:()=>window.GROWTHIQ_TRACKER.view(),'domain-expert':()=>window.GROWTHIQ_EXPERT.view(),keynote:keynoteView,demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers,signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route]()}
   function render(){unmountSpatial();document.getElementById('app').innerHTML=shell();syncNavigation();mountSpatial()}
   function renderView(){
     const focused=document.activeElement;
@@ -418,7 +385,7 @@
     if(el.id==='next-search'){const position=el.selectionStart;studioNextState.query=el.value;renderView();const field=document.getElementById('next-search');field.focus();try{field.setSelectionRange(position,position)}catch{}return}
     if(el.hasAttribute('data-search')){const position=el.selectionStart;state.query=el.value;renderView();const next=document.querySelector('[data-search]');next.focus();try{next.setSelectionRange(position,position)}catch{}return}
     if(el.id==='studio-subject'||el.id==='studio-context'){studioDraft()[el.id==='studio-subject'?'subject':'context']=el.value;if(isNextStudio()&&el.id==='studio-subject')studioNextState.subject=el.value;if(isSpatialStudio()){const session=spatialSessions[studioBase()]||(spatialSessions[studioBase()]={});session[el.id==='studio-subject'?'subject':'context']=el.value}return}
-    if(el.id==='research-query'){state.question=el.value;if(state.route==='keynote')keynoteSession.question=el.value;document.getElementById('ask-send').disabled=!el.value.trim()}
+    if(el.id==='research-query'){state.question=el.value;document.getElementById('ask-send').disabled=!el.value.trim()}
     if(el.id==='global-search')commandResults(el.value);
   });
   document.addEventListener('change',event=>{
@@ -457,7 +424,7 @@
   for(const id of ['detail-dialog','command-dialog']){const dialog=document.getElementById(id);dialog.addEventListener('close',()=>{if(opener?.isConnected)opener.focus();else if(opener?.dataset.openSignal!==undefined)document.querySelector('[data-open-signal="'+opener.dataset.openSignal+'"]')?.focus()});dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}})}
   function route(){
     if(location.hash==='#tracker')history.replaceState(null,'','#radar');
-    const requested=location.hash.slice(1)||'home';
+    const requested=location.hash.slice(1)||'feed';
     state.savedViews[state.route]={query:state.query,scroll:window.scrollY};
     const parts=requested.split('/');
     if(parts.length>1&&studioVariants.some(v=>v[0]===parts[0])){
@@ -470,6 +437,7 @@
     render();window.scrollTo(0,state.savedViews[state.route]?.scroll||0);
     if(state.route.endsWith('-workspace'))document.getElementById('studio-task-title')?.focus();
   }
+  document.addEventListener('growthiq-prepare-question',event=>{if(typeof event.detail==='string'){state.question=event.detail;location.hash='ask'}});
   window.addEventListener('hashchange',route);
   route();
   window.GROWTHIQ_PREVIEW={routes:Object.keys(routeInfo)};

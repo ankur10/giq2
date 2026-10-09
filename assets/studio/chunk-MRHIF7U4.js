@@ -1,0 +1,1 @@
+function o(n){let e=new WeakMap,t=()=>new Promise(requestAnimationFrame);window.seekTo=async i=>{n(i),await t(),await t(),await t();for(let a of document.getAnimations())e.has(a)||(e.set(a,i),a.pause()),a.currentTime=Math.max(0,(i-e.get(a))*1e3);await t()}}export{o as a};

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-08",
+  "scope": "22-second desktop cinematic proof; no mobile work",
+  "commands": {
+    "npm run build": "passed",
+    "npm run check": "passed",
+    "node verification/check.cjs": "87 checks passed; mock-DOM checks, not browser tests"
+  },
+  "browser": {
+    "viewports": [
+      "1280x720",
+      "1440x900",
+      "1920x1080"
+    ],
+    "playback": "Autoplay once, stopped at22; play/pause and seek exercised",
+    "shots": "Four compositions and intermediate moving frames visually inspected",
+    "handoff": "Continue in the product opens #ask with prepared question, title, summary and relevance; textbox value verified",
+    "fullscreen": "Fullscreen control toggled to Exit fullscreen and back; physical venue display untested",
+    "errors": "No browser console errors observed"
+  },
+  "recording": {
+    "file": "preview.mp4",
+    "method": "276 browser screenshot samples over 22.586 seconds, encoded to30fps with duplicated samples and final hold; not a performance benchmark"
+  },
+  "limitations": [
+    "Actual projector, venue GPU and clicker untested",
+    "OS reduced motion and renderer failure source-reviewed, not forced in browser",
+    "Captured record is not independently verified current news; no research generation is connected"
+  ],
+  "detector": {
+    "report": "/private/tmp/keynote-film-detector.json",
+    "runs": 1,
+    "advisories": "Product-stage colors and enlarged typography scoped intentionally"
+  }
+}

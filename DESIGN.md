@@ -429,54 +429,53 @@ production-integration verification.
 - Do not apply Precision typography or control refinements to Advisory or Mineral; preserve layout breakpoints, data and workflows across all three options.
 - Do not describe mock-DOM checks as browser tests or claim visual approval without screenshots.
 
-## Product Keynote Proof (`#keynote`)
+## Cinematic Product Keynote (`#keynote`)
 
 ### Overview
 
-This scoped presentation layer uses the established GrowthIQ shell, briefing reader and Ask composer. It is an ordinary extension of the existing product world. The former nine-scene movie adaptation is replaced by a presenter-controlled signal → significance → question flow. `keynote.css`, `keynote.jsx` and the keynote helpers in `app.js` implement it; `keynote-contract.md` records its scope. The implementation reuses `home()` and `ask()` rather than drawing substitute product screens. No new generated or raster assets are introduced.
+This desktop film replaces the guided walkthrough with a single cinematic composition that unfolds over 22 seconds. Its visual principle is to pull meaning out of the product interface and physically carry it toward the next action. Actual GrowthIQ screen captures occupy a three-dimensional stage; crisp HTML signal, implication and question surfaces lift forward while the camera moves between Your Briefing and Ask GrowthIQ. `keynote.jsx`, `keynote-film.jsx` and `keynote.css` define this scoped presentation world; `app.js` provides the product handoff. Global design rules and tokens above remain unchanged.
 
 ### Colors
 
-Every surface, foreground, border, selection and action inherits the existing semantic theme roles. Advisory, Precision and Mineral remain available, along with the independent header contrast setting. The focused relevance panel uses accent-light, selected-border, ink and accent; the carried-context panel and presenter transport use surface and line. There is no keynote palette or replacement set of global tokens.
+The film locks its stage to Advisory-derived navy (#051c2c), with pale foreground text (#f7f8f9), white reading surfaces, a pale blue signal surface (#dee8f4) and blue contextual accents (#164caa). Fine borders (#d9dfe3) retain the photographed product's compact reading surfaces. Supporting labels use muted blue-gray; keyboard focus uses pale blue (#b9d6ff). These are film-local values, independent of the saved Precision, Advisory or Mineral selection and header contrast preference. The two screen textures were captured in Advisory.
 
 ### Typography
 
-Existing local fonts and theme-specific font assignments remain in force. The following source sizes are scoped presentation adjustments, not additions to the global type ramp:
+The existing local Source Serif 4 and Source Sans 3 families retain the product's editorial character. These base sizes belong to the film composition and are scaled together to fit the stage; they do not extend the global type ramp:
 
-- The signal heading uses (clamp(28px, 2.4vw, 40px)); the normal summary and context copy use (18px/1.65), and the context heading uses (21px).
-- The significance view reduces the signal heading to (clamp(26px, 2.1vw, 34px)) with a (40ch) limit and the summary to (16px). Its focal relevance copy grows to (clamp(19px, 1.7vw, 25px)/1.55).
-- The editable question uses (clamp(20px, 1.8vw, 28px)/1.5). Carried-context titles use (17px/600), with disclosure copy at (14px).
-- The presenter cue uses the existing serif variable at (23px/1.25), dropping to (20px) through (1100px) and (21px) through (767px). Step labels use sans serif at (13px), or (12px) on mobile.
-- Through (767px), the initial signal heading is (27px), while the significance heading retains its scoped clamp. Normal reading copy is (17px), focal relevance is (19px), and question text is (20px).
+- The lifted signal title uses serif (42px/1.14, weight 400), with a (23ch) limit; summary copy uses sans serif (20px/1.5).
+- The implication heading uses sans serif (23px/1.3, weight 600), and its one-sentence body uses (31px/1.45, weight 400).
+- The prepared question uses serif (44px/1.3, weight 400), with a (32ch) limit.
+- The edge caption uses serif (clamp(23px, 2vw, 34px)/1.2); metadata and film controls use sans serif, predominantly (12–16px), with provenance at (11px) and tabular playhead numerals.
 
 ### Layout
 
-The actual product viewport scrolls independently of the fixed presenter transport. A ResizeObserver measures the transport, topbar and workspace to reserve their current height and align the transport with the workspace; the viewport height is the small viewport height less the measured header and controls. This keeps content reachable when controls wrap or the viewport changes. The route hides the ordinary footer, watch strip and Studio shortcut. The initial desktop signal index is capped at (440px) and scrolls; the selected record is placed first.
+The route fills the viewport (100svh), hides the workspace sidebar, topbar, page header and footer, and suppresses page scrolling. Camera and HTML material layers share an inset stage (52px from the top, 92px from the bottom). A compact brand and exit header sits above it; caption, final action and playback controls occupy the lower edge with horizontal offsets (3vw). There is no large presenter transport or independently scrollable product viewport inside the film.
 
-In the significance view, the briefing filter row and index hide, the reader expands into a centered container with maximum width (1000px), and its relevance receives (24px) padding and a theme-aware boundary. The question view retains the native composer, its controls and a carried-context disclosure above it; introductory and suggested-prompt sections hide. The context panel is at most (860px) wide. Each presenter step resets the product scroll and brings the focal reader, relevance or composer into view; the audience can still scroll the product independently.
-
-The transport uses (19px 36px 12px) padding, with the cue and actions beside one another. Through (1100px), spacing tightens. Through (767px), it spans the viewport, actions stack below the cue and step navigation, the initial index and briefing filters hide, and reader padding becomes (22px 20px). Mobile relevance padding is (18px); the composer minimum height is (250px), compared with (190px) on desktop. Notes have a mobile height limit of (45vh) and their own overflow. At widths from (1500px), main content has a (1500px) maximum width and the transport uses (48px) horizontal padding.
+Lifted surfaces have base widths of (620px) for the signal, (1000px) for the implication and (1080px) for the composer. Their common scale is the smaller of stage width divided by (1440) and stage height divided by (720). Camera distance also adjusts for the available aspect ratio. The source screen textures are (1600×1000) captures mapped onto (16×10) planes. Desktop framing was checked at (1280×720), (1440×900) and (1920×1080). This revision has no mobile-specific layout or mobile QA commitment.
 
 ### Elevation & Depth
 
-Theme-aware reading surfaces and fine borders retain the product's flat treatment. The presenter transport uses a restrained upward shadow (0 -8px 24px rgb(5 28 44 / .05)); on-screen notes use the stronger overlay shadow (0 12px 35px rgb(5 28 44 / .14)). The composer retains its inherited treatment.
+React Three Fiber drives a perspective camera between two screenshot-textured product planes. The canvas renders on demand with capped device pixel ratio (1–1.75). The screen planes have subtle backing geometry; a short curved line connects the briefing and question during travel. Foreground HTML shares the same timeline and receives projected positions, perspective rotation, scale, opacity and selective blur. Lifted surfaces use an ambient shadow (0 35px 100px rgb(0 8 15 / .5), 0 5px 20px rgb(0 8 15 / .24)). This depth vocabulary is confined to the film.
 
-Reader movement lasts (620ms) and the question entrance (480ms), both using cubic-bezier(.16, 1, .3, 1). These short transitions follow manual step changes; nothing advances on a timer. Manual pause and system reduced motion suppress transitions, animations and smooth scrolling. No WebGL scene or simple-graphics mode belongs to this replacement proof.
+The signal begins lifting at (3.6s), the implication comes forward at (10s), travel toward Ask begins at (15s), and the question arrives at (19s). The sequence stops at (22s), when the continuation action becomes visible and interactive. Camera interpolation uses smoothstep; foreground entrances use quartic ease-out. Playback may be paused or scrubbed. Reduced motion uses still compositions selected manually, with autoplay suppressed; that behavior is source-reviewed, not OS-tested.
 
 ### Shapes
 
-Shared button, field and surface shapes remain in force. The relevance panel, carried context and notes use the existing radius variable. Small circular step markers identify sequence position; they are navigation indicators, not a new diagram or container language.
+Product-derived surfaces and actions retain compact corners (3px), thin boundaries and rectangular reading areas. The playhead has a small circular thumb (9px). Screen planes, foreground reading surfaces and the linking path provide the scene geometry; no decorative market network or persistent card grid is introduced.
 
 ### Components
 
-The presenter transport combines a brief spoken cue, three directly selectable steps, a previous control and the next meaningful action. Primary actions retain primary/on-primary styling and a minimum height of (48px). The active step exposes aria-current; notes expose expanded state and motion pause exposes pressed state. Shared focus styling remains in force. Step changes move focus to the spoken cue without disturbing the product scroll position.
+The stage has four compositions: product approach, lifted signal, business implication and prepared question. Foreground product representations are non-interactive and hidden from assistive technology; a polite live region supplies the active caption and focal text. The footer identifies the captured product and prepared question. The visible controls operate the film until “Continue in the product” becomes available at (22s); that action opens the actual Ask route with full original context. PRODUCT.md records the content and service boundaries.
 
-The initial signal reader preserves its source-availability disclosure and product actions. The significance view emphasizes the same relevance block. The question view displays the selected signal with an expandable context disclosure above the editable native composer. The final action hands the edited question and selected record context to the standard Ask route; it does not reveal a prepared or generated answer. PRODUCT.md defines the captured-data and service boundaries.
+Playback provides Play/Pause, previous/next shot and a range playhead, plus fullscreen and Exit film. Controls and links have a visible focus outline (2px) with offset (4px). Shot stops are (0s), (7.8s), (13.5s) and (22s); reduced-motion entry starts with the settled opening view at (3s). A renderer failure displays a captured briefing and a contextual product handoff. A keynote module load failure links to Your Briefing.
 
 ### Do's and Don'ts
 
-**The Product Continuity Rule.** Keep keynote changes scoped to the presenter layer and its focused product views; retain the shared themes, fonts, component behavior and existing product tour.
+**The Product Material Rule.** Use actual product captures and recognizable product typography as the cinematic material; keep the stage palette and depth treatment scoped to this route.
 
-**The Visible Context Rule.** Keep captured-source availability and carried context accessible alongside the question. Presentation emphasis must not imply newly verified news or completed research.
+**The Meaning in Motion Rule.** Use camera travel and layered emphasis to connect signal, implication and question on one timeline. Keep focal copy short enough for its reading window while preserving full original context in the product handoff.
 
-Do retain manual progression, working product controls, independent scrolling, visible focus and reduced-motion support. Do not restore the rejected movie palette, fictional story, cinematic slide layout or decorative 3D scene. Source and screenshot review for this extension do not replace the historical global verification notes above.
+**The Honest Handoff Rule.** Identify captured material and the prepared question. Keep pictured product controls inert, then return to the working product for editing and normal actions; never imply a generated answer.
+
+Do preserve pause, scrubbing, shot navigation, visible focus and reduced-motion stills. Do retain the existing workspace, global themes and tour outside the film. Do not restore manual walkthrough pages, invent research outcomes or extend this revision into mobile work. Desktop captures and review evidence live in `.impeccable/review/keynote-film`; actual projector, GPU and clicker hardware remain untested. These scoped checks do not replace the historical global verification notes above.
