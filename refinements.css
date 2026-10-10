@@ -188,3 +188,11 @@ a, summary { text-underline-offset: .2em; }
 
 /* Keep shared navigation visible outside the dedicated results workspace. */
 .shell .topbar { position: sticky; top: 0; z-index: 18; }
+
+/* Connected Markets uses the full workspace for legible chart labels. */
+.shell[data-route="connected-markets"] .main { max-width: none; width: 100%; padding-inline: clamp(18px, 2vw, 36px); }
+
+/* The market title provides the heading within this chart workspace. */
+.shell[data-route="connected-markets"] .page-header{display:none}
+.shell[data-route="connected-markets"] .main{padding-top:8px;padding-bottom:16px}
+.shell[data-route="connected-markets"] #view>.tabs{margin-bottom:12px}

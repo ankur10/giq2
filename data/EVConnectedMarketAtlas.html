@@ -1,0 +1,740 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>EV Connected Market Atlas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an index rail of views on the left, one chart stage on the right.
+   Navy ink on a cool ground; gold is reserved for the core market. */
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --ink:#0e1a33; --ink2:#44506a; --muted:#626d85;
+  --rule:#d8dde8; --gold:#9a7420; --gold-soft:#f3ead4;
+  --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a;
+  --a0:52%; --a1:34%; --a2:21%; --a3:10%;
+  --display:'Cormorant Garamond','Iowan Old Style',Georgia,serif;
+  --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a1322; --surface:#111c30; --ink:#eef1f7; --ink2:#c0c8d8; --muted:#8f9bb3;
+    --rule:#26344f; --gold:#d6b05a; --gold-soft:#2b2617;
+    --c1:#3987e5; --c2:#d95926; --c3:#199e70; --a0:62%; --a1:44%; --a2:30%; --a3:18%; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a1322; --surface:#111c30; --ink:#eef1f7; --ink2:#c0c8d8; --muted:#8f9bb3;
+  --rule:#26344f; --gold:#d6b05a; --gold-soft:#2b2617;
+  --c1:#3987e5; --c2:#d95926; --c3:#199e70; --a0:62%; --a1:44%; --a2:30%; --a3:18%; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:24px;padding-block:36px 64px}
+@media (max-width:520px){.wrap{padding-inline:16px;padding-block:24px 48px}}
+
+/* header */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.02;margin:8px 0 10px;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:62ch;color:var(--ink2);margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0 0;padding:14px 0 0;border-top:1px solid var(--rule);list-style:none;font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.facts b{font-weight:500;color:var(--ink)}
+.facts .core b{color:var(--gold)}
+
+/* shell */
+.shell{display:grid;grid-template-columns:216px minmax(0,1fr);gap:36px;margin-top:32px;align-items:start}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:18px}
+.rail h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 6px}
+.rail .grp{display:flex;flex-direction:column;gap:2px}
+.rail button{font:inherit;font-size:14px;text-align:left;background:none;border:0;border-left:2px solid var(--rule);padding:6px 12px;color:var(--ink2);cursor:pointer}
+.rail button:hover{color:var(--ink);border-left-color:var(--muted)}
+.rail button[aria-selected="true"]{color:var(--ink);font-weight:600;border-left-color:var(--gold)}
+.rail button:focus-visible,.seg-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:20px}
+  .rail{position:static;flex-direction:row;gap:20px;overflow-x:auto;padding-bottom:8px}
+  .rail .grp{flex-direction:row;gap:4px;flex:none;align-items:center}
+  .rail h2{margin:0 6px 0 0;flex:none}
+  .rail button{border-left:0;border-bottom:2px solid var(--rule);white-space:nowrap;padding:6px 8px}
+  .rail button[aria-selected="true"]{border-bottom-color:var(--gold)}
+  .rail button:hover{border-bottom-color:var(--muted)}
+}
+
+/* view */
+.view{display:flex;flex-direction:column;gap:14px;min-width:0}
+.view h2{font-family:var(--display);font-weight:600;font-size:30px;line-height:1.1;margin:0}
+.view .q{color:var(--ink2);margin:0;max-width:66ch}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:18px;min-width:0}
+.scroll{overflow-x:auto}
+.scroll svg{display:block;width:100%;height:auto}
+.w-lg svg{min-width:860px}.w-md svg{min-width:680px}
+.sq svg{max-width:880px;margin:0 auto}
+.notes{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;color:var(--ink2);font-size:13.5px;max-width:72ch}
+.notes li{padding-left:14px;position:relative}
+.notes li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink2);margin-bottom:12px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;background:var(--c);flex:none}
+.legend i.ring{background:none;border:2px solid var(--gold);border-radius:50%}
+.legend i.dot{background:var(--gold);border-radius:50%}
+.legend i.dash{height:0;border-radius:0;background:none;border-top:2px dashed var(--gold);width:18px}
+.c0{--c:var(--c1)}.c1{--c:var(--c2)}.c2{--c:var(--c3)}
+
+/* svg common */
+svg text{font-family:var(--body);fill:var(--ink)}
+svg .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;fill:var(--muted)}
+svg .axis{stroke:var(--rule);stroke-width:1;fill:none}
+svg .axis-head{fill:var(--muted)}
+svg .tick{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+svg .grid{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+svg .halo{paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.lv0{--a:var(--a0)}.lv1{--a:var(--a1)}.lv2{--a:var(--a2)}.lv3{--a:var(--a3)}
+.node,.seg{cursor:default;outline:none}
+.tint{fill:color-mix(in srgb,var(--c) var(--a),var(--surface))}
+.link{fill:none;stroke:var(--c);stroke-width:1.5;opacity:.5}
+[data-p]{transition:opacity .15s}
+.focus [data-p]:not(.on){opacity:.14}
+.focus .link.on{opacity:.95;stroke-width:2}
+@media (prefers-reduced-motion:reduce){[data-p]{transition:none}}
+
+/* horizon */
+#s-horizon .node text{font-size:13.5px}
+#s-horizon .lv0 text,#s-horizon .lv1 text{font-weight:600}
+#s-horizon .node:focus-visible rect{stroke:var(--ink);stroke-width:1.5}
+/* sunburst */
+#s-sunburst .seg{stroke:var(--surface);stroke-width:2}
+#s-sunburst .seg:focus-visible{stroke:var(--ink)}
+#s-sunburst text{pointer-events:none;font-size:13px}
+#s-sunburst .glabel{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+#s-sunburst .b{font-weight:600;font-size:13.5px}
+.coretxt{font-family:var(--display);font-weight:600;font-size:21px;text-anchor:middle}
+.coresub{font-family:var(--mono);font-size:10.5px;fill:var(--muted);text-anchor:middle}
+.corering{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.5}
+/* radial */
+#s-radial .node circle{fill:var(--c);stroke:var(--surface);stroke-width:2}
+#s-radial .lv1 text{font-weight:600;font-size:13.5px}
+#s-radial .lv2 text{font-size:12.5px;fill:var(--ink2)}
+#s-radial .lv3 text{font-size:13px}
+#s-radial .garc{fill:none;stroke:var(--c);stroke-width:3;stroke-linecap:round}
+#s-radial .glabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;fill:var(--ink2)}
+#s-radial .node:focus-visible circle{stroke:var(--ink)}
+
+/* value chain */
+.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.stage{display:flex;flex-direction:column;gap:8px;min-width:0}
+.stage>header{border-top:2px solid var(--ink);padding-top:8px;position:relative}
+.stage>header .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stage>header h3{font-size:14.5px;font-weight:600;margin:2px 0 4px;line-height:1.25}
+.stage:not(:last-child)>header::after{content:"";position:absolute;right:-9px;top:-6px;border:5px solid transparent;border-left-color:var(--ink)}
+.bet{border-radius:5px;padding:9px 10px;background:color-mix(in srgb,var(--c) 10%,var(--surface));border-left:3px solid var(--c);min-width:0}
+.bet h4{margin:0 0 6px;font-size:13.5px;font-weight:600;line-height:1.25}
+.bet ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.bet li{font-size:12.5px;line-height:1.3;overflow-wrap:anywhere}
+.bet li small{display:block;color:var(--ink2);font-size:12px}
+.demand{margin-top:14px;border-top:1px dashed var(--muted);padding-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.demand .cap{grid-column:1/-1;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.demand div.box{border:1px solid var(--rule);border-radius:5px;padding:10px 12px}
+.demand h4{margin:0 0 4px;font-size:13.5px}
+.demand p{margin:0;color:var(--ink2);font-size:13px}
+@media (max-width:860px){
+  .chain{grid-template-columns:minmax(0,1fr)}
+  .stage:not(:last-child)>header::after{display:none}
+  .demand{grid-template-columns:minmax(0,1fr)}
+}
+
+/* tables and matrices */
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:middle}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;vertical-align:bottom}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px;white-space:nowrap}
+td.ctr,th.ctr{text-align:center}
+tbody tr:hover td,tbody tr:hover th{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+tbody th{font-weight:500}
+.mx{min-width:720px}
+.mx thead .grph{border-bottom:2px solid var(--ink);color:var(--ink2)}
+.mx thead .gap,.mx td.gap{border-bottom-color:transparent;width:10px;padding:0}
+.mx .dot{display:inline-block;width:13px;height:13px;border-radius:50%;background:var(--c1);vertical-align:middle}
+.mx .nodot{display:inline-block;width:5px;height:1px;background:var(--rule);vertical-align:middle}
+.mx td.cell{text-align:center;cursor:default}
+.mx td.cell:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.mx .trk{display:inline-block;width:50px;text-align:left;margin-right:8px;border-left:1px solid var(--muted);line-height:1}
+.mx .bar{display:inline-block;height:7px;border-radius:0 3px 3px 0;background:var(--c1);vertical-align:middle}
+.mx td.cagr{min-width:124px}
+.hm{min-width:760px}
+.hm td.h{text-align:center;font-family:var(--mono);font-size:12.5px;background:color-mix(in srgb,var(--c1) var(--v),transparent);border:2px solid var(--surface);cursor:default}
+.hm td.h:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.hm thead th.bh{text-transform:none;letter-spacing:0;font-family:var(--body);font-size:12px;color:var(--ink);font-weight:500;text-align:center;line-height:1.2;width:8.4%;padding-inline:4px}
+.hm thead th.gh{text-align:center;border-bottom:3px solid var(--c);color:var(--ink2)}
+.hm td.tot,.hm th.tot{color:var(--muted)}
+.tables{display:flex;flex-direction:column;gap:22px}
+.tables h3{font-size:14px;margin:0 0 8px}
+.tables .tw{overflow-x:auto}
+.tables table{min-width:640px}
+.sw{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--c);margin-right:7px}
+
+/* network */
+#s-network .clabel{font-size:14px;font-weight:600}
+#s-network .mlabel{font-size:13.5px}
+#s-network .mmeta{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+#s-network .glab{font-size:12px;fill:var(--ink2)}
+#s-network .cnode{fill:var(--ink);stroke:var(--surface);stroke-width:2}
+#s-network .mnode{fill:var(--c1);stroke:var(--surface);stroke-width:2}
+#s-network .nlink{fill:none;stroke:var(--c1);stroke-width:1.5;opacity:.45}
+#s-network .brk{stroke:var(--muted);stroke-width:1;fill:none}
+#s-network [data-n]{transition:opacity .15s;cursor:default;outline:none}
+#s-network.focus [data-n]:not(.on){opacity:.14}
+#s-network.focus .nlink.on{opacity:.95;stroke-width:2}
+#s-network g:focus-visible circle{stroke:var(--gold)}
+/* bubbles */
+#s-bubble .pt{fill:var(--c1);fill-opacity:.8;stroke:var(--surface);stroke-width:2;cursor:default}
+#s-bubble .pt:focus-visible{stroke:var(--ink);outline:none}
+#s-bubble .corept{fill:var(--gold);stroke:var(--surface);stroke-width:2}
+#s-bubble .lab{font-size:12px}
+#s-bubble .axt{font-size:12px;fill:var(--ink2)}
+/* growth */
+#s-growth .area{fill:var(--gold);opacity:.12}
+#s-growth .line{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:5 5}
+#s-growth .stated{fill:var(--gold);stroke:var(--surface);stroke-width:2}
+#s-growth .shown{fill:var(--surface);stroke:var(--gold);stroke-width:2.5}
+#s-growth .lab{font-size:12.5px}
+#s-growth .lab b{font-weight:600}
+#s-growth .cross{stroke:var(--muted);stroke-width:1}
+#s-growth .hov{fill:var(--surface);stroke:var(--gold);stroke-width:2}
+
+#tip{position:fixed;z-index:10;max-width:300px;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:5px;padding:9px 11px;font-size:12.5px;line-height:1.4;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+#tip .te{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+#tip .tt{font-weight:600;font-size:13.5px;margin:1px 0 3px}
+#tip .tl{opacity:.86}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GrowthIQ · Connected Market export</div>
+    <h1>Electric Vehicle Market</h1>
+    <p class="lede">Ten ways to draw the same export: the four-level taxonomy, the customer links, and the core market's own numbers. Hover or tab onto any mark for its lineage.</p>
+    <ul class="facts">
+      <li class="core"><b>1</b> core market</li><li><b>3</b> hot bets</li><li><b>9</b> next hot bets</li><li><b>27</b> disruptive technologies</li><li><b>27</b> future trends</li><li><b>6</b> companies</li><li><b>13</b> linked markets</li>
+    </ul>
+  </header>
+
+  <div class="shell">
+    <nav class="rail" aria-label="Views">
+      <div><h2>Taxonomy</h2><div class="grp" role="tablist">
+        <button role="tab" data-v="horizon">Horizon map</button>
+        <button role="tab" data-v="sunburst">Sunburst</button>
+        <button role="tab" data-v="radial">Radial tree</button>
+        <button role="tab" data-v="chain">Value chain</button>
+        <button role="tab" data-v="themes">Theme matrix</button>
+      </div></div>
+      <div><h2>Customers</h2><div class="grp" role="tablist">
+        <button role="tab" data-v="matrix">Company × market</button>
+        <button role="tab" data-v="network">Network</button>
+        <button role="tab" data-v="bubble">Size vs growth</button>
+      </div></div>
+      <div><h2>Core</h2><div class="grp" role="tablist">
+        <button role="tab" data-v="growth">Growth curve</button>
+      </div></div>
+      <div><h2>Reference</h2><div class="grp" role="tablist">
+        <button role="tab" data-v="data">Data tables</button>
+      </div></div>
+    </nav>
+
+    <main>
+      <section class="view" id="v-horizon">
+        <h2>Horizon map</h2>
+        <p class="q">Where is this market heading? The four taxonomy levels read left to right as a time axis, from today's hot bets to the trends furthest out.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-lg"><svg id="s-horizon" role="img" aria-label="Horizon map of the EV taxonomy in four columns"></svg></div></div>
+        <ul class="notes">
+          <li>All 27 disruptive technologies appear here. The live graph drops this level and shows only the trends.</li>
+          <li>Each technology leads to exactly one trend, so the last two columns pair off row by row.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-sunburst" hidden>
+        <h2>Sunburst</h2>
+        <p class="q">What is the whole structure at a glance? Each ring is one taxonomy level, with the core market at the centre.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-md sq"><svg id="s-sunburst" role="img" aria-label="Sunburst of the EV taxonomy in four rings"></svg></div></div>
+        <ul class="notes">
+          <li>Every ring is an equal split (3 × 3 × 3 × 1), so arc width carries no magnitude. It shows membership only.</li>
+          <li>With sizes or report counts per node, the same chart could show weight as well as structure.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-radial" hidden>
+        <h2>Radial tree</h2>
+        <p class="q">How does the current circular graph look with its hierarchy drawn in? Same footprint as the Connected Market tab, with parent links and the technology level restored.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-md sq"><svg id="s-radial" role="img" aria-label="Radial tree of the EV taxonomy"></svg></div></div>
+        <ul class="notes">
+          <li>Technology names sit on the spokes between the two outer rings, so the outer ring is still the 27 future trends at 13.3° spacing.</li>
+          <li>Labels are harder to scan here than in the horizon map. This view suits a hero graphic more than a working screen.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-chain" hidden>
+        <h2>Value chain</h2>
+        <p class="q">Where along the chain does each bet sit, and who buys at the end? The nine next hot bets are placed by stage, with the two customer groups as demand.</p>
+        <div class="card">
+          <div class="legend" data-groups></div>
+          <div class="chain" id="chain"></div>
+          <div class="demand" id="demand"></div>
+        </div>
+        <ul class="notes">
+          <li>The stage for each bet is my proposal. The export has no stage field.</li>
+          <li>The export also has no link from a customer to a taxonomy node, so the demand row sits below the chain and is not wired to it.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-themes" hidden>
+        <h2>Theme matrix</h2>
+        <p class="q">Which themes repeat across branches? Each cell counts how many of a branch's six technology and trend labels mention the theme.</p>
+        <div class="card"><div class="scroll"><table class="hm" id="t-themes"></table></div></div>
+        <ul class="notes">
+          <li>Tags come from keyword matching on the 54 labels. A label can match more than one theme.</li>
+          <li>Rows with marks in many columns are cross-cutting themes that the tree shape hides.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-matrix" hidden>
+        <h2>Company × market</h2>
+        <p class="q">Which customers share which linked markets? Rows are the 13 unique markets listed as revenue sources, columns are the six companies.</p>
+        <div class="card"><div class="scroll"><table class="mx" id="t-matrix"></table></div></div>
+        <ul class="notes">
+          <li>18 links cover 13 markets. Drone Package Delivery is the only market shared across both customer groups.</li>
+          <li>UPS and FedEx have identical columns. Amazon and Lyft share no market with any other company.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-network" hidden>
+        <h2>Network</h2>
+        <p class="q">The same 18 links as a two-sided graph. Market dots grow with the number of companies linked to them.</p>
+        <div class="card"><div class="scroll w-lg"><svg id="s-network" role="img" aria-label="Bipartite network of six companies and thirteen linked markets"></svg></div></div>
+        <ul class="notes">
+          <li>Markets are ordered to keep links from crossing, so clusters read top to bottom.</li>
+          <li>There are no market-to-market or customer-to-taxonomy links in the export, which is why this stays two columns.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-bubble" hidden>
+        <h2>Size vs growth</h2>
+        <p class="q">Which linked markets are large and fast-growing? Each bubble is a linked market, sized by the number of companies linked to it. The gold diamond is the core market.</p>
+        <div class="card"><div class="scroll w-md"><svg id="s-bubble" role="img" aria-label="Bubble chart of market size against CAGR"></svg></div></div>
+        <ul class="notes">
+          <li>Sizes carry no year in the export, so horizontal position is indicative. The three blockchain markets in the top right are the ones to check first.</li>
+          <li>Digital Pharmacy and Ride Sharing sit almost on top of each other at about $340B and 17%, so they share one label.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-growth" hidden>
+        <h2>Growth curve</h2>
+        <p class="q">How big is the core market, and when? The summary states two values, and the graph node shows a third with no year attached.</p>
+        <div class="card">
+          <div class="legend"><span><i class="dot"></i>Stated in the report summary</span><span><i class="ring"></i>Shown as the graph node's size</span><span><i class="dash"></i>Interpolated between the stated points</span></div>
+          <div class="scroll w-md"><svg id="s-growth" role="img" aria-label="Line chart of EV market size from 2025 to 2035"></svg></div>
+        </div>
+        <ul class="notes">
+          <li>The two stated values imply 5.47% a year, which the summary rounds to 5.5%.</li>
+          <li>$910.2B falls on this curve at 2030. A year label on the node would remove the ambiguity.</li>
+        </ul>
+      </section>
+
+      <section class="view" id="v-data" hidden>
+        <h2>Data tables</h2>
+        <p class="q">Every value the charts use, as rows.</p>
+        <div class="card tables">
+          <div><h3>Linked markets</h3><div class="tw"><table id="t-markets"></table></div></div>
+          <div><h3>Taxonomy</h3><div class="tw"><table id="t-tax"></table></div></div>
+        </div>
+        <ul class="notes">
+          <li>Record year is read from the timestamp inside each market's record ID.</li>
+          <li>Report links are left out because the export's URLs carry signed tokens.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- data (from the export) ---------- */
+var G=[
+ {name:'Top Technologies',bets:[
+  {name:'Battery Technology',items:[['Solid-State Batteries','Graphene Batteries'],['Lithium-Sulfur Batteries','Quantum Glass Battery'],['Wireless Charging','Nanowire Battery']]},
+  {name:'Charging Infrastructure',items:[['Ultra-Fast Charging Stations','AI Optimized Charging'],['V2G Technology','Bi-directional Charging'],['Inductive Charging','Charging Roads']]},
+  {name:'Autonomous Driving',items:[['AI in Autonomous Driving','Quantum Computing in Autonomous Driving'],['5G and V2X Communication','Edge Computing in V2X'],['LiDAR Technology','Solid-State LiDAR']]}]},
+ {name:'Top Sub Markets',bets:[
+  {name:'Battery Production',items:[['Battery Recycling','Second Life Batteries'],['Cobalt-Free Batteries','Solid Electrolyte'],['Battery Management Systems','AI in Battery Management']]},
+  {name:'Charging Stations',items:[['Solar Powered Charging Stations','Wireless Power Transfer Roads'],['Battery Swapping Stations','Autonomous Battery Swapping Stations'],['Smart Charging Stations','AI in Charging Station Management']]},
+  {name:'EV Manufacturing',items:[['3D Printing in EV Manufacturing','AI in EV Production'],['Lightweight Materials','Nanotechnology in Lightweight Materials'],['Modular EV Platforms','AI in EV Design']]}]},
+ {name:'Top Industries',bets:[
+  {name:'Automotive',items:[['Shared Mobility Services','Autonomous Shared Mobility'],['Fleet Electrification','Electric Trucks'],['EV Leasing','Subscription Based EV Ownership']]},
+  {name:'Energy',items:[['Renewable Energy Integration','AI in Energy Management'],['Smart Grids','Decentralized Energy Systems'],['Energy Storage Systems','Vehicle as a Virtual Power Plant']]},
+  {name:'Technology',items:[['Blockchain in EV','Quantum Computing in EV'],['IoT in EV','Edge Computing in EV'],['AR/VR in EV Training','Mixed Reality in EV Training']]}]}
+];
+var MK=[
+ ['5de8417cd1bb8d83948025a4','Drone Package Delivery',4.66,37.4],
+ ['5c4f907bd1bb8d38a0e5175f','Delivery Robots',3.24,32.4],
+ ['5d1be8fcd1bb8d8e041eeda5','Autonomous Last Mile Delivery',4.2,22.7],
+ ['62a017c0d1bb8d1d24962e6d','Digital Pharmacy',339.38,17],
+ ['5845f8843b091a42201b204e','Automotive E-tailing',141.98,12.53],
+ ['5b34e14bd1bb8d52785d549f','Blockchain in Retail',263.7,96.4],
+ ['5b171cfbd1bb8d55a44e1235','Blockchain Identity Management',130.34,92.7],
+ ['5b3d587cd1bb8d5718ac20e4','Blockchain in Insurance',102.98,84.9],
+ ['58accd7f3b091a136cb754ab','Temperature Controlled Packaging Solutions',157.41,18.4],
+ ['5bdcddfbd1bb8d50485e1a79','Battery Packaging',80.03,12],
+ ['5d4a0d7bd1bb8d9fec0062ba','Mobility as a Service',40.1,32.3],
+ ['5d3a3b7cd1bb8d4078889425','Bike and Scooter Rental',16.98,18.9],
+ ['58911e1d3b091a17f4d474bb','Ride Sharing',342.14,16.6]
+].map(function(m,i){return {i:i,id:m[0],name:m[1],size:m[2],cagr:m[3],year:new Date(parseInt(m[0].slice(0,8),16)*1000).getUTCFullYear(),cos:[]};});
+var CG=['Individual Consumers & Retail Buyers','Fleet & Commercial Operators'];
+/* display order chosen to keep shared markets adjacent */
+var CO=[
+ {name:'Amazon',raw:'Amazon.com, Inc.',g:0,m:[5,6,7]},
+ {name:'JD.com',raw:'Jd.com',g:0,m:[0,1,2]},
+ {name:'Walmart',raw:'WALMART INC.',g:0,m:[0,3,4]},
+ {name:'UPS',raw:'United Parcel Service, Inc.',g:1,m:[0,8,9]},
+ {name:'FedEx',raw:'FedEx Corporation',g:1,m:[0,8,9]},
+ {name:'Lyft',raw:'LYFT, INC.',g:1,m:[10,11,12]}
+];
+CO.forEach(function(c,ci){c.i=ci;c.m.forEach(function(mi){MK[mi].cos.push(ci);});});
+var MORD=MK.slice().sort(function(a,b){
+  var ba=a.cos.reduce(function(s,x){return s+x;},0)/a.cos.length, bb=b.cos.reduce(function(s,x){return s+x;},0)/b.cos.length;
+  return ba-bb||b.cagr-a.cagr;});
+var CORE={name:'Electric Vehicle Market',v25:698.63,v35:1189.59,node:910.2,cagr:5.5};
+var LEVELS=['Hot bet','Next hot bet','Disruptive technology','Future trend'];
+
+/* flatten taxonomy */
+var N=[];
+G.forEach(function(g,gi){
+  var gn={level:0,name:g.name,g:gi,path:'g'+gi,row:gi*9+4,a0:gi*120,a1:gi*120+120,line:[g.name]};N.push(gn);
+  g.bets.forEach(function(b,bi){
+    var bn={level:1,name:b.name,g:gi,path:gn.path+'.b'+bi,row:gi*9+bi*3+1,parent:gn,a0:gi*120+bi*40,a1:gi*120+bi*40+40,line:[g.name,b.name]};N.push(bn);b.node=bn;b.g=gi;
+    b.items.forEach(function(it,ti){
+      var leaf=gi*9+bi*3+ti, s=360/27;
+      var tn={level:2,name:it[0],g:gi,path:bn.path+'.t'+ti,row:leaf,parent:bn,a0:leaf*s,a1:(leaf+1)*s,line:[g.name,b.name,it[0]]};N.push(tn);
+      N.push({level:3,name:it[1],g:gi,path:tn.path+'.f',row:leaf,parent:tn,a0:leaf*s,a1:(leaf+1)*s,line:[g.name,b.name,it[0],it[1]]});
+    });
+  });
+});
+
+/* ---------- helpers ---------- */
+var NS='http://www.w3.org/2000/svg';
+function $(s){return document.querySelector(s);}
+function S(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function H(tag,attrs,parent,text){var e=document.createElement(tag);for(var k in attrs||{})e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function wrap(str,max){var w=str.split(' '),out=[],cur='';w.forEach(function(x){if(cur&&(cur+' '+x).length>max){out.push(cur);cur=x;}else cur=cur?cur+' '+x:x;});if(cur)out.push(cur);return out;}
+function money(v){return '$'+v.toLocaleString('en-US',{maximumFractionDigits:2})+'B';}
+function pt(r,a){var t=(a-90)*Math.PI/180;return [+(r*Math.cos(t)).toFixed(2),+(r*Math.sin(t)).toFixed(2)];}
+
+var tipEl=$('#tip');
+function showTip(e,t){
+  tipEl.replaceChildren();
+  if(t.e)H('div',{class:'te'},tipEl,t.e);
+  H('div',{class:'tt'},tipEl,t.t);
+  (t.l||[]).forEach(function(x){H('div',{class:'tl'},tipEl,x);});
+  tipEl.hidden=false;place(e);
+}
+function place(e){
+  var x,y;
+  if(e.type&&e.type.indexOf('pointer')===0){x=e.clientX;y=e.clientY;}
+  else{var r=e.target.getBoundingClientRect();x=r.left+r.width/2;y=r.top+r.height/2;}
+  var w=tipEl.offsetWidth,h=tipEl.offsetHeight,L=x+14,T=y+14;
+  if(L+w>innerWidth-8)L=x-w-14;if(L<8)L=8;
+  if(T+h>innerHeight-8)T=y-h-14;if(T<8)T=8;
+  tipEl.style.left=L+'px';tipEl.style.top=T+'px';
+}
+function tip(el,get,onIn,onOut){
+  function i(e){showTip(e,get(e));if(onIn)onIn();}
+  function o(){tipEl.hidden=true;if(onOut)onOut();}
+  el.addEventListener('pointerenter',i);el.addEventListener('pointermove',function(e){if(!tipEl.hidden)place(e);});
+  el.addEventListener('pointerleave',o);el.addEventListener('focus',i);el.addEventListener('blur',o);
+}
+function related(a,b){return a===b||a.indexOf(b+'.')===0||b.indexOf(a+'.')===0;}
+function bindNode(el,n,svg){
+  tip(el,function(){return {e:LEVELS[n.level],t:n.name,l:n.line.length>1?[n.line.slice(0,-1).join(' › ')]:['Under '+CORE.name]};},
+    function(){svg.classList.add('focus');svg.querySelectorAll('[data-p]').forEach(function(x){x.classList.toggle('on',related(x.getAttribute('data-p'),n.path));});},
+    function(){svg.classList.remove('focus');});
+}
+document.querySelectorAll('[data-groups]').forEach(function(l){G.forEach(function(g,i){var s=H('span',{class:'c'+i},l);H('i',{},s);s.appendChild(document.createTextNode(g.name));});});
+
+/* ---------- 1. horizon map ---------- */
+(function(){
+  var svg=$('#s-horizon'),W=1004,top=46,rh=28,Ht=top+27*rh+6;
+  svg.setAttribute('viewBox','0 0 '+W+' '+Ht);
+  var cols=[[0,140],[186,372],[418,656],[702,1000]];
+  LEVELS.forEach(function(h,i){S('text',{x:cols[i][0],y:14,class:'cap'},svg,h);});
+  S('line',{x1:0,y1:28,x2:W-9,y2:28,class:'axis'},svg);S('path',{d:'M'+(W-9)+' 24L'+(W-1)+' 28L'+(W-9)+' 32Z',class:'axis-head'},svg);
+  function y(r){return top+r*rh+rh/2;}
+  var gl=S('g',{},svg),gn=S('g',{},svg);
+  N.forEach(function(n){
+    var c=cols[n.level],yy=y(n.row);
+    if(n.parent){var pc=cols[n.level-1],x1=pc[1],x2=c[0],m=(x1+x2)/2,py=y(n.parent.row);
+      S('path',{d:'M'+x1+' '+py+'C'+m+' '+py+' '+m+' '+yy+' '+x2+' '+yy,class:'link c'+n.g,'data-p':n.path},gl);}
+    var g=S('g',{class:'node lv'+n.level+' c'+n.g,'data-p':n.path,tabindex:0},gn);
+    S('rect',{x:c[0],y:yy-11,width:c[1]-c[0],height:22,rx:4,class:'tint'},g);
+    S('text',{x:c[0]+9,y:yy+4.6},g,n.name);
+    bindNode(g,n,svg);
+  });
+})();
+
+/* ---------- 2. sunburst ---------- */
+function sector(r0,r1,a0,a1){var p0=pt(r1,a0),p1=pt(r1,a1),p2=pt(r0,a1),p3=pt(r0,a0);
+  return 'M'+p0+'A'+r1+' '+r1+' 0 0 1 '+p1+'L'+p2+'A'+r0+' '+r0+' 0 0 0 '+p3+'Z';}
+function arc(r,a0,a1,rev){var s=pt(r,rev?a1:a0),e=pt(r,rev?a0:a1);return 'M'+s+'A'+r+' '+r+' 0 0 '+(rev?0:1)+' '+e;}
+function radialLabel(parent,lines,a,r,o){
+  var flip=a>180,g=S('g',{transform:'rotate('+(a-90).toFixed(2)+') translate('+r+' 0)'+(flip?' rotate(180)':'')},parent);
+  var dir=o.dir||0,far=dir>0?!flip:flip,lh=o.lh||15,x=dir?(far?o.dx:-o.dx):0,lift=lines.length===1&&o.lift?o.lift:0;
+  var t=S('text',{'text-anchor':dir?(far?'start':'end'):'middle',class:o.cls||''},g);
+  lines.forEach(function(ln,i){S('tspan',{x:x,y:((i-(lines.length-1)/2)*lh+(o.fs||13)*0.35-lift).toFixed(1)},t,ln);});
+  return g;
+}
+function coreMark(svg,r){
+  S('circle',{r:r,class:'corering'},svg);
+  S('text',{y:-9,class:'coretxt'},svg,'Electric');S('text',{y:13,class:'coretxt'},svg,'Vehicle');
+  S('text',{y:31,class:'coresub'},svg,'CORE MARKET');
+}
+(function(){
+  var svg=$('#s-sunburst'),R=[[74,112],[112,228],[228,384],[384,552]],V=560;
+  svg.setAttribute('viewBox',-V+' '+-V+' '+2*V+' '+2*V);
+  var defs=S('defs',{},svg),gs=S('g',{},svg),gt=S('g',{},svg);
+  var wr=[0,14,20,21];
+  N.forEach(function(n){
+    var r=R[n.level],p=S('path',{d:sector(r[0],r[1],n.a0,n.a1),class:'seg tint lv'+n.level+' c'+n.g,'data-p':n.path,tabindex:0},gs);
+    bindNode(p,n,svg);
+    var mid=(n.a0+n.a1)/2;
+    if(n.level===0){
+      var rev=mid>90&&mid<270,rm=(r[0]+r[1])/2+(rev?4:-4),id='sb-g'+n.g;
+      S('path',{id:id,d:arc(rm,n.a0+4,n.a1-4,rev),fill:'none'},defs);
+      var t=S('text',{class:'glabel','text-anchor':'middle','data-p':n.path},gt);
+      S('textPath',{href:'#'+id,startOffset:'50%'},t,n.name);
+    }else{
+      var g=radialLabel(gt,wrap(n.name,wr[n.level]),mid,(r[0]+r[1])/2,{cls:n.level===1?'b':'',fs:13});
+      g.setAttribute('data-p',n.path);
+    }
+  });
+  coreMark(svg,68);
+})();
+
+/* ---------- 3. radial tree ---------- */
+(function(){
+  var svg=$('#s-radial'),V=622,RB=206,RT=300,RF=452;
+  svg.setAttribute('viewBox',-V+' '+-V+' '+2*V+' '+2*V);
+  var defs=S('defs',{},svg),gl=S('g',{},svg),gn=S('g',{},svg);
+  N.forEach(function(n){
+    var a=(n.a0+n.a1)/2;
+    if(n.level===0){
+      var id='rt-g'+n.g,rev=a>90&&a<270;
+      var hit=S('g',{'data-p':n.path,class:'c'+n.g,tabindex:0},gn);
+      S('path',{d:arc(58,n.a0+5,n.a1-5,false),class:'garc'},hit);
+      S('path',{id:id,d:arc(rev?78:68,n.a0+5,n.a1-5,rev),fill:'none'},defs);
+      var t=S('text',{class:'glabel','text-anchor':'middle'},hit);S('textPath',{href:'#'+id,startOffset:'50%'},t,n.name);
+      bindNode(hit,n,svg);return;
+    }
+    var r=n.level===1?RB:n.level===2?RT:RF,p=pt(r,a);
+    if(n.level===1){S('path',{d:'M'+pt(48,a)+'L'+pt(RB,a),class:'link c'+n.g,'data-p':n.path},gl);}
+    else if(n.level===2){var pa=(n.parent.a0+n.parent.a1)/2,rm=(RB+RT)/2+6;
+      S('path',{d:'M'+pt(RB,pa)+'C'+pt(rm,pa)+' '+pt(rm,a)+' '+p,class:'link c'+n.g,'data-p':n.path},gl);}
+    else{S('path',{d:'M'+pt(RT,a)+'L'+p,class:'link c'+n.g,'data-p':n.path},gl);}
+    var g=S('g',{class:'node lv'+n.level+' c'+n.g,'data-p':n.path,tabindex:0},gn);
+    S('circle',{cx:p[0],cy:p[1],r:n.level===1?6.5:n.level===2?4:5},g);
+    var o=n.level===1?{dir:-1,dx:13,fs:13.5,lh:17,lift:8,cls:'halo'}:n.level===2?{dir:1,dx:10,fs:12.5,lh:17,lift:7.5,cls:'halo'}:{dir:1,dx:11,fs:13};
+    radialLabel(g,wrap(n.name,n.level===1?14:n.level===2?19:21),a,r,o);
+    bindNode(g,n,svg);
+  });
+  coreMark(svg,44);
+})();
+
+/* ---------- 4. value chain ---------- */
+(function(){
+  var stages=[['Battery and materials',['Battery Technology','Battery Production']],['Vehicle and software',['EV Manufacturing','Autonomous Driving','Technology']],['Charging',['Charging Infrastructure','Charging Stations']],['Energy and grid',['Energy']],['Mobility and fleets',['Automotive']]];
+  var all={};G.forEach(function(g){g.bets.forEach(function(b){all[b.name]=b;});});
+  var root=$('#chain');
+  stages.forEach(function(s,i){
+    var sec=H('section',{class:'stage'},root),hd=H('header',{},sec);
+    H('div',{class:'cap'},hd,'Stage '+(i+1));H('h3',{},hd,s[0]);
+    s[1].forEach(function(bn){var b=all[bn],c=H('div',{class:'bet c'+b.g},sec);H('h4',{},c,b.name);
+      var ul=H('ul',{},c);b.items.forEach(function(it){var li=H('li',{},ul,it[0]);H('small',{},li,'→ '+it[1]);});});
+  });
+  var d=$('#demand');H('div',{class:'cap'},d,'Demand · customer groups in the export');
+  CG.forEach(function(g,gi){var b=H('div',{class:'box'},d);H('h4',{},b,g);H('p',{},b,CO.filter(function(c){return c.g===gi;}).map(function(c){return c.name;}).join(' · '));});
+})();
+
+/* ---------- 5. theme matrix ---------- */
+(function(){
+  var themes=[['AI',/\bAI\b/],['Quantum',/Quantum/],['Edge and connectivity',/Edge|5G|V2X|IoT/],['Autonomy',/Autonomous|LiDAR/],['Battery',/Batter|Electrolyte/],['Charging',/Charging|V2G|Power Transfer/],['Grid and energy',/Energy|Grid|Power Plant|Solar/],['Materials',/Graphene|Nano|Lightweight|Solid|Lithium|Cobalt/],['Mobility models',/Mobility|Fleet|Leasing|Subscription|Trucks/]];
+  var bets=[];G.forEach(function(g){g.bets.forEach(function(b){bets.push(b);});});
+  var t=$('#t-themes'),th=H('thead',{},t),r1=H('tr',{},th),r2=H('tr',{},th);
+  H('th',{rowspan:2},r1,'Theme');
+  G.forEach(function(g,i){H('th',{colspan:3,class:'gh c'+i},r1,g.name);});
+  H('th',{rowspan:2,class:'num tot'},r1,'Branches');
+  bets.forEach(function(b){H('th',{class:'bh'},r2,b.name);});
+  var tb=H('tbody',{},t);
+  themes.forEach(function(tm){
+    var tr=H('tr',{},tb),n=0;H('th',{scope:'row'},tr,tm[0]);
+    bets.forEach(function(b){
+      var hits=[];b.items.forEach(function(it){it.forEach(function(x){if(tm[1].test(x))hits.push(x);});});
+      var td=H('td',{class:'h',style:'--v:'+(hits.length?Math.min(72,10+12*hits.length):0)+'%'},tr,hits.length?String(hits.length):'');
+      if(hits.length){n++;td.setAttribute('tabindex',0);tip(td,function(){return {e:tm[0]+' in '+b.name,t:hits.length+' of 6 labels',l:hits};});}
+    });
+    H('td',{class:'num tot'},tr,n+' / 9');
+  });
+})();
+
+/* ---------- 6. company × market matrix ---------- */
+(function(){
+  var t=$('#t-matrix'),th=H('thead',{},t),r1=H('tr',{},th),r2=H('tr',{},th);
+  H('th',{rowspan:2},r1,'Linked market');
+  H('th',{colspan:3,class:'ctr grph'},r1,CG[0]);H('th',{class:'gap',rowspan:2},r1);H('th',{colspan:3,class:'ctr grph'},r1,CG[1]);
+  H('th',{rowspan:2,class:'num'},r1,'Size');H('th',{rowspan:2,class:'num'},r1,'CAGR');
+  CO.forEach(function(c){H('th',{class:'ctr'},r2,c.name);});
+  var tb=H('tbody',{},t);
+  MORD.forEach(function(m){
+    var tr=H('tr',{},tb);H('th',{scope:'row'},tr,m.name);
+    CO.forEach(function(c,ci){
+      if(ci===3)H('td',{class:'gap'},tr);
+      var on=m.cos.indexOf(ci)>=0,td=H('td',{class:'cell'},tr);H('span',{class:on?'dot':'nodot'},td);
+      if(on){td.setAttribute('tabindex',0);td.setAttribute('aria-label',c.name+' linked to '+m.name);
+        tip(td,function(){return {e:CG[c.g],t:c.name+' → '+m.name,l:['Listed as '+c.raw,money(m.size)+' · '+m.cagr+'% CAGR']};});}
+    });
+    H('td',{class:'num'},tr,money(m.size));
+    var cg=H('td',{class:'num cagr'},tr),tk=H('span',{class:'trk'},cg);H('span',{class:'bar',style:'width:'+(m.cagr*0.5).toFixed(0)+'px'},tk);cg.appendChild(document.createTextNode(m.cagr+'%'));
+  });
+})();
+
+/* ---------- 7. network ---------- */
+(function(){
+  var svg=$('#s-network'),W=940,rh=40,top=30,Ht=top+12*rh+44;
+  svg.setAttribute('viewBox','34 0 '+(W-34)+' '+Ht);
+  var cx=262,mx=560,cy=[],my={};
+  MORD.forEach(function(m,i){my[m.i]=top+i*rh;});
+  cy=[70,170,270,345,405,475]; /* near each company's linked rows, with a gap between the two groups */
+  var gl=S('g',{},svg),gn=S('g',{},svg);
+  function focus(keys){svg.classList.add('focus');svg.querySelectorAll('[data-n]').forEach(function(x){var k=x.getAttribute('data-n').split(' ');x.classList.toggle('on',k.some(function(v){return keys.indexOf(v)>=0;}));});}
+  function blur(){svg.classList.remove('focus');}
+  CO.forEach(function(c){c.m.forEach(function(mi){var y1=cy[c.i],y2=my[mi],m=(cx+mx)/2;
+    S('path',{d:'M'+cx+' '+y1+'C'+m+' '+y1+' '+m+' '+y2+' '+mx+' '+y2,class:'nlink','data-n':'c'+c.i+' m'+mi},gl);});});
+  CG.forEach(function(g,gi){var idx=CO.filter(function(c){return c.g===gi;}),y0=cy[idx[0].i]-16,y1=cy[idx[2].i]+16,ym=(y0+y1)/2,lines=wrap(g,16);
+    S('path',{d:'M128 '+y0+'H120V'+y1+'H128',class:'brk'},svg);
+    var t=S('text',{class:'glab','text-anchor':'end'},svg);lines.forEach(function(ln,i){S('tspan',{x:110,y:ym+(i-(lines.length-1)/2)*15+4},t,ln);});});
+  CO.forEach(function(c){
+    var g=S('g',{'data-n':'c'+c.i+' '+c.m.map(function(x){return 'cm'+x;}).join(' '),tabindex:0},gn);
+    S('circle',{cx:cx,cy:cy[c.i],r:8,class:'cnode'},g);S('text',{x:cx-15,y:cy[c.i]+5,'text-anchor':'end',class:'clabel'},g,c.name);
+    tip(g,function(){return {e:CG[c.g],t:c.name,l:['Listed as '+c.raw].concat(c.m.map(function(mi){return MK[mi].name;}))};},
+      function(){focus(['c'+c.i,'mc'+c.i]);},blur);
+  });
+  MORD.forEach(function(m){
+    var keys=['m'+m.i].concat(m.cos.map(function(ci){return 'mc'+ci;}));
+    var g=S('g',{'data-n':keys.join(' '),tabindex:0},gn),y=my[m.i],r=4+2.5*m.cos.length;
+    S('circle',{cx:mx,cy:y,r:r,class:'mnode'},g);
+    S('text',{x:mx+22,y:y+1,class:'mlabel'},g,m.name);
+    S('text',{x:mx+22,y:y+15,class:'mmeta'},g,money(m.size)+' · '+m.cagr+'%');
+    tip(g,function(){return {e:'Linked market',t:m.name,l:[money(m.size)+' · '+m.cagr+'% CAGR','Linked to '+m.cos.map(function(ci){return CO[ci].name;}).join(', ')]};},
+      function(){focus(['m'+m.i,'cm'+m.i]);},blur);
+  });
+})();
+
+/* ---------- 8. size vs growth ---------- */
+(function(){
+  var svg=$('#s-bubble'),W=940,Ht=516,PL=64,PR=880,PT=38,PB=452;
+  svg.setAttribute('viewBox','0 0 '+W+' '+Ht);
+  var LX=Math.log10(2000);
+  function x(v){return PL+Math.log10(v)/LX*(PR-PL);}
+  function y(v){return PB-v/100*(PB-PT);}
+  [0,20,40,60,80,100].forEach(function(v){S('line',{x1:PL,x2:PR,y1:y(v),y2:y(v),class:v?'grid':'axis'},svg);S('text',{x:PL-10,y:y(v)+4,'text-anchor':'end',class:'tick'},svg,v+'%');});
+  [1,10,100,1000].forEach(function(v){S('line',{x1:x(v),x2:x(v),y1:PB,y2:PB+5,class:'axis'},svg);S('text',{x:x(v),y:PB+20,'text-anchor':'middle',class:'tick'},svg,'$'+v.toLocaleString('en-US')+'B');});
+  S('text',{x:(PL+PR)/2,y:Ht-12,'text-anchor':'middle',class:'axt'},svg,'Market size, log scale (year not stated in the export)');
+  S('text',{x:14,y:16,class:'axt'},svg,'CAGR');
+  var P=MK.map(function(m){return {m:m,x:x(m.size),y:y(m.cagr),r:Math.sqrt(m.cos.length)*7.5,label:m.name};});
+  var core={core:1,x:x(CORE.node),y:y(CORE.cagr),r:8,label:'Electric Vehicle (core)'};
+  P.forEach(function(a,i){P.slice(i+1).forEach(function(b){if(a.label&&b.label&&Math.hypot(a.x-b.x,a.y-b.y)<6){a.label+=', '+b.label;b.label='';}});});
+  var all=[core].concat(P.slice().sort(function(a,b){return a.y-b.y;}));
+  var boxes=all.map(function(p){return {x:p.x-p.r,y:p.y-p.r,w:2*p.r,h:2*p.r};}),placed=[];
+  function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+  var gm=S('g',{},svg),gt=S('g',{},svg);
+  all.forEach(function(p,i){
+    var w=p.label.length*6.5+4,h=15,d=p.r+5,k=d*0.72,e=d+12;
+    var c=[[p.x+d,p.y-h/2],[p.x-d-w,p.y-h/2],[p.x-w/2,p.y-d-h],[p.x-w/2,p.y+d],[p.x+k,p.y-k-h],[p.x+k,p.y+k],[p.x-k-w,p.y-k-h],[p.x-k-w,p.y+k],[p.x-w/2,p.y+e],[p.x-w/2,p.y-e-h],[p.x+k,p.y+e],[p.x-k-w,p.y+e]],best=c[0],low=1e9;
+    if(p.core)c=[[p.x-d-w,p.y-h/2]];
+    for(var j=0;j<c.length;j++){var b={x:c[j][0],y:c[j][1],w:w,h:h};
+      if(b.x<PL+2||b.x+w>W-2||b.y<PT-8||b.y+h>PB-2)continue;
+      var cost=placed.filter(function(q){return hit(b,q);}).length*2+boxes.filter(function(q,n){return n!==i&&Math.hypot(all[n].x-p.x,all[n].y-p.y)>6&&hit(b,q);}).length;
+      if(cost<low){low=cost;best=c[j];}
+      if(!cost)break;}
+    if(p.label)placed.push({x:best[0],y:best[1],w:w,h:h});
+    if(p.label)S('text',{x:best[0]+2,y:best[1]+11.5,class:'lab halo'},gt,p.label);
+    var el;
+    if(p.core){el=S('path',{d:'M'+p.x+' '+(p.y-9)+'L'+(p.x+9)+' '+p.y+'L'+p.x+' '+(p.y+9)+'L'+(p.x-9)+' '+p.y+'Z',class:'corept',tabindex:0},gm);
+      tip(el,function(){return {e:'Core market',t:CORE.name,l:[money(CORE.node)+' on the graph node · '+CORE.cagr+'% CAGR']};});}
+    else{el=S('circle',{cx:p.x,cy:p.y,r:p.r,class:'pt',tabindex:0},gm);
+      tip(el,function(){var near=P.filter(function(q){return Math.hypot(q.x-p.x,q.y-p.y)<6;});
+        if(near.length>1)return {e:'Overlapping markets',t:near.map(function(q){return q.m.name;}).join(' and '),l:near.map(function(q){return q.m.name+': '+money(q.m.size)+' · '+q.m.cagr+'%';})};
+        return {e:'Linked market',t:p.m.name,l:[money(p.m.size)+' · '+p.m.cagr+'% CAGR','Linked to '+p.m.cos.map(function(ci){return CO[ci].name;}).join(', ')]};});}
+  });
+})();
+
+/* ---------- 9. growth curve ---------- */
+(function(){
+  var svg=$('#s-growth'),W=900,Ht=420,PL=70,PR=860,PT=24,PB=366;
+  svg.setAttribute('viewBox','0 0 '+W+' '+Ht);
+  var r=Math.pow(CORE.v35/CORE.v25,0.1)-1;
+  function val(yr){return CORE.v25*Math.pow(1+r,yr-2025);}
+  function x(yr){return PL+(yr-2025)/10*(PR-PL);}
+  function y(v){return PB-v/1400*(PB-PT);}
+  [0,350,700,1050,1400].forEach(function(v){S('line',{x1:PL,x2:PR,y1:y(v),y2:y(v),class:v?'grid':'axis'},svg);S('text',{x:PL-10,y:y(v)+4,'text-anchor':'end',class:'tick'},svg,'$'+v.toLocaleString('en-US')+'B');});
+  for(var yr=2025;yr<=2035;yr++){S('text',{x:x(yr),y:PB+20,'text-anchor':'middle',class:'tick'},svg,String(yr));}
+  var d='';for(var q=2025;q<=2035;q+=0.25){d+=(d?'L':'M')+x(q).toFixed(1)+' '+y(val(q)).toFixed(1);}
+  S('path',{d:d+'L'+x(2035)+' '+y(0)+'L'+x(2025)+' '+y(0)+'Z',class:'area'},svg);
+  S('path',{d:d,class:'line'},svg);
+  var yn=2025+Math.log(CORE.node/CORE.v25)/Math.log(1+r);
+  var cross=S('line',{y1:PT,y2:PB,class:'cross',visibility:'hidden'},svg),hov=S('circle',{r:4.5,class:'hov',visibility:'hidden'},svg);
+  S('circle',{cx:x(2025),cy:y(CORE.v25),r:5.5,class:'stated'},svg);
+  S('circle',{cx:x(2035),cy:y(CORE.v35),r:5.5,class:'stated'},svg);
+  S('circle',{cx:x(yn),cy:y(CORE.node),r:6,class:'shown'},svg);
+  function lab(px,py,anchor,a,b){var t=S('text',{x:px,y:py,'text-anchor':anchor,class:'lab halo'},svg);S('tspan',{'font-weight':600},t,a);S('tspan',{x:px,dy:16,fill:'var(--ink2)'},t,b);}
+  lab(x(2025)+10,y(CORE.v25)-30,'start','$698.63B','2025, stated');
+  lab(x(2035)-2,y(CORE.v35)-30,'end','$1,189.59B','2035, stated');
+  lab(x(yn),y(CORE.node)-32,'middle','$910.2B','graph node, no year given');
+  var hitr=S('rect',{x:PL,y:PT,width:PR-PL,height:PB-PT,fill:'transparent',tabindex:0,'aria-label':'Core market size by year'},svg),cur=2030;
+  function at(e){
+    if(e.type.indexOf('pointer')===0){var b=svg.getBoundingClientRect();cur=Math.round(2025+((e.clientX-b.left)/b.width*W-PL)/(PR-PL)*10);}
+    cur=Math.max(2025,Math.min(2035,cur));
+    cross.setAttribute('x1',x(cur));cross.setAttribute('x2',x(cur));cross.setAttribute('visibility','visible');
+    hov.setAttribute('cx',x(cur));hov.setAttribute('cy',y(val(cur)));hov.setAttribute('visibility','visible');
+    var st=cur===2025||cur===2035;
+    showTip(e,{e:String(cur),t:money(+val(cur).toFixed(1)),l:[st?'Stated in the report summary':'Interpolated at '+(r*100).toFixed(2)+'% a year']});
+  }
+  function off(){tipEl.hidden=true;cross.setAttribute('visibility','hidden');hov.setAttribute('visibility','hidden');}
+  hitr.addEventListener('pointermove',at);hitr.addEventListener('pointerleave',off);hitr.addEventListener('focus',at);hitr.addEventListener('blur',off);
+  hitr.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){cur++;at(e);}else if(e.key==='ArrowLeft'){cur--;at(e);}});
+})();
+
+/* ---------- 10. data tables ---------- */
+(function(){
+  var t=$('#t-markets'),hr=H('tr',{},H('thead',{},t));
+  ['Market','Size','CAGR','Companies','Record year'].forEach(function(h,i){H('th',{class:i===1||i===2||i===4?'num':''},hr,h);});
+  var tb=H('tbody',{},t);
+  MORD.forEach(function(m){var tr=H('tr',{},tb);H('th',{scope:'row'},tr,m.name);H('td',{class:'num'},tr,money(m.size));H('td',{class:'num'},tr,m.cagr+'%');
+    H('td',{},tr,m.cos.map(function(ci){return CO[ci].name;}).join(', '));H('td',{class:'num'},tr,String(m.year));});
+  var t2=$('#t-tax'),h2=H('tr',{},H('thead',{},t2));LEVELS.forEach(function(h){H('th',{},h2,h);});
+  var b2=H('tbody',{},t2);
+  G.forEach(function(g,gi){g.bets.forEach(function(b){b.items.forEach(function(it){var tr=H('tr',{},b2);
+    var td=H('td',{class:'c'+gi},tr);H('span',{class:'sw'},td);td.appendChild(document.createTextNode(g.name));
+    H('td',{},tr,b.name);H('td',{},tr,it[0]);H('td',{},tr,it[1]);});});});
+})();
+
+/* ---------- tabs ---------- */
+var btns=[].slice.call(document.querySelectorAll('.rail button')),ids=btns.map(function(b){return b.getAttribute('data-v');});
+function show(id,push){
+  if(ids.indexOf(id)<0)id=ids[0];
+  ids.forEach(function(v){$('#v-'+v).hidden=v!==id;});
+  btns.forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-v')===id?'true':'false');});
+  tipEl.hidden=true;
+  if(push){try{history.replaceState(null,'','#'+id);}catch(e){}try{localStorage.setItem('ev-atlas-view',id);}catch(e){}}
+}
+btns.forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-v'),true);});});
+var start=(location.hash||'').slice(1);
+if(!start){try{start=localStorage.getItem('ev-atlas-view')||'';}catch(e){}}
+show(start||ids[0],false);
+window.addEventListener('hashchange',function(){show((location.hash||'').slice(1),false);});
+})();
+</script>
+
+</body></html>

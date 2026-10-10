@@ -1,0 +1,147 @@
+<div class="wrap">
+  <header>
+    <h1 class="market-title">Electric Vehicle Market</h1>
+    <div class="atlas-controls"><button class="chart-size-toggle" type="button" aria-pressed="false">Enlarge chart</button><button class="motion-toggle" title="Animation respects your system’s reduced-motion preference" type="button" aria-pressed="true">Motion on</button></div>
+    <ul class="facts">
+      <li class="core"><b>1</b> core market</li><li><b>3</b> hot bets</li><li><b>9</b> next hot bets</li><li><b>27</b> disruptive technologies</li><li><b>27</b> future trends</li><li><b>6</b> companies</li><li><b>13</b> linked markets</li>
+    </ul>
+  </header>
+
+  <div class="shell">
+    <nav class="rail" role="tablist" aria-label="Views">
+      <div><h2>Taxonomy</h2><div class="grp">
+        <button role="tab" data-v="horizon">Horizon map</button>
+        <button role="tab" data-v="sunburst">Sunburst</button>
+        <button role="tab" data-v="radial">Radial tree</button>
+        <button role="tab" data-v="chain">Value chain</button>
+        <button role="tab" data-v="themes">Theme matrix</button>
+      </div></div>
+      <div><h2>Customers</h2><div class="grp">
+        <button role="tab" data-v="matrix">Company × market</button>
+        <button role="tab" data-v="network">Network</button>
+        <button role="tab" data-v="bubble">Size vs growth</button>
+      </div></div>
+      <div><h2>Core</h2><div class="grp">
+        <button role="tab" data-v="growth">Growth curve</button>
+      </div></div>
+      <div><h2>Reference</h2><div class="grp">
+        <button role="tab" data-v="data">Data tables</button>
+      </div></div>
+    </nav>
+
+    <main>
+      <section class="view" id="v-expedition" hidden><div id="expedition-root"></div></section>
+      <section class="view" id="v-horizon">
+        <h2>Horizon map</h2>
+        <p class="q">How do the market’s ideas connect? Read the four taxonomy levels from left to right. These relationships do not establish a timeline or maturity ranking.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-lg"><svg id="s-horizon" role="img" aria-label="Horizon map of the EV taxonomy in four columns"></svg></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>All 27 disruptive technologies appear here. The live graph drops this level and shows only the trends.</li>
+          <li>Each technology leads to exactly one trend, so the last two columns pair off row by row.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-sunburst" hidden>
+        <h2>Sunburst</h2>
+        <p class="q">What is the whole structure at a glance? Each ring is one taxonomy level, with the core market at the centre.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-md sq"><svg id="s-sunburst" role="img" aria-label="Sunburst of the EV taxonomy in four rings"></svg></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>Every ring is an equal split (3 × 3 × 3 × 1), so arc width carries no magnitude. It shows membership only.</li>
+          <li>With sizes or report counts per node, the same chart could show weight as well as structure.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-radial" hidden>
+        <h2>Radial tree</h2>
+        <p class="q">How does the current circular graph look with its hierarchy drawn in? Same footprint as the Connected Market tab, with parent links and the technology level restored.</p>
+        <div class="card"><div class="legend" data-groups></div><div class="scroll w-md sq"><svg id="s-radial" role="img" aria-label="Radial tree of the EV taxonomy"></svg></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>Technology names sit on the spokes between the two outer rings, so the outer ring is still the 27 future trends at 13.3° spacing.</li>
+          <li>Labels are harder to scan here than in the horizon map. This view suits a hero graphic more than a working screen.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-chain" hidden>
+        <h2>Value chain</h2>
+        <p class="q">Where along the chain does each bet sit, and who buys at the end? The nine next hot bets are placed by stage, with the two customer groups as demand.</p>
+        <div class="card">
+          <div class="legend" data-groups></div>
+          <div class="chain" id="chain"></div>
+          <div class="demand" id="demand"></div>
+        </div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>The stage for each bet is an illustrative classification. The export has no stage field.</li>
+          <li>The export also has no link from a customer to a taxonomy node, so the demand row sits below the chain and is not wired to it.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-themes" hidden>
+        <h2>Theme matrix</h2>
+        <p class="q">Which themes repeat across branches? Each cell counts how many of a branch's six technology and trend labels mention the theme.</p>
+        <div class="card"><div class="scroll"><table class="hm" id="t-themes"></table></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>Tags come from keyword matching on the 54 labels. A label can match more than one theme.</li>
+          <li>Rows with marks in many columns are cross-cutting themes that the tree shape hides.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-matrix" hidden>
+        <h2>Company × market</h2>
+        <p class="q">Which customers share which linked markets? Rows are the 13 unique markets listed as revenue sources, columns are the six companies.</p>
+        <div class="card"><div class="scroll"><table class="mx" id="t-matrix"></table></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>18 links cover 13 markets. Drone Package Delivery is the only market shared across both customer groups.</li>
+          <li>UPS and FedEx have identical columns. Amazon and Lyft share no market with any other company.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-network" hidden>
+        <h2>Network</h2>
+        <p class="q">The same 18 links as a two-sided graph. Market dots grow with the number of companies linked to them.</p>
+        <div class="card"><div class="scroll w-lg"><svg id="s-network" role="img" aria-label="Bipartite network of six companies and thirteen linked markets"></svg></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>Markets are ordered to keep links from crossing, so clusters read top to bottom.</li>
+          <li>There are no market-to-market or customer-to-taxonomy links in the export, which is why this stays two columns.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-bubble" hidden>
+        <h2>Size vs growth</h2>
+        <p class="q">Which linked markets are large and fast-growing? Each bubble is a linked market, sized by the number of companies linked to it. The gold diamond is the core market.</p>
+        <div class="card"><div class="scroll w-md"><svg id="s-bubble" role="img" aria-label="Bubble chart of market size against CAGR"></svg></div></div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>Sizes carry no year in the export, so horizontal position is indicative. The three blockchain markets in the top right are the ones to check first.</li>
+          <li>Digital Pharmacy and Ride Sharing sit almost on top of each other at about $340B and 17%, so they share one label.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-growth" hidden>
+        <h2>Growth curve</h2>
+        <p class="q">How big is the core market, and when? The summary states two values, and the graph node shows a third with no year attached.</p>
+        <div class="card">
+          <div class="legend"><span><i class="dot"></i>Stated in the report summary</span><span><i class="ring"></i>Shown as the graph node's size</span><span><i class="dash"></i>Interpolated between the stated points</span></div>
+          <div class="scroll w-md"><svg id="s-growth" role="img" aria-label="Line chart of EV market size from 2025 to 2035"></svg></div>
+        </div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>The two stated values imply 5.47% a year, which the summary rounds to 5.5%.</li>
+          <li>$910.2B aligns approximately with 2030 on this interpolation. This does not establish the year of the source figure.</li>
+        </ul></details>
+      </section>
+
+      <section class="view" id="v-data" hidden>
+        <h2>Data tables</h2>
+        <p class="q">Every value the charts use, as rows.</p>
+        <div class="card tables">
+          <div><h3>Linked markets</h3><div class="tw"><table id="t-markets"></table></div></div>
+          <div><h3>Taxonomy</h3><div class="tw"><table id="t-tax"></table></div></div>
+        </div>
+        <details class="chart-notes"><summary>About this view</summary><ul class="notes">
+          <li>ID timestamp year is read from the timestamp inside each market's record ID.</li>
+          <li>The ID timestamp does not establish the reporting period. Report links are left out because the export's URLs carry signed tokens.</li>
+        </ul></details>
+      </section>
+    </main>
+  </div>
+</div>
+<div id="tip" hidden></div>
+

@@ -1,0 +1,719 @@
+{
+  "market": "Electric Vehicle Market",
+  "exported_at": "2026-10-10T11:43:49.414779+00:00",
+  "description": "Actual API responses. The Stage1 graph response already merges the YC circle names into the rendered graph; the separate YC response preserves all circle metadata. API credentials are excluded.",
+  "responses": {
+    "connected_graph": {
+      "endpoint": "https://stage1-growthiq.mnmks.com/growth_iq_api_proxy/ks/get_connected_graph_data",
+      "method": "POST",
+      "request_parameters_without_credentials": {
+        "report_id": "209371461",
+        "report_name": "Electric Vehicle Market"
+      },
+      "response": {
+        "status": 200,
+        "message": "Success",
+        "data": {
+          "core": {
+            "id": "5876c0153b091a09b4f24cdc",
+            "label": "Electric Vehicle Market",
+            "summary": "The plug-in electric vehicle market is projected to grow from USD 698.63 billion in 2025, and reach USD 1,189.59 billion in 2035, growing at a CAGR of 5.5%. The major players in the electric vehicle market include BYD Company Ltd. (China), Tesla (US), Zhejiang Geely Holding Group (China), Volkswagen Group (Germany), and General Motors (US). These companies offer various electric vehicles and have strong global distribution networks. Companies are also actively launching new products and collaborating with other players to expand their market presence. In August 2025, General Motors (US) announced that it will be temporarily importing EV batteries from CATL (China) to support production of its affordable EV models, including the upcoming Chevrolet Bolt.",
+            "size": "$910.2B",
+            "cagr": "5.5%",
+            "url": "/htmlreports/display/MWRiNTIxMjUwMmIyMGEyMTM5NzhlNzI3YTYyMzNkNzA2MTI3MzYwMDA5YmU1YTM5MGJiMzIzNDk1NjRkYTJjNyeLIgPJDDvS4fdz0ktfcWmXv75uKHQV-u4vI5vFuVpyuFivQEZ4uQXNTqxu9C_fxQ,,?ic=1&cid=NDgzMjlkNDlhZTgzZjE4YjYwYzMyNWI4ZTc0YWI5MzMwMzJlZDg4OWM3ZjgxYzU5MmRhMzNkNGJjN2QxY2YxZYoGZ_AhZ2CfPFYPq-S3SenxH5QUrin2w-oCvlRDuhOZlyXPyZClYsn9_Y3w813drw,,"
+          },
+          "adjacentMarkets": [
+            {
+              "id": "yc-07b45058ea4f16a1",
+              "label": "Graphene Batteries",
+              "angle": 0.0
+            },
+            {
+              "id": "yc-255f7d585257646b",
+              "label": "Quantum Glass Battery",
+              "angle": 13.333333333333334
+            },
+            {
+              "id": "yc-7deb3d43eee157d7",
+              "label": "Nanowire Battery",
+              "angle": 26.666666666666668
+            },
+            {
+              "id": "yc-0a3f1dcaf76d5b8b",
+              "label": "AI Optimized Charging",
+              "angle": 40.0
+            },
+            {
+              "id": "yc-009ab3cca90a7616",
+              "label": "Bi-directional Charging",
+              "angle": 53.333333333333336
+            },
+            {
+              "id": "yc-d3df3940ccd6fc13",
+              "label": "Charging Roads",
+              "angle": 66.66666666666667
+            },
+            {
+              "id": "yc-772304f865ba4434",
+              "label": "Quantum Computing in Autonomous Driving",
+              "angle": 80.0
+            },
+            {
+              "id": "yc-88d1be21514ffb26",
+              "label": "Edge Computing in V2X",
+              "angle": 93.33333333333333
+            },
+            {
+              "id": "yc-9c5db816ab5ac966",
+              "label": "Solid-State LiDAR",
+              "angle": 106.66666666666667
+            },
+            {
+              "id": "yc-a42998b6cee80bbd",
+              "label": "Second Life Batteries",
+              "angle": 120.0
+            },
+            {
+              "id": "yc-7b3f1f311d880af0",
+              "label": "Solid Electrolyte",
+              "angle": 133.33333333333334
+            },
+            {
+              "id": "yc-c04f7a331fbb5178",
+              "label": "AI in Battery Management",
+              "angle": 146.66666666666666
+            },
+            {
+              "id": "yc-55dd8ea87dd7ea1b",
+              "label": "Wireless Power Transfer Roads",
+              "angle": 160.0
+            },
+            {
+              "id": "yc-002af920ee074a6d",
+              "label": "Autonomous Battery Swapping Stations",
+              "angle": 173.33333333333334
+            },
+            {
+              "id": "yc-5a70f1cf073f256b",
+              "label": "AI in Charging Station Management",
+              "angle": 186.66666666666666
+            },
+            {
+              "id": "yc-4cf1d5683d69d40c",
+              "label": "AI in EV Production",
+              "angle": 200.0
+            },
+            {
+              "id": "yc-1cdf75d073a93f22",
+              "label": "Nanotechnology in Lightweight Materials",
+              "angle": 213.33333333333334
+            },
+            {
+              "id": "yc-58d26ba1c34ca236",
+              "label": "AI in EV Design",
+              "angle": 226.66666666666666
+            },
+            {
+              "id": "yc-c25785f1c92baf15",
+              "label": "Autonomous Shared Mobility",
+              "angle": 240.0
+            },
+            {
+              "id": "yc-ab928072c11e180a",
+              "label": "Electric Trucks",
+              "angle": 253.33333333333334
+            },
+            {
+              "id": "yc-e7a5a25ab9292653",
+              "label": "Subscription Based EV Ownership",
+              "angle": 266.6666666666667
+            },
+            {
+              "id": "yc-d648dc4826e162df",
+              "label": "AI in Energy Management",
+              "angle": 280.0
+            },
+            {
+              "id": "yc-c7f94dc3fcd9226f",
+              "label": "Decentralized Energy Systems",
+              "angle": 293.3333333333333
+            },
+            {
+              "id": "yc-048633360ca9e8cc",
+              "label": "Vehicle as a Virtual Power Plant",
+              "angle": 306.6666666666667
+            },
+            {
+              "id": "yc-5b27c1e39010e004",
+              "label": "Quantum Computing in EV",
+              "angle": 320.0
+            },
+            {
+              "id": "yc-01c11a3dcd0d9e10",
+              "label": "Edge Computing in EV",
+              "angle": 333.3333333333333
+            },
+            {
+              "id": "yc-9dbd8bff0f74fec0",
+              "label": "Mixed Reality in EV Training",
+              "angle": 346.6666666666667
+            }
+          ],
+          "segments": {
+            "Top Technologies": [
+              {
+                "id": "yc-a200f5c585708c38",
+                "label": "Battery Technology",
+                "angle": 0.0
+              },
+              {
+                "id": "yc-da9656842dbafe94",
+                "label": "Charging Infrastructure",
+                "angle": 40.0
+              },
+              {
+                "id": "yc-db18ebc85bd6c554",
+                "label": "Autonomous Driving",
+                "angle": 80.0
+              }
+            ],
+            "Top Sub Markets": [
+              {
+                "id": "yc-7102b7d1a7676e8e",
+                "label": "Battery Production",
+                "angle": 120.0
+              },
+              {
+                "id": "yc-f877b27564c4f223",
+                "label": "Charging Stations",
+                "angle": 160.0
+              },
+              {
+                "id": "yc-26af35a2ba9bc219",
+                "label": "EV Manufacturing",
+                "angle": 200.0
+              }
+            ],
+            "Top Industries": [
+              {
+                "id": "yc-bc4b1d8ac5377309",
+                "label": "Automotive",
+                "angle": 240.0
+              },
+              {
+                "id": "yc-d61b7c96a1574ced",
+                "label": "Energy",
+                "angle": 280.0
+              },
+              {
+                "id": "yc-99e3a94fd2b09921",
+                "label": "Technology",
+                "angle": 320.0
+              }
+            ]
+          },
+          "customers": [
+            {
+              "id": "Individual Consumers & Retail Buyers",
+              "name": "Individual Consumers & Retail Buyers",
+              "companies": [
+                {
+                  "id": "jdcom",
+                  "name": "Jd.com",
+                  "logo": "https://mnmks.com//company_logos/jdcom.jpeg",
+                  "revenueSources": [
+                    {
+                      "id": "5de8417cd1bb8d83948025a4",
+                      "name": "Drone Package Delivery Market",
+                      "size": "$4.66B",
+                      "cagr": "37.4%",
+                      "url": "/htmlreports/display/YmMwMmY1NjVjZTdhZDQxMTZlNDY5ZWJiZjk1Yjc5ZmQ5ZTQwYzM4ZTAxMTYzZjkwMGJkNWNmNDRmOGYyZTI0Nc3iJB6aeKmuR5MRWVsqjmNi5Hu4Lj2N3-Lr-PLpkwVSn2YMWzvDlx3AEo04hUbHbw,,?ic=1&cid=YzhiMjI1MWQ3ZGZmMjUxM2RhYzFhMzA5ZTJiYTNiNjVmOTM2ODE2OGVkYjFmNThkZTcwZjI5ZDY2NDM0MzM5MNFvRGLfDdtd5Lg62XfzU_fyGHRD5UHWv5EJu1N4FvwihxQ5rILEZ_uziDN4jN_DMA,,"
+                    },
+                    {
+                      "id": "5c4f907bd1bb8d38a0e5175f",
+                      "name": "Delivery Robots Market",
+                      "size": "$3.24B",
+                      "cagr": "32.4%",
+                      "url": "/htmlreports/display/ZWE0NzQ2NGU0MGYxZWFhZjQ4MzgyZTMzZTIyYTE2NWVhYzRjNGM4YTU2YTc1NmQ4NDhiNzg1MDNiMmQyMjg2NsA_1cF5n5vR2xm7XNFMSGjnbLHgJitBKi3bhyjjwiRJyBvJJ-VOifi9BEXqaie4CA,,?ic=1&cid=NjgwYmFmMDlmYzJiZDE5OWE0ZTkwMWQ0ZTk5MzgyMWQ0N2IyMjUwYTMzZjAyNTU1YjEyODZkNzU1NzBkYTA1YakqHSU0K409c1BdJn6tnzt5DR6XTwBO-Ip6V4PeFa8zv8dgKaovUPoKWjJSsdl6XA,,"
+                    },
+                    {
+                      "id": "5d1be8fcd1bb8d8e041eeda5",
+                      "name": "Autonomous Last Mile Delivery Market",
+                      "size": "$4.2B",
+                      "cagr": "22.7%",
+                      "url": "/htmlreports/display/Y2Y2ZGM5ZDIyMTI0ZGE0ODI5OGZmZTE1MDUwM2U1YmJjNWQwMDUwZGIzNjFiY2UzNGFhZWRkN2YzNTdkOGI3MY2F1SZRf6odCNjwXYPO1e10X59-FiuhCcFiU24SCkOYWnER0wCK9-fwlZK5Dvulmw,,?ic=1&cid=MjgwZDc0Y2FlN2FhYWUwZWI3MzRiZDBhNWZhMWYxMWEzNWNkMzc1NWY2NDRmMGE1YjZhYTAyNzY4ZDAyZmUxMXMWLO2Hxve6zRGi4PZhLW4JUOHqQke-CMHZ5wiwzLraVD7gswC9gZVass_R_PkyYg,,"
+                    }
+                  ]
+                },
+                {
+                  "id": "walmart_stores_inc",
+                  "name": "WALMART INC.",
+                  "logo": "https://mnmks.com//company_logos/walmart_stores_inc.png",
+                  "revenueSources": [
+                    {
+                      "id": "5de8417cd1bb8d83948025a4",
+                      "name": "Drone Package Delivery Market",
+                      "size": "$4.66B",
+                      "cagr": "37.4%",
+                      "url": "/htmlreports/display/ZTBkMjg1NzZjMjhjY2QwY2M0M2QyNTY0NzY5MGM4NDg4ODI3OGQzZTgwMTMwZmY4Y2I2MDA3OTA0Yjg0YWVmNlv484-Szp9tFJGFsM7oVFpzgjYe9Ym_fkDv5GIlivNyP8Wdk_YlqTAEIByvFVrFjg,,?ic=1&cid=NWE4NTFhOWJlYjlkOGZkZjYyMTFlMzRjNTM2N2E2Yzg2N2UwOTE3NWUzZDZhOTI3YmQ3NDViZDY5MmFiYTdmMpzGvQc7nxdEw-QBVQxqjsuSL2GxglB5JGFb5WQJAYnI5rLxOQR2uZfjzuDH0XiitQ,,"
+                    },
+                    {
+                      "id": "62a017c0d1bb8d1d24962e6d",
+                      "name": "Digital Pharmacy Market",
+                      "size": "$339.38B",
+                      "cagr": "17%",
+                      "url": "/htmlreports/display/MDlhMWNjZjJjY2QxNjA1ZDExMzM1Zjg1YmVjNWQ4ZjdmYjE1ODU4NGM5NGIyMzhmNjMzNzcyZGUwY2EzYWNlZsZh3BYtPCDe8TW7tEuPYQfjcpavtr0HFwYKCjDwka4KIgIHWmlDzEdGEJOG7Y6KJA,,?ic=1&cid=NDZiY2Y1ZmQ3ODFkMDRiZDVjYzcxMjg0YWNjMzBiMjM0NTc1YWVmNDU0ZWIwNDA4MmMzYWY2OTFmNjY0ZGM5NXPTXT0lXB-1gL2sdDtMAVAaZKdVHEOpKsVBCBYKHIneiYXOduf195zQZqZgO_mscA,,"
+                    },
+                    {
+                      "id": "5845f8843b091a42201b204e",
+                      "name": "Automotive E-tailing Market",
+                      "size": "$141.98B",
+                      "cagr": "12.53%",
+                      "url": "/htmlreports/display/MTEyMTNmZGFkMjY0NDNiMzhiOTg1Njc5NDExNmRlY2IwZTg5NzJjZWEyZGM4YmQwNzNkNWVjZTJkMTVmNGNiZYH-XbI6NrYnhI1vNnKqC5HFxf3VgloKpIto3Jk3-gzenAgoNTj5Gn7KLhucQOk4Ow,,?ic=1&cid=MTgxNzk1NTdhYTMwOWIzOTQxOGQ0MTZjNTZjZTU2MDk4ZjI1YTAxNjkwYjBhMTBjZTRmNzI3MTVjMzQ3YWU2NhwIS1WJ78HCAp6CpbOT2n-QBE1nYme3GGK64955bcpMec4j3gZsc123OiYQA7rS5w,,"
+                    }
+                  ]
+                },
+                {
+                  "id": "amazon",
+                  "name": "Amazon.com, Inc.",
+                  "logo": "https://mnmks.com//company_logos/amazon.png",
+                  "revenueSources": [
+                    {
+                      "id": "5b34e14bd1bb8d52785d549f",
+                      "name": "Blockchain in Retail Market",
+                      "size": "$263.7B",
+                      "cagr": "96.4%",
+                      "url": "/htmlreports/display/ZmViYjFiMzhhMGQ3ZTQ3MjY2MmFiYmE0YzMyNzIwODNhODBlNzg0NTk3ZGM0MjBlN2YxNmIyNzFiNWRlOGI3ZMg_Kan8C8UKjpr6-lN5WryGRVfcaKno9JnbAtPaDNZ_czqLYgE9dPFUjhFFK2IwbA,,?ic=1&cid=YmRlNWViNmYwMTRiOTU3MWM5NThjNjM3ZWI4MDY3NTY4OWUwMzdiNzk4NzNjNTI5MDM1NjQ4ZDkzYjIzNGI3N3kuq5L91jdiNmX1GlU567TqvgLGGPSabGSea_aYwXeK8ec8UiqLZyMZ3-7El8PU8g,,"
+                    },
+                    {
+                      "id": "5b171cfbd1bb8d55a44e1235",
+                      "name": "Blockchain Identity Management Market",
+                      "size": "$130.34B",
+                      "cagr": "92.7%",
+                      "url": "/htmlreports/display/ZmRkNGU2OWNmNDdmZTFhMTJkNzVhZTVlZjY2ZWMyZGZlM2Y2ZTUxYzA1YjAzMDhhMDk2YTdmNzdlN2ZlNzdiNuh3QuAkPDbWkCrBVSL1dnooyJcqqKuWIYwoxrPqlGFcRCVwvw2UCz4WaBinXFMb3w,,?ic=1&cid=MzgyZDUzNjIzNDA5N2UwNzE1MGYxYzQ1MjFkNDY0ZGU5ZWMwYmQ0NDkxNzY5ODhlZDhkMDFjMWZmOTUwZDk0YftRfmESmOoJKnY3EDwx4lQy-1IK6URYDNrS_1cu7e67OuE66_cD_wfwYzsUzkfmcQ,,"
+                    },
+                    {
+                      "id": "5b3d587cd1bb8d5718ac20e4",
+                      "name": "Blockchain In Insurance Market",
+                      "size": "$102.98B",
+                      "cagr": "84.9%",
+                      "url": "/htmlreports/display/Y2RmNjE2MjNiMDA2MGM4Y2YxNmYxNTc1MWVmOWM4MjQxNDY0ODBkODIxZGFhODU2NjlmN2VmMjYzZDM1YmQwZNLzMoSLeWqPnUxGnbxjj9uQ4P4evmu-RY5IXPprHweLKGD5_rtpuqDTcd4ZQhep1A,,?ic=1&cid=M2M0MDQ3ZDdlMjQ0MDY4YzU5NjBhODcxZGM4YzE3MmU2YmQxYTEzZDkxNTM1MzY3ZmU1MWVjOWUwODM2NTJiZgtPniIY-7VTb5R__PVF4Nm0Of2o38bAEkEoWNfxb_5shBn8HnT4iJwYjULhVH7jSg,,"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "Fleet & Commercial Operators",
+              "name": "Fleet & Commercial Operators",
+              "companies": [
+                {
+                  "id": "united_parcel_service_inc",
+                  "name": "United Parcel Service, Inc.",
+                  "logo": "https://mnmks.com//company_logos/united_parcel_service_inc.png",
+                  "revenueSources": [
+                    {
+                      "id": "5de8417cd1bb8d83948025a4",
+                      "name": "Drone Package Delivery Market",
+                      "size": "$4.66B",
+                      "cagr": "37.4%",
+                      "url": "/htmlreports/display/ZGY2OGNlZGRmNjg3Y2IxMWNmNDFmMWM5MDc0ZGEyY2Y0YWE2YzY3NmQ2MDI5ZWY1ZGJiYTQ1MTdkM2EwNjE3MEvO2sk7Diu8e2D3fuKCi25hfO59rIEoqPw352iFJHMEeILvgbQYR5_wV1blhTv5Fg,,?ic=1&cid=YjFmNzBmZTRmZTEyZTNlMzk1ZmJmNTIxZWQyZWExYmJiNTZkMzlkNDUzYzE0ZjI0MjBhNzQxYjg2ZDI5MTRiZLIXlNEr3PcOO1Y1ER9Bhd120AEpdV4cr358ECZxrR7p5t_dynHrx3kjqf8-yw854w,,"
+                    },
+                    {
+                      "id": "58accd7f3b091a136cb754ab",
+                      "name": "Temperature Controlled Packaging Solutions Market",
+                      "size": "$157.41B",
+                      "cagr": "18.4%",
+                      "url": "/htmlreports/display/NzIwZTg1ZDc2NDE3YzdmYjQ5NjU0OGJjMTAzMTc0MzQ5Yzc2M2Y1M2VhNWQwMTYzMDhkYmRlZjUxYWM2YzU2ZO6Dkm97EzR7loaQUZU6eoWoLDWgha6w1j9o6tDLqNfeuxmXyU9_oClS70T_FXgVGA,,?ic=1&cid=NTRjMTYyYTc0NDBlMWRkNDMzN2M0ZDgyMDYwMjc0NWRlMjM1MWZmYWVjNzNlZWNjZmExMGUxYWY3N2EzNmM2OVW0MVa1oXOFVJciDum7584z6czjYgaEfeGah1hiOJYEtHFgut1nGBjkpAJ3560qpg,,"
+                    },
+                    {
+                      "id": "5bdcddfbd1bb8d50485e1a79",
+                      "name": "Battery Packaging Market",
+                      "size": "$80.03B",
+                      "cagr": "12%",
+                      "url": "/htmlreports/display/ODc2MDczMzA4NmEwNDNlNWFkYjYzMmMzMmViODBhMDAxMGQwYzA5YTZiOTI5ZDhjOGNjYzJhMmRiYTlhNDg2MbXdqXU44J9qAPaUs_eEh8KW9d77FYQtFZQ-CV82tanPWYxhKIhEdZNB6iSY1NK2mw,,?ic=1&cid=NmI4YWU0MzQyZTNkMWQyYWNiNDM0NzkxOWI5MDBiYTBiZjBlZWY0ZDliYzZhZmNhYzAzM2UwNDA4MTk1YjAxODHi8kKJT8FfEC7T_QUAhxkqncZH1e9k8PHcCHU-y4o7jKBib2NY6_iKTJNYdVjL5w,,"
+                    }
+                  ]
+                },
+                {
+                  "id": "lyft",
+                  "name": "LYFT, INC.",
+                  "logo": "https://mnmks.com//company_logos/lyft.png",
+                  "revenueSources": [
+                    {
+                      "id": "5d4a0d7bd1bb8d9fec0062ba",
+                      "name": "Mobility as a Service Market",
+                      "size": "$40.1B",
+                      "cagr": "32.3%",
+                      "url": "/htmlreports/display/YzlmZDc5ZWUxNzQ5MGE3MmFkYzczZTYyMGVkZmEyYWQ2MTRmODFmY2VhNTU3ODQ1YmIxMTlkNzM1MzU4ODJkYWrtEwjv7l3dRABzzY1IRNBaGlpg3JY8wbluCmDED1okrxlI5Fr9I_1ec0D1XGvn0g,,?ic=1&cid=MjJkYmM3NTJhOWNmNDA4ZDgzNjI2ODA4MDIzMzA5MzZlOWVhZWU4MTM5NWJhMzJhMmVhNTQ5ODU4NDYxMDFhZV182YOsMaxk_clDGGasxgt27mN5rGxnPvIC5vEBGFW2DeoXUY-ZDLHcmEEXYdcJfw,,"
+                    },
+                    {
+                      "id": "5d3a3b7cd1bb8d4078889425",
+                      "name": "Bike and Scooter Rental Market",
+                      "size": "$16.98B",
+                      "cagr": "18.9%",
+                      "url": "/htmlreports/display/Y2NkMDM5NTAwMjNkYTVmYmRkNGU2YjFlYzQ3OGQ5YjQzZjNmNmM2ZTkwMjg5MTYzMWZjODJlMTBmYWVlZTk5NWGB5iEVXzeo2pMEjk-HNYp8r43Pvgc7d11CRKlwgR6ucbax5bWqqp7c9rvX93cg1Q,,?ic=1&cid=OTU4MGYyYTI5NjRmMWFmY2UxNGI0NDBlYTY4MDA0ODRjMzRmMmJkM2RiYjdiZGI5M2ExN2ZmYTRhN2JhYTFmZYoZ8ldH5yDVHRanfYQgs7qB0_cvsfNXIEX5yGIICRutGYLFD-9RJuu8WN2LKNCWsQ,,"
+                    },
+                    {
+                      "id": "58911e1d3b091a17f4d474bb",
+                      "name": "Ride Sharing Market",
+                      "size": "$342.14B",
+                      "cagr": "16.6%",
+                      "url": "/htmlreports/display/NzNkMzI1ODlhYjMwMTg2OWY4MjkzYjY5MGI5NjQ2Y2U3OTQ1OTdmMjVkMGNmYTE3MTM3MzJjZGQ3OTE0NDU0ZVn56Em4gvlE35de2Zn7O1jkG_2bHClhWoG36qlWS1mGUBk5izSPgmeux2iSMfKqBQ,,?ic=1&cid=MmI3ODNjMzNhMjVmNjBjYjY3MWY1MmQyZjQxZjYxY2ExZTRmMDhkNzc1MGQyZTNhNTU5NzJlNDQ2ZTk5ZjZlZlkqnSI2jJU-u8rqwm1CuOxCFmBTffU4nkTUgOhNASGaEjU-INg7vgPM0xcmdvT4yQ,,"
+                    }
+                  ]
+                },
+                {
+                  "id": "fedex_corporation",
+                  "name": "FedEx Corporation",
+                  "logo": "https://mnmks.com//company_logos/fedex_corporation.png",
+                  "revenueSources": [
+                    {
+                      "id": "5de8417cd1bb8d83948025a4",
+                      "name": "Drone Package Delivery Market",
+                      "size": "$4.66B",
+                      "cagr": "37.4%",
+                      "url": "/htmlreports/display/NDA2ODJjNmJkMDljZjFlNTYzMTFmYmNlYWQ1MThmNTAzZTI4NWUzZjA0NTgyZGNjOWYwODg3MDg0N2ZmMTMwNfvkpnvmCaBbaNquwweP09nsOKadjvpD-MRTfNQo_FyYb84jkauyfYqy1nslB09lzg,,?ic=1&cid=MTlkOTRmZjlhZTMzYjVhYTZkMGYzMTNmZmFmYThhNzg3ZTlkMWQ5ZjY5NWFkNThkODUyZGQ3NWI5NDkzOTE1ZJ-W_HHzz0TF_EtsCI8deHO3Mp3jPhmCPPBe6XXG_0Y1Mlh5iBRQAa-6CUEha_rAwA,,"
+                    },
+                    {
+                      "id": "58accd7f3b091a136cb754ab",
+                      "name": "Temperature Controlled Packaging Solutions Market",
+                      "size": "$157.41B",
+                      "cagr": "18.4%",
+                      "url": "/htmlreports/display/NzUyNzcyZDZjZGVlMTk4MmY3OGI3YzNlYWI1NTEyODAzNTg5MjJhMDRlOTFkZDBkZWYwYjFmYzViMTE2YzFhNhvgbaaOpKwW0q-QF21nleaBACSfBiiJ1mnf2LRVMxz0FAeLPIEmlmNPPkjGg7ZYLQ,,?ic=1&cid=YTVlODA0OWE2MDgzYWVkNWFjNDVmNWYzYzE4NWRlODNhYTE3NTgzMmYyYWE0MzU0YjcyNWYwMDM2MzQ1OGYwNlQ23pBEQx56fgYnKPt-h_9Q4jDVl6kiZo14H79Zm4igcvmobF0FvcaO_qKq2PTHGg,,"
+                    },
+                    {
+                      "id": "5bdcddfbd1bb8d50485e1a79",
+                      "name": "Battery Packaging Market",
+                      "size": "$80.03B",
+                      "cagr": "12%",
+                      "url": "/htmlreports/display/YTU2NjFhZDAwYWFlODQzNWQ0ZjY4ZWJlNTQ1NjJiZjQxNmJkY2ViMTIzNmQ1Zjc5MWI3MWNhN2RmMzA4YWYyY_L_XfDxdLNMsCbWgIOjjnDS4da0Jre4-wVC_BzWdTL87uMC7I8Mw9yBQR825iwKCw,,?ic=1&cid=NzQ3MzIxNTA1MmMyNzBmNDIzMjU5YmU5Y2RjMjAyZGY0ZmRiYzBkY2U3MjI4NmY0ZDFmMWFkNGRiN2M5NWE4Nwzdqiz1VNM3FM-2Y7DegybIJlVsO36poQw2swPnDX7Y2AQTTX_5KPASDCwuKRhcOw,,"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "yc_circle_segments": {
+      "endpoint": "https://mnmks.com/api/get_yc_circle_segments",
+      "method": "POST",
+      "request_parameters_without_credentials": {
+        "report_name": "Electric Vehicle Market"
+      },
+      "response": {
+        "status": 200,
+        "message": "Success",
+        "data": {
+          "market": "Electric Vehicle Market",
+          "inner_circle_segments": [
+            {
+              "name": "Battery Technology",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Technologies",
+              "disruptive_technologies": [
+                "Solid-State Batteries",
+                "Lithium-Sulfur Batteries",
+                "Wireless Charging"
+              ]
+            },
+            {
+              "name": "Charging Infrastructure",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Technologies",
+              "disruptive_technologies": [
+                "Ultra-Fast Charging Stations",
+                "V2G Technology",
+                "Inductive Charging"
+              ]
+            },
+            {
+              "name": "Autonomous Driving",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Technologies",
+              "disruptive_technologies": [
+                "AI in Autonomous Driving",
+                "5G and V2X Communication",
+                "LiDAR Technology"
+              ]
+            },
+            {
+              "name": "Battery Production",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Sub Markets",
+              "disruptive_technologies": [
+                "Battery Recycling",
+                "Cobalt-Free Batteries",
+                "Battery Management Systems"
+              ]
+            },
+            {
+              "name": "Charging Stations",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Sub Markets",
+              "disruptive_technologies": [
+                "Solar Powered Charging Stations",
+                "Battery Swapping Stations",
+                "Smart Charging Stations"
+              ]
+            },
+            {
+              "name": "EV Manufacturing",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Sub Markets",
+              "disruptive_technologies": [
+                "3D Printing in EV Manufacturing",
+                "Lightweight Materials",
+                "Modular EV Platforms"
+              ]
+            },
+            {
+              "name": "Automotive",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Industries",
+              "disruptive_technologies": [
+                "Shared Mobility Services",
+                "Fleet Electrification",
+                "EV Leasing"
+              ]
+            },
+            {
+              "name": "Energy",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Industries",
+              "disruptive_technologies": [
+                "Renewable Energy Integration",
+                "Smart Grids",
+                "Energy Storage Systems"
+              ]
+            },
+            {
+              "name": "Technology",
+              "type": "next_hot_bet",
+              "hot_bet": "Top Industries",
+              "disruptive_technologies": [
+                "Blockchain in EV",
+                "IoT in EV",
+                "AR/VR in EV Training"
+              ]
+            }
+          ],
+          "outer_circle_segments": [
+            {
+              "name": "Graphene Batteries",
+              "type": "future_trend",
+              "disruptive_technology": "Solid-State Batteries",
+              "next_hot_bet": "Battery Technology",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Quantum Glass Battery",
+              "type": "future_trend",
+              "disruptive_technology": "Lithium-Sulfur Batteries",
+              "next_hot_bet": "Battery Technology",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Nanowire Battery",
+              "type": "future_trend",
+              "disruptive_technology": "Wireless Charging",
+              "next_hot_bet": "Battery Technology",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "AI Optimized Charging",
+              "type": "future_trend",
+              "disruptive_technology": "Ultra-Fast Charging Stations",
+              "next_hot_bet": "Charging Infrastructure",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Bi-directional Charging",
+              "type": "future_trend",
+              "disruptive_technology": "V2G Technology",
+              "next_hot_bet": "Charging Infrastructure",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Charging Roads",
+              "type": "future_trend",
+              "disruptive_technology": "Inductive Charging",
+              "next_hot_bet": "Charging Infrastructure",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Quantum Computing in Autonomous Driving",
+              "type": "future_trend",
+              "disruptive_technology": "AI in Autonomous Driving",
+              "next_hot_bet": "Autonomous Driving",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Edge Computing in V2X",
+              "type": "future_trend",
+              "disruptive_technology": "5G and V2X Communication",
+              "next_hot_bet": "Autonomous Driving",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Solid-State LiDAR",
+              "type": "future_trend",
+              "disruptive_technology": "LiDAR Technology",
+              "next_hot_bet": "Autonomous Driving",
+              "hot_bet": "Top Technologies"
+            },
+            {
+              "name": "Second Life Batteries",
+              "type": "future_trend",
+              "disruptive_technology": "Battery Recycling",
+              "next_hot_bet": "Battery Production",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "Solid Electrolyte",
+              "type": "future_trend",
+              "disruptive_technology": "Cobalt-Free Batteries",
+              "next_hot_bet": "Battery Production",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "AI in Battery Management",
+              "type": "future_trend",
+              "disruptive_technology": "Battery Management Systems",
+              "next_hot_bet": "Battery Production",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "Wireless Power Transfer Roads",
+              "type": "future_trend",
+              "disruptive_technology": "Solar Powered Charging Stations",
+              "next_hot_bet": "Charging Stations",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "Autonomous Battery Swapping Stations",
+              "type": "future_trend",
+              "disruptive_technology": "Battery Swapping Stations",
+              "next_hot_bet": "Charging Stations",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "AI in Charging Station Management",
+              "type": "future_trend",
+              "disruptive_technology": "Smart Charging Stations",
+              "next_hot_bet": "Charging Stations",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "AI in EV Production",
+              "type": "future_trend",
+              "disruptive_technology": "3D Printing in EV Manufacturing",
+              "next_hot_bet": "EV Manufacturing",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "Nanotechnology in Lightweight Materials",
+              "type": "future_trend",
+              "disruptive_technology": "Lightweight Materials",
+              "next_hot_bet": "EV Manufacturing",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "AI in EV Design",
+              "type": "future_trend",
+              "disruptive_technology": "Modular EV Platforms",
+              "next_hot_bet": "EV Manufacturing",
+              "hot_bet": "Top Sub Markets"
+            },
+            {
+              "name": "Autonomous Shared Mobility",
+              "type": "future_trend",
+              "disruptive_technology": "Shared Mobility Services",
+              "next_hot_bet": "Automotive",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Electric Trucks",
+              "type": "future_trend",
+              "disruptive_technology": "Fleet Electrification",
+              "next_hot_bet": "Automotive",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Subscription Based EV Ownership",
+              "type": "future_trend",
+              "disruptive_technology": "EV Leasing",
+              "next_hot_bet": "Automotive",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "AI in Energy Management",
+              "type": "future_trend",
+              "disruptive_technology": "Renewable Energy Integration",
+              "next_hot_bet": "Energy",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Decentralized Energy Systems",
+              "type": "future_trend",
+              "disruptive_technology": "Smart Grids",
+              "next_hot_bet": "Energy",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Vehicle as a Virtual Power Plant",
+              "type": "future_trend",
+              "disruptive_technology": "Energy Storage Systems",
+              "next_hot_bet": "Energy",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Quantum Computing in EV",
+              "type": "future_trend",
+              "disruptive_technology": "Blockchain in EV",
+              "next_hot_bet": "Technology",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Edge Computing in EV",
+              "type": "future_trend",
+              "disruptive_technology": "IoT in EV",
+              "next_hot_bet": "Technology",
+              "hot_bet": "Top Industries"
+            },
+            {
+              "name": "Mixed Reality in EV Training",
+              "type": "future_trend",
+              "disruptive_technology": "AR/VR in EV Training",
+              "next_hot_bet": "Technology",
+              "hot_bet": "Top Industries"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "answer_flow": {
+    "market_input": "core_data.core_market.market from market strategy analysis",
+    "report_lookup": "get_market_details with code=market name; use the matched CRM/report ID",
+    "parallel_requests": [
+      "get_connected_graph_data with report_id",
+      "get_yc_circle_segments with report_name"
+    ],
+    "merge": {
+      "core": "Retained from get_connected_graph_data",
+      "customers": "Retained from get_connected_graph_data",
+      "segments": "inner_circle_segments mapped to nodes and grouped by hot_bet",
+      "adjacentMarkets": "outer_circle_segments mapped to nodes",
+      "fallback": "Retain the original graph ring if its YC circle data is unavailable or empty"
+    },
+    "delivery": "Merged graph is published as connected_markets.graph_data and rendered by the Connected Market tab"
+  },
+  "verification": {
+    "inner_circle_count": 9,
+    "outer_circle_count": 27,
+    "circle_names_match_rendered_graph": true
+  }
+}
