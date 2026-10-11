@@ -1,0 +1,9 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {KEY,seed,transition} from './model.mjs';
+import {load,save,reset} from './persistence.mjs';
+const memory=()=>{const data=new Map([['growthiq-theme','mineral'],['existing-work','keep']]);return {data,getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};};
+test('reload preserves edits, draft, and decisions',()=>{const storage=memory();let s=transition(seed(),{type:'decision',outcome:'hold',rationale:'More evidence required',condition:'Validate demand'});s=transition(s,{type:'draft',key:'expert',value:'Prepared locally'});assert.equal(save(storage,s),true);assert.deepEqual(load(storage).value,s);});
+test('storage failures keep an in-memory session usable',()=>{const storage={getItem(){throw Error('denied');},setItem(){throw Error('quota');}};const initial=load(storage);assert.equal(initial.storage,false);const next=transition(initial.value,{type:'assumptions',value:{volume:14000,share:5,price:4000}});assert.equal(save(storage,next),false);assert.equal(next.assumptions.volume,14000);assert.equal(reset(storage).storage,false);});
+test('reset isolates the Innovation OS key',()=>{const storage=memory();save(storage,transition(seed(),{type:'question',id:'payment'}));reset(storage);assert.deepEqual(load(storage).value,seed());assert.equal(storage.data.get('growthiq-theme'),'mineral');assert.equal(storage.data.get('existing-work'),'keep');assert.equal(storage.data.size,3);});
+test('malformed or incompatible data safely falls back with a notice',()=>{for(const raw of ['{bad',JSON.stringify({...seed(),version:9}),JSON.stringify({...seed(),drafts:{plan:[]}}),JSON.stringify({...seed(),activity:[{text:'bad',at:'not a date'}]})]){const storage=memory();storage.setItem(KEY,raw);const result=load(storage);assert.deepEqual(result.value,seed());assert.match(result.message,/could not be restored/);}});

@@ -418,6 +418,8 @@ root.querySelectorAll('.scroll > svg').forEach(svg=>{
 
 // Expedition is retained for future iteration but is not mounted or offered in navigation.
 
+mountLandscape(root.querySelector('#landscape-root'),G,CORE);
+
 /* Motion is local to the mounted page; all sequences are finite and CSS handles OS preferences. */
 const sizeButton=root.querySelector('.chart-size-toggle');
 sizeButton.addEventListener('click',()=>{const large=root.host.dataset.chartSize!=='large';root.host.dataset.chartSize=large?'large':'fit';sizeButton.setAttribute('aria-pressed',String(large));sizeButton.textContent=large?'Fit chart':'Enlarge chart';});
@@ -444,7 +446,7 @@ function show(id,push){
   if(current?.id==='v-'+id&&current.classList.contains('is-entering'))return;
   ids.forEach(function(v){const panel=$('#v-'+v);panel.classList.remove('is-entering');panel.hidden=v!==id;});
   const next=$('#v-'+id);
-  sizeButton.hidden=id==='expedition';
+  sizeButton.hidden=['expedition','landscape'].includes(id);
   next.querySelectorAll('path.link,path.nlink,#s-growth path.line').forEach(p=>p.style.removeProperty('stroke-dasharray'));
   void next.offsetWidth;
   next.classList.add('is-entering');
@@ -534,5 +536,37 @@ function mountExpedition(host,groups,core){
    const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/markdown;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='ev-opportunity-workbench.md';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);announce('Workbench exported.');
   }
  });
+ render();
+}
+
+function mountLandscape(host,groups,core){
+ const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let region=null,branch=null,technology=null;
+ const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>';
+ const terrain=`<svg class="land-terrain" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true"><path class="land-shore land-shore-a" d="M25 195C-10 40 258 0 395 89S470 275 336 320 54 365 25 195Z"/><path class="land-shore land-shore-b" d="M430 425C330 313 465 179 620 164S899 264 797 425 516 523 430 425Z"/><path class="land-shore land-shore-c" d="M835 113C920 21 1152 41 1171 209S1187 507 1036 483 765 277 835 113Z"/><g class="land-contours"><path d="M60 191C35 78 247 43 361 115S415 260 309 285 88 301 60 191Z"/><path d="M98 187C86 113 236 91 319 142S365 235 280 247 126 254 98 187Z"/><path d="M466 410C387 319 494 218 625 202S848 280 762 414 534 487 466 410Z"/><path d="M505 393C451 324 529 258 629 242S798 299 725 398 553 446 505 393Z"/><path d="M874 136C940 66 1119 80 1138 217S1152 467 1038 448 817 266 874 136Z"/><path d="M914 162C963 109 1084 119 1104 224S1112 424 1039 412 871 257 914 162Z"/></g><path class="land-route" pathLength="1" d="M230 178C392 156 405 407 606 340S789 128 1006 256"/></svg>`;
+ function render(focus=false,back=false){
+  const g=region===null?null:groups[region],b=branch===null?null:g.bets[branch];
+  const level=b?'technologies':g?'branches':'regions';
+  const items=b?b.items.map((item,i)=>({title:item[0],detail:'Explore linked future trend',index:i})):g?g.bets.map((bet,i)=>({title:bet.name,detail:bet.items.length+' technologies to explore',index:i})):groups.map((group,i)=>({title:group.name,detail:group.bets.length+' branches · '+group.bets.reduce((n,x)=>n+x.items.length,0)+' trends',index:i}));
+  host.innerHTML=`<div class="land-heading"><div><h2>Living Market Landscape</h2><p>Enter a region. Follow its branches. Discover what comes next.</p></div><button class="land-reset" type="button" ${region===null?'disabled':''}>Return to overview</button></div>
+  <nav class="land-breadcrumbs" aria-label="Landscape location"><button type="button" data-land-back="overview" ${region===null?'aria-current="location"':''}>${escape(core.name)}</button>${g?`<span>/</span><button type="button" data-land-back="region" ${!b?'aria-current="location"':''}>${escape(g.name)}</button>`:''}${b?`<span>/</span><span aria-current="location">${escape(b.name)}</span>`:''}</nav>
+  <div class="land-layout ${technology!==null?'has-detail':''}"><section class="land-map land-${level} ${back?'land-return':'land-enter'}" aria-label="${escape(g?b?b.name:g.name:'Market regions')}" style="--land-color:var(--c${region===null?1:region+1})">
+  <div class="land-map-title"><h3 tabindex="-1">${escape(b?b.name:g?g.name:'Where will you explore?')}</h3><p>${b?'Choose a technology to reveal its future trend.':g?'Choose a branch to explore its technologies.':'Three regions of the EV ecosystem.'}</p></div>
+  <div class="land-world">${terrain}${items.map((item,i)=>`<button class="land-place land-place-${i} ${technology===i?'selected':''}" type="button" data-land-place="${i}" style="--arrival:${i*90}ms" ${b?`aria-pressed="${technology===i}"`:''}><span class="land-marker" aria-hidden="true"></span><strong>${escape(item.title)}</strong><small>${escape(item.detail)}</small><span class="land-enter-label">${b?'Discover trend':'Enter '+(g?'branch':'region')}${arrow}</span></button>`).join('')}</div>
+  <div class="land-map-key"><span>${region===null?'3 regions':branch===null?'Region / branches':'Branch / technologies'}</span><span>Spatial layout is illustrative</span></div></section>
+  ${technology!==null?`<aside class="land-detail" aria-label="Future trend details"><button class="land-close" type="button">Close details</button><p class="land-detail-label">Future trend</p><h3>${escape(b.items[technology][1])}</h3><div class="land-lineage"><span>${escape(core.name)}</span><span>${escape(g.name)}</span><span>${escape(b.name)}</span><span>${escape(b.items[technology][0])}</span><strong>${escape(b.items[technology][1])}</strong></div><p>This relationship comes from the market taxonomy. It does not establish a timeline or commercial readiness.</p><button class="land-next" type="button">Explore next technology ${arrow}</button></aside>`:''}</div>
+  <p class="land-footnote">Source: data/data1.json · Region area, distance and placement do not represent market size or connection strength.</p>`;
+  if(focus)host.querySelector(technology!==null?'.land-detail h3':'.land-map-title h3')?.setAttribute('tabindex','-1');
+  if(focus)host.querySelector(technology!==null?'.land-detail h3':'.land-map-title h3')?.focus({preventScroll:true});
+ }
+ host.addEventListener('click',e=>{
+  const button=e.target.closest('button');if(!button||button.disabled)return;
+  if(button.dataset.landPlace!==undefined){const i=Number(button.dataset.landPlace);if(region===null)region=i;else if(branch===null)branch=i;else technology=i;render(true);}
+  else if(button.classList.contains('land-reset')||button.dataset.landBack==='overview'){region=branch=technology=null;render(true,true);}
+  else if(button.dataset.landBack==='region'){branch=technology=null;render(true,true);}
+  else if(button.classList.contains('land-close')){const previous=technology;technology=null;render(false,true);host.querySelector(`[data-land-place="${previous}"]`).focus({preventScroll:true});}
+  else if(button.classList.contains('land-next')){technology=(technology+1)%groups[region].bets[branch].items.length;render(true);}
+ });
+ host.addEventListener('keydown',e=>{if(e.key==='Escape'){if(technology!==null)technology=null;else if(branch!==null)branch=null;else region=null;render(true,true);e.stopPropagation();}});
  render();
 }

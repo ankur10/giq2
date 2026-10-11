@@ -9,6 +9,7 @@
 
   <div class="shell">
     <nav class="rail" role="tablist" aria-label="Views">
+      <div><div class="grp"><button role="tab" data-v="landscape">Living Landscape</button></div></div>
       <div><h2>Taxonomy</h2><div class="grp">
         <button role="tab" data-v="horizon">Horizon map</button>
         <button role="tab" data-v="sunburst">Sunburst</button>
@@ -30,6 +31,7 @@
     </nav>
 
     <main>
+      <section class="view" id="v-landscape" hidden><div id="landscape-root"></div></section>
       <section class="view" id="v-expedition" hidden><div id="expedition-root"></div></section>
       <section class="view" id="v-horizon">
         <h2>Horizon map</h2>
