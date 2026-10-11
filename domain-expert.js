@@ -18,7 +18,7 @@
     if(first){first.focus();return}
     const record={id:'EXP-'+crypto.randomUUID().slice(0,8).toUpperCase(),created:new Date().toISOString(),...Object.fromEntries(new FormData(form).entries())};
     for(const name of ['subject','details','email','region'])record[name]=record[name].trim();
-    requests.unshift(record);try{localStorage.setItem(key,JSON.stringify(requests));persisted=true}catch{persisted=false}
+    requests.unshift(record);window.GROWTHIQ_WORK?.captureActivity('expert:'+record.id,'domain-expert');try{localStorage.setItem(key,JSON.stringify(requests));persisted=true}catch{persisted=false}
     draft={};message=persisted?'Your request is saved in this browser. This preview has not sent it to an expert.':'Your request is available for this visit. Browser storage is unavailable, so it will not survive a reload. No expert has been contacted.';
     document.querySelector('.expert-page').outerHTML=view();document.getElementById('expert-confirmation').focus();
   });
