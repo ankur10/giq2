@@ -4,7 +4,7 @@ const path = require('node:path');
 const output = path.join(__dirname, 'dist');
 // Publish only runtime files, keeping source, local reviews and tooling private.
 const files = [
-  'innovation.html', 'innovation-classic.html', 'innovation.css', 'innovation-brief.css',
+  'innovation.html', 'innovation-guided.html', 'innovation-discovery.css', 'innovation-connected.html', 'innovation-investigation.css', 'innovation-classic.html', 'innovation.css', 'innovation-brief.css',
   'connected-markets.js', 'connected-markets.html', 'connected-markets.css',
   'my-work.js', 'my-work.css', 'my-feed.js', 'my-feed.css',
   'stage.html', 'stage.css', 'film.html', 'film.css', 'reel.html', 'reel.css', 'tracker.js', 'tracker.css', 'domain-expert.js', 'domain-expert.css', 'ask-results.html', 'ask-results.css', 'ask-thermo.css', 'index.html', 'app.js', 'data.js', 'studio-data.js', 'theme.js',
