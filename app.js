@@ -39,7 +39,7 @@
   const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.document}</svg>`;
   const routeInfo = {
     feed:['My Feed','My Feed','A fresh perspective. A useful next step.'],
-    work:['My Work','My Work','A home for your questions, research and next steps.'],
+    work:['My Work','My Work','Projects, research and requests.'],
     keynote:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
     demo:['GrowthIQ Live','GrowthIQ Live','A guided journey through the full product.'],
     home:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
