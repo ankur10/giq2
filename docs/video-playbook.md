@@ -125,19 +125,24 @@ A long piece can be exported as several ranges in parallel and joined with `ffmp
 
 ## Making a narrated reel of real screens
 
-`deck/video/` is the GrowthIQ 2.0 video: real product screenshots with panels that lift off them, a voice-over and the music bed. It is driven by the voice like the narrated demo, but its picture is a pure function of time, so it exports frame by frame like the film.
+`deck/video/` holds the GrowthIQ 2.0 videos: real product screenshots with panels that lift off them, a voice-over and the music bed. They are driven by the voice like the narrated demo, but the picture is a pure function of time, so they export frame by frame like the film.
 
-- `deck/video/narration.mjs`: one line per beat.
-- `deck/video/shots.mjs`: what each beat shows: the screenshot, the regions that lift off it and when.
+One engine plays several tellings of the same screens:
+
+- `deck/video/screens.mjs`: every product screen, the regions that lift off it and when.
+- `deck/video/stories/<name>/shots.mjs`: the order of the beats for one story, with each beat's time stamp.
+- `deck/video/stories/<name>/narration.mjs`: that story's line for each beat.
 - Screenshots go in `deck/assets/video/`. They are not committed, because they show a customer workspace.
 
+There are two stories so far: `morning` (the pitch is speed) and `turn` (an assumption fails and the answer changes; the pitch is rigour). To add a third, copy a story folder and rewrite its lines and beat order.
+
 ```bash
-node tools/make-voiceover.mjs --story deck/video
+node tools/make-voiceover.mjs --story deck/video/stories/turn
 npm run deck
-npm run video:export -- deck/video/ 0 116.8 out/growthiq-2.0.mp4 http://127.0.0.1:8773/
+npm run video:export -- "deck/video/?story=turn" 0 121.5 out/growthiq-2.0-turn.mp4 http://127.0.0.1:8773/
 ```
 
-`npm run deck` serves the repo on port 8773 and must stay running during the export. The end time is the video's length, which `deck/video/` prints as `window.totalSeconds`. Open `http://127.0.0.1:8773/deck/video/` and press space to watch it live.
+`npm run deck` serves the repo on port 8773 and must stay running during the export. The end time is the video's length, which the page reports as `window.totalSeconds`. To watch one live, open `http://127.0.0.1:8773/deck/video/?story=turn` and press space.
 
 ## Rules that were learned the hard way
 

@@ -17,11 +17,13 @@ const PULSE = [0, 2, 1, 3, 2, 1, 3, 2];   // which chord note each eighth of a b
 // The arrangement grows with the story: chords alone at first, the pulse from `pulseFrom`, bass
 // and drums from `drumsFrom`, and one held chord from `close` to `end` (all in seconds).
 // `motifs` are the moments the three-note motif is left open; it resolves at the close.
+// `rests` are spans [from, to] where everything but the held chords falls silent.
 // `drive` is the fuller arrangement: a kick on every beat, a backbeat, and the pulse doubled an octave up.
-export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = [], tempo = TEMPO, drive = false}) {
+export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = [], tempo = TEMPO, drive = false, rests = []}) {
   const beats = seconds => seconds / BEAT;
   const list = [{kind: 'room', at: 0, to: beats(end)}];
-  const add = (kind, seconds, more = {}) => list.push({kind, at: beats(seconds), ...more});
+  const resting = seconds => rests.some(([from, to]) => seconds >= from && seconds < to);
+  const add = (kind, seconds, more = {}) => { if (!resting(seconds) || kind === 'bell') list.push({kind, at: beats(seconds), ...more}); };
   const beat = 60 / tempo, bar = beat * 4;
   for (let n = 0; n * bar < close; n++) {
     const from = n * bar, chord = PROGRESSION[Math.floor(n / 2) % PROGRESSION.length], [bass, ...notes] = chord;

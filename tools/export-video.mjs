@@ -1,6 +1,6 @@
 // Exports the film or the reel as an mp4 with its score, frame by frame, so picture and sound
 // are exact. Not part of the build: it needs Chrome and ffmpeg.
-//   node tools/export-video.mjs <film|reel> <from-second> <to-second> <out.mp4> [site]
+//   node tools/export-video.mjs <film|reel|page path> <from-second> <to-second> <out.mp4> [site]
 // A long piece can be exported as several ranges at once and joined afterwards; each range
 // first steps silently through the two seconds before it, so anything mid-transition at its
 // first frame is in the right state.
@@ -14,7 +14,7 @@ const browser = await puppeteer.launch({executablePath: process.env.CHROME || '/
 const page = await browser.newPage();
 await page.setViewport({width: 1920, height: 1080, deviceScaleFactor: 1});
 const errors = []; page.on('pageerror', e => errors.push(String(e)));
-await page.goto(new URL(`${piece}?t=${start - lead}`, site).href, {waitUntil: 'networkidle0'});
+await page.goto(new URL(`${piece}${piece.includes('?') ? '&' : '?'}t=${start - lead}`, site).href, {waitUntil: 'networkidle0'});
 await new Promise(resolve => setTimeout(resolve, 1500));
 
 const wav = out.replace(/\.mp4$/, '.wav');
