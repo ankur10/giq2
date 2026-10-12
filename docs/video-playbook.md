@@ -134,7 +134,7 @@ A long piece can be exported as several ranges in parallel and joined with `ffmp
 ```bash
 node tools/make-voiceover.mjs --story deck/video
 npm run deck
-npm run video:export -- deck/video/ 0 116 out/growthiq-2.0.mp4 http://127.0.0.1:8773/
+npm run video:export -- deck/video/ 0 116.8 out/growthiq-2.0.mp4 http://127.0.0.1:8773/
 ```
 
 `npm run deck` serves the repo on port 8773 and must stay running during the export. The end time is the video's length, which `deck/video/` prints as `window.totalSeconds`. Open `http://127.0.0.1:8773/deck/video/` and press space to watch it live.

@@ -13,30 +13,38 @@ const clamp = v => Math.max(0, Math.min(1, v)), span = (t, from, to) => clamp((t
 const out = t => 1 - (1 - t) ** 3, inOut = t => t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
 const el = (tag, className, parent, html) => { const node = document.createElement(tag); node.className = className; if (html) node.innerHTML = html; parent.append(node); return node; };
 
-// A product screen: the image, a veil that dims it, and the regions that lift off it.
+const back = t => 1 + 2.2 * (t - 1) ** 3 + 1.2 * (t - 1) ** 2;   // eases out with a small overshoot
+const PAD = 30;   // the margin of page colour kept around every screen
+
+// A product screen: the image inside a margin of its own page colour, a veil that dims it, and
+// the regions that lift off it.
 function card(parent, screen, [w, h], box, panels = []) {
-  const scale = Math.min(box.width / w, box.height / h), width = w * scale, height = h * scale;
-  const node = el('div', 'card', parent);
-  Object.assign(node.style, {left: box.left + (box.width - width) / 2 + 'px', top: box.top + (box.height - height) / 2 + 'px', width: width + 'px', height: height + 'px'});
-  el('img', '', node).src = `${IMAGES}${screen}.jpg`;
+  const scale = Math.min((box.width - PAD * 2) / w, (box.height - PAD * 2) / h), width = w * scale, height = h * scale;
+  const node = el('div', 'card', parent), image = el('img', '', node);
+  Object.assign(node.style, {left: box.left + (box.width - width) / 2 - PAD + 'px', top: box.top + (box.height - height) / 2 - PAD + 'px', width: width + PAD * 2 + 'px', height: height + PAD * 2 + 'px'});
+  Object.assign(image.style, {left: PAD + 'px', top: PAD + 'px', width: width + 'px', height: height + 'px'});
+  image.src = `${IMAGES}${screen}.jpg`;
+  // The margin takes the colour of the screen's own top-left corner.
+  image.decode().then(() => { const c = document.createElement('canvas').getContext('2d'); c.drawImage(image, 0, 0, 1, 1, 0, 0, 1, 1); const [r, g, b] = c.getImageData(0, 0, 1, 1).data; node.style.background = `rgb(${r} ${g} ${b})`; }).catch(() => {});
   const dim = el('div', 'dim', node);
   const lifted = panels.map(({rect: [x, y, pw, ph], at}) => {
     const panel = el('div', 'panel', node);
-    Object.assign(panel.style, {left: x * scale + 'px', top: y * scale + 'px', width: pw * scale + 'px', height: ph * scale + 'px', backgroundImage: `url(${IMAGES}${screen}.jpg)`, backgroundSize: `${width}px ${height}px`, backgroundPosition: `${-x * scale}px ${-y * scale}px`});
+    Object.assign(panel.style, {left: PAD + x * scale + 'px', top: PAD + y * scale + 'px', width: pw * scale + 'px', height: ph * scale + 'px', backgroundImage: `url(${IMAGES}${screen}.jpg)`, backgroundSize: `${width}px ${height}px`, backgroundPosition: `${-x * scale}px ${-y * scale}px`});
     return {panel, at};
   });
   return {node, dim, lifted};
 }
-const STAGE = {left: 210, top: 150, width: 1500, height: 770};
+const STAGE = {left: 190, top: 140, width: 1540, height: 790};
+const glow = el('div', 'glow', root), day = el('p', 'day', root);
 
-const scenes = beats.map(beat => {
-  const node = el('section', 'beat', root), scene = {beat, node};
+const scenes = beats.map((beat, index) => {
+  const node = el('section', 'beat', root), scene = {beat, node, side: index % 2 ? 1 : -1};
   if (beat.label) scene.label = el('p', 'label', node, beat.label);
   if (beat.kind === 'title') scene.words = [...el('h1', 'title', node, beat.words.split(' ').map(word => `<span>${word}</span>`).join(' ')).children];
   else if (beat.kind === 'question') scene.typed = el('p', 'typed', node);
   else if (beat.kind === 'trio') scene.cards = beat.screens.map(([screen, name], i) => {
-    const made = card(node, screen, [1100, 826], {left: 120 + i * 570, top: 240, width: 540, height: 406});
-    const tag = el('p', 'tag', node, name); Object.assign(tag.style, {left: 120 + i * 570 + 'px', top: '676px'});
+    const made = card(node, screen, [1100, 826], {left: 110 + i * 575, top: 220, width: 550, height: 440});
+    const tag = el('p', 'tag', node, name); Object.assign(tag.style, {left: 120 + i * 575 + 'px', top: '690px'});
     return {...made, tag};
   });
   else if (beat.kind === 'close') {
@@ -44,55 +52,64 @@ const scenes = beats.map(beat => {
     scene.path = node.querySelector('path'); scene.dot = node.querySelector('circle');
     scene.tagline = el('h1', 'title', node, 'We see growth<br><em>before it happens.</em>'); scene.tagline.style.top = '390px'; scene.tagline.style.fontSize = '152px';
     scene.sign = el('p', 'sign', node, 'GrowthIQ 2.0');
-  } else {
-    scene.main = card(node, beat.screen, beat.size, STAGE, beat.panels);
-    if (beat.over) { scene.over = card(node, beat.over.screen, [556, 552], {left: 1250, top: 330, width: 520, height: 516}); scene.overTag = el('p', 'label', node, beat.over.label); Object.assign(scene.overTag.style, {left: '1250px', top: '268px'}); }
-  }
+  } else scene.main = card(node, beat.screen, beat.size, STAGE, beat.panels);
+  scene.overs = (beat.overs ?? []).map(over => {
+    const made = card(node, over.screen, over.size, over.box), tag = el('p', 'chip', made.node, over.label);
+    return {...made, tag, at: over.at};
+  });
   scene.caption = el('p', 'caption', node, `<span>${beat.text}</span>`);
   return scene;
 });
 
-// A card arriving, drifting forward while it is on screen, and leaving.
-function place(node, u, duration, delay = 0) {
-  const arrive = out(span(u, delay, delay + 1.1)), leave = inOut(span(u, duration, duration + 0.55));
-  node.style.opacity = arrive * (1 - leave);
-  node.style.transform = `translateY(${(1 - arrive) * 80 - leave * 30}px) rotateX(${(1 - arrive) * 9}deg) scale(${0.93 + 0.07 * arrive + 0.025 * clamp(u / duration) + 0.02 * leave})`;
+// A card swinging in from its side, drifting forward and across while it is on screen, and leaving.
+function place(node, u, duration, side, delay = 0) {
+  const arrive = out(span(u, delay, delay + 0.75)), leave = inOut(span(u, duration, duration + 0.45)), along = clamp(u / duration);
+  node.style.opacity = span(u, delay, delay + 0.3) * (1 - leave);
+  node.style.transform = `translate(${side * ((1 - arrive) * 150 - 16 + 32 * along) - side * leave * 90}px, ${(1 - arrive) * 50}px) rotateY(${-side * (1 - arrive) * 13 + side * leave * 8}deg) scale(${0.9 + 0.1 * arrive + 0.05 * along + 0.03 * leave})`;
 }
-// Panels lift one at a time: each settles back as the next one rises.
+// Panels lift one at a time, with a small overshoot: each settles back as the next one rises.
 function lift({dim, lifted}, u) {
   let most = 0;
   lifted.forEach(({panel, at}, i) => {
-    const until = lifted[i + 1] ? lifted[i + 1].at - 0.15 : 1e6;
-    const up = out(span(u, at, at + 0.8)) * (1 - inOut(span(u, until, until + 0.5)));
-    most = Math.max(most, up);
-    panel.style.opacity = up > 0 ? 1 : 0;
-    panel.style.transform = `translateY(${-10 * up}px) scale(${1 + 0.085 * up})`;
-    panel.style.boxShadow = `0 ${30 * up}px ${90 * up}px rgb(0 0 0 / ${0.5 * up}), 0 0 0 1px rgb(13 23 48 / ${0.12 * up})`;
+    const until = lifted[i + 1] ? lifted[i + 1].at - 0.1 : 1e6, down = 1 - inOut(span(u, until, until + 0.35));
+    const up = span(u, at, at + 0.5), raised = back(up) * down, shade = clamp(up * 2) * down;
+    most = Math.max(most, shade);
+    panel.style.opacity = up > 0 && down > 0 ? 1 : 0;
+    panel.style.transform = `translateY(${-12 * raised}px) scale(${1 + 0.09 * raised})`;
+    panel.style.boxShadow = `0 ${34 * shade}px ${90 * shade}px rgb(4 10 30 / ${0.5 * shade}), 0 0 0 2px rgb(232 112 26 / ${0.9 * shade})`;
   });
-  dim.style.opacity = 0.36 * most;
+  dim.style.opacity = 0.2 * most;
 }
 
 function draw(seconds) {
   const t = Math.max(0, Math.min(total + TAIL, seconds));
+  // The light behind the screens never stops moving.
+  glow.style.transform = `translate(${Math.sin(t / 5.5) * 320}px, ${Math.cos(t / 7) * 110}px) scale(${1 + 0.12 * Math.sin(t / 3.1)})`;
+  // The day of the week holds while it is the same, and turns over when the story moves on.
+  const now = beats.findLast(beat => beat.start <= t) ?? beats[0], before = beats[beats.indexOf(now) - 1], after = beats[beats.indexOf(now) + 1], into = t - now.start;
+  day.textContent = now.kind === 'close' ? '' : now.day;
+  const turnedIn = !before || before.day !== now.day ? out(span(into, 0.15, 0.8)) : 1, turnsOut = after && after.day !== now.day ? 1 - span(into, now.duration - 0.3, now.duration) : 1;
+  day.style.opacity = turnedIn * turnsOut; day.style.transform = `translateY(${(1 - turnedIn) * -24}px)`;
+
   for (const scene of scenes) {
-    const {beat, node} = scene, u = t - beat.start, last = beat === beats.at(-1);
-    const on = u >= 0 && (last || u < beat.duration + 0.6);
+    const {beat, node, side} = scene, u = t - beat.start, last = beat === beats.at(-1);
+    const on = u >= 0 && (last || u < beat.duration + 0.5);
     node.style.visibility = on ? 'visible' : 'hidden';
     if (!on) continue;
-    const leave = last ? 0 : inOut(span(u, beat.duration, beat.duration + 0.55));
+    const leave = last ? 0 : inOut(span(u, beat.duration, beat.duration + 0.45));
     node.style.opacity = 1;
-    if (scene.label) scene.label.style.opacity = out(span(u, 0.2, 1)) * (1 - leave);
-    scene.caption.style.opacity = span(u, beat.voiceAt - 0.25, beat.voiceAt + 0.15) * (1 - span(u, beat.voiceAt + beat.voice + 0.5, beat.voiceAt + beat.voice + 0.9)) * (1 - leave);
-    if (scene.words) scene.words.forEach((word, i) => { const shown = out(span(u, 0.7 + i * 0.13, 1.6 + i * 0.13)); word.style.opacity = shown * (1 - leave); word.style.transform = `translateY(${(1 - shown) * 34 - leave * 20}px)`; });
+    if (scene.label) scene.label.style.opacity = out(span(u, 0.15, 0.7)) * (1 - leave);
+    scene.caption.style.opacity = span(u, beat.voiceAt - 0.25, beat.voiceAt + 0.1) * (1 - span(u, beat.voiceAt + beat.voice + 0.5, beat.voiceAt + beat.voice + 0.8)) * (1 - leave);
+    if (scene.words) scene.words.forEach((word, i) => { const shown = out(span(u, 0.5 + i * 0.16, 1.2 + i * 0.16)); word.style.opacity = shown * (1 - leave); word.style.transform = `translateY(${(1 - shown) * 40 - leave * 20}px)`; });
     if (scene.typed) {
-      const typed = QUESTION.slice(0, Math.floor(span(u, 0.9, 5.6) * QUESTION.length));
-      scene.typed.innerHTML = `${typed}<i style="opacity:${Math.floor(u * 2) % 2 ? 0.25 : 1}"></i>`;
-      scene.typed.style.opacity = out(span(u, 0.3, 1)) * (1 - leave);
-      scene.typed.style.transform = `translateY(${-leave * 30}px)`;
+      const typed = QUESTION.slice(0, Math.floor(span(u, 0.6, 4.4) * QUESTION.length));
+      scene.typed.innerHTML = `${typed}<i style="opacity:${Math.floor(u * 2.5) % 2 ? 0.25 : 1}"></i>`;
+      scene.typed.style.opacity = out(span(u, 0.2, 0.7)) * (1 - leave);
+      scene.typed.style.transform = `translateY(${-leave * 30}px) scale(${1 + 0.03 * clamp(u / beat.duration)})`;
     }
-    if (scene.cards) scene.cards.forEach((made, i) => { place(made.node, u, beat.duration, 0.2 + i * 0.4); made.tag.style.opacity = out(span(u, 0.9 + i * 0.4, 1.7 + i * 0.4)) * (1 - leave); });
-    if (scene.main) { place(scene.main.node, u, beat.duration); lift(scene.main, u); }
-    if (scene.over) { place(scene.over.node, u, beat.duration, beat.over.at); scene.overTag.style.opacity = out(span(u, beat.over.at + 0.5, beat.over.at + 1.2)) * (1 - leave); }
+    if (scene.cards) scene.cards.forEach((made, i) => { place(made.node, u, beat.duration, i - 1 || side, 0.15 + i * 0.3); made.tag.style.opacity = out(span(u, 0.7 + i * 0.3, 1.3 + i * 0.3)) * (1 - leave); });
+    if (scene.main) { place(scene.main.node, u, beat.duration, side); lift(scene.main, u); }
+    for (const over of scene.overs) { place(over.node, u, beat.duration, -side, over.at); over.tag.style.opacity = out(span(u, over.at + 0.4, over.at + 0.9)); }
     if (scene.path) {
       scene.path.style.strokeDashoffset = 1 - inOut(span(u, 0.3, 1.9));
       const landed = out(span(u, 1.8, 2.5)); scene.dot.style.opacity = landed; scene.dot.setAttribute('r', 11 * landed);
@@ -104,7 +121,8 @@ function draw(seconds) {
 
 // Sound: one voice file per beat over the generated bed.
 const at = id => beats.find(beat => beat.id === id).start;
-const score = () => bed({end: total, pulseFrom: at('ask'), drumsFrom: at('answer'), close: at('close') + 1.2, motifs: [0.5, at('answer') + 0.6]});
+const LEVEL = MUSIC_LEVEL * 1.2;   // this piece carries more music than the stage demo
+const score = () => bed({end: total, tempo: 124, drive: true, pulseFrom: 0.5, drumsFrom: at('ask'), close: at('close') + 1.2, motifs: [0.5, at('answer') + 0.6]});
 let files;
 const loadVoices = () => files ??= Promise.all(beats.map(async beat => [beat.id, await (await fetch(`voice/${beat.id}.m4a`)).arrayBuffer()]));
 async function schedule(ctx, start) {
@@ -113,7 +131,7 @@ async function schedule(ctx, start) {
     const beat = beats.find(b => b.id === id), source = ctx.createBufferSource();
     source.buffer = await ctx.decodeAudioData(bytes.slice(0)); source.connect(speech); source.start(start + beat.start + beat.voiceAt);
   }
-  compose(ctx, ctx.destination, start, score(), MUSIC_LEVEL);
+  compose(ctx, ctx.destination, start, score(), LEVEL);
 }
 window.renderScore = async () => {
   const ctx = new OfflineAudioContext(2, Math.ceil((total + RING) * 44100), 44100);

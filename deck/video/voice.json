@@ -1,14 +1,14 @@
 {
-  "open": 2.91,
-  "ask": 6.6,
-  "answer": 6.8,
+  "open": 5.8,
+  "ask": 5,
+  "answer": 4.8,
   "sources": 4,
-  "assumptions": 5.9,
-  "interviews": 6.5,
-  "experts": 3.6,
-  "opportunities": 6.4,
-  "studio": 7.4,
-  "field": 5.7,
-  "work": 5.1,
-  "close": 4.3
+  "assumptions": 4.9,
+  "interviews": 5.2,
+  "experts": 2.99,
+  "opportunities": 6.3,
+  "studio": 6.8,
+  "field": 4.2,
+  "work": 5.6,
+  "close": 4.8
 }

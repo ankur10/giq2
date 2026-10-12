@@ -17,11 +17,12 @@ const PULSE = [0, 2, 1, 3, 2, 1, 3, 2];   // which chord note each eighth of a b
 // The arrangement grows with the story: chords alone at first, the pulse from `pulseFrom`, bass
 // and drums from `drumsFrom`, and one held chord from `close` to `end` (all in seconds).
 // `motifs` are the moments the three-note motif is left open; it resolves at the close.
-export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = []}) {
+// `drive` is the fuller arrangement: a kick on every beat, a backbeat, and the pulse doubled an octave up.
+export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = [], tempo = TEMPO, drive = false}) {
   const beats = seconds => seconds / BEAT;
   const list = [{kind: 'room', at: 0, to: beats(end)}];
   const add = (kind, seconds, more = {}) => list.push({kind, at: beats(seconds), ...more});
-  const beat = 60 / TEMPO, bar = beat * 4;
+  const beat = 60 / tempo, bar = beat * 4;
   for (let n = 0; n * bar < close; n++) {
     const from = n * bar, chord = PROGRESSION[Math.floor(n / 2) % PROGRESSION.length], [bass, ...notes] = chord;
     if (n % 2 === 0) list.push({kind: 'pad', at: beats(from), to: beats(Math.min(from + bar * 2, close) - 0.15), notes: notes.slice(0, 3), gain: 0.06, attack: 0.4, release: 0.8, bright: true});
@@ -32,7 +33,12 @@ export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = []}
         if (eighth === 0 || eighth === 3 || eighth === 6) add('pluck', when, {note: bass + 12, gain: 0.16});
         if (eighth === 0 || eighth === 4) add('kick', when, {gain: 0.2});
         if (eighth % 2) add('hat', when, {gain: 0.028});
-        if (eighth === 2 || eighth === 6) add('tick', when, {gain: 0.05});
+        if (eighth === 2 || eighth === 6) add('tick', when, {gain: drive ? 0.13 : 0.05});
+        if (drive) {
+          if (eighth === 2 || eighth === 6) { add('kick', when, {gain: 0.2}); add('hat', when, {gain: 0.07}); }
+          if (eighth % 2 === 0) add('hat', when, {gain: 0.02});
+          add('pluck', when + beat / 4, {note: notes[PULSE[(eighth + 3) % 8]] + 12, gain: 0.032});
+        }
       }
     }
   }
