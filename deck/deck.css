@@ -1,0 +1,83 @@
+/* The GrowthIQ 2.0 deck: one 1920x1080 stage, in the product's own type and colours.
+   Dark throughout, so the white product screens are the brightest thing shown. */
+@font-face{font-family:"Source Serif 4";src:url(../assets/serif.woff2) format("woff2");font-weight:200 900;font-display:block}
+@font-face{font-family:"Source Sans 3";src:url(../assets/sans.woff2) format("woff2");font-weight:200 900;font-display:block}
+
+:root{--navy:#14213d;--deep:#0d1730;--edge:#070b16;--orange:#e8701a;--paper:#f4f1ea;--soft:#a9b6cf;--faint:#5d6b8a;--out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.65,0,.2,1)}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--edge)}
+body[data-idle]{cursor:none}
+.deck{position:fixed;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));overflow:hidden;color:var(--paper);font-family:"Source Sans 3",Arial,sans-serif;background:radial-gradient(120% 90% at 50% 45%,var(--navy) 0%,var(--deep) 45%,var(--edge) 100%)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility 0s .7s}
+.slide[data-on]{opacity:1;visibility:visible;transition:opacity .9s var(--ease) .15s}
+h1,h2,h3,p,ul{margin:0;padding:0}ul{list-style:none}
+h1,h2{font-family:"Source Serif 4",Georgia,serif;font-weight:400;letter-spacing:-.02em}
+
+/* Anything with a step waits for it */
+[data-step]{opacity:0;transform:translateY(22px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+[data-step][data-shown]{opacity:1;transform:none;transition:opacity .9s var(--out),transform 1.1s var(--out)}
+
+.chrome{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:0 calc(64px * var(--fit,1)) calc(34px * var(--fit,1));font:500 calc(20px * var(--fit,1)) "Source Sans 3",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);pointer-events:none}
+
+/* 1. Cover: one line climbs across the stage and stops where the title's promise is */
+.cover-line{position:absolute;inset:0;width:100%;height:100%}
+.cover-line path{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.cover-line circle{fill:var(--orange);opacity:0;transform-origin:1790px 168px;transform:scale(.2)}
+.cover[data-on] .cover-line path{animation:draw 3.2s var(--ease) .5s forwards}
+.cover[data-on] .cover-line circle{animation:land .9s var(--out) 3.5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes land{to{opacity:1;transform:none}}
+.cover .eyebrow,.cover h1,.cover .lede,.cover .dateline{position:absolute;left:140px;opacity:0}
+.cover .eyebrow{top:236px;font:600 28px "Source Sans 3",Arial,sans-serif;letter-spacing:.14em;color:var(--orange)}
+.cover h1{top:286px;font-size:208px;line-height:1}
+.cover h1 span{color:var(--orange);font-style:italic;font-weight:300}
+.cover .lede{top:540px;font:400 52px/1.25 "Source Serif 4",Georgia,serif;color:var(--soft)}
+.cover .dateline{bottom:104px;font-size:28px;color:var(--faint);letter-spacing:.04em}
+.cover[data-on] .eyebrow{animation:rise 1.1s var(--out) .3s forwards}
+.cover[data-on] h1{animation:rise 1.3s var(--out) .5s forwards}
+.cover[data-on] .lede{animation:rise 1.3s var(--out) 1.3s forwards}
+.cover[data-on] .dateline{animation:rise 1.1s var(--out) 2s forwards}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* 2. The thesis: the sentence sets itself word by word, then the answer */
+.thesis h2{position:absolute;left:140px;top:232px;width:1500px;font-size:124px;line-height:1.08}
+.thesis h2 span{display:inline-block;opacity:0;transform:translateY(34px)}
+.thesis[data-on] h2 span{animation:rise 1s var(--out) calc(.35s + var(--i) * .11s) forwards}
+.thesis .answer{position:absolute;left:140px;top:800px;font:400 68px/1.1 "Source Serif 4",Georgia,serif;color:var(--soft)}
+.thesis .answer em{color:var(--orange)}
+.thesis .answer::before{content:"";position:absolute;left:0;top:-52px;width:132px;height:5px;border-radius:3px;background:var(--orange)}
+
+/* 3. The journey: the line travels, and each version arrives on it */
+.journey h2{position:absolute;left:140px;top:84px;font-size:68px;line-height:1.1}
+.track{position:absolute;left:140px;top:356px;width:1640px;height:4px;border-radius:2px;background:rgb(169 182 207 / .16)}
+.track i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--soft),var(--orange));transition:width 1.4s var(--ease)}
+.journey[data-on] .track i{width:60px}
+.journey[data-on][data-at="1"] .track i{width:380px}
+.journey[data-on][data-at="2"] .track i{width:1640px}
+.stage-col{position:absolute;left:var(--x);top:210px;width:380px}
+.stage-col.now{width:920px}
+.stage-col b{display:block;height:112px;font:300 104px/1 "Source Serif 4",Georgia,serif;color:var(--soft);letter-spacing:-.03em}
+.stage-col .node{position:absolute;left:0;top:136px;width:24px;height:24px;border-radius:50%;background:var(--deep);border:4px solid var(--soft);box-sizing:border-box}
+.stage-col h3{margin-top:84px;font:600 26px "Source Sans 3",Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.stage-col h3 small{margin-left:18px;padding:5px 14px;border-radius:99px;font-size:22px;letter-spacing:.06em;color:var(--edge);background:var(--orange)}
+.stage-col ul{margin-top:30px;font-size:34px;line-height:1.3;color:var(--soft)}
+.stage-col li{margin-bottom:20px}
+.stage-col.now ul{display:grid;grid-template-columns:420px 500px;grid-template-rows:repeat(6,auto);grid-auto-flow:column;font-size:32px;white-space:nowrap}
+.stage-col.now b{color:var(--paper);font-weight:400}
+.stage-col.now .node{border-color:var(--orange);background:var(--orange);box-shadow:0 0 0 10px rgb(232 112 26 / .18)}
+.stage-col.now h3{color:var(--orange)}
+.stage-col.now ul{color:var(--paper)}
+.stage-col.now li{opacity:0;transform:translateX(-18px)}
+.stage-col.now[data-shown] li{animation:slide .8s var(--out) calc(.5s + var(--i) * .07s) forwards}
+.stage-col.now li.kept{color:var(--faint)}
+@keyframes slide{to{opacity:1;transform:none}}
+/* Earlier versions step back once a later one has arrived */
+.journey[data-at="1"] .stage-col:nth-of-type(1),.journey[data-at="2"] .stage-col:not(.now){opacity:.5}
+
+/* 4. The film */
+.film h2{position:absolute;left:140px;top:60px;font-size:52px;line-height:1.1}
+.film h2 span{color:var(--soft);font-style:italic;font-weight:300}
+.screen{position:absolute;left:240px;top:150px;width:1440px;height:810px;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 50px 140px rgb(0 0 0 / .6),0 0 0 1px rgb(255 255 255 / .08)}
+.screen video{display:block;width:100%;height:100%;object-fit:cover}
+.screen .hint{position:absolute;left:44px;bottom:44px;width:104px;height:104px;border-radius:50%;font-size:0;background:rgb(7 11 22 / .78);box-shadow:0 0 0 2px rgb(255 255 255 / .5);transition:opacity .5s}
+.screen .hint::after{content:"";position:absolute;left:40px;top:31px;border-left:34px solid var(--paper);border-top:21px solid transparent;border-bottom:21px solid transparent}
+.film[data-at="1"] .hint{opacity:0}

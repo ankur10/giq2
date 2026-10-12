@@ -9,6 +9,7 @@
     "build:studio": "node build-studio.cjs",
     "check": "node --check app.js",
     "test": "node --test stage/test/*.test.mjs film/test/*.test.mjs reel/test/*.test.mjs innovation/*.test.mjs",
+    "deck": "serve . --listen tcp://127.0.0.1:8773",
     "voice": "node tools/make-voiceover.mjs",
     "video:narrated": "node tools/export-narrated.mjs",
     "video:export": "node tools/export-video.mjs",
