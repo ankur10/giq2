@@ -1,0 +1,274 @@
+[
+  {
+    "id": "salesforce",
+    "name": "Salesforce",
+    "category": "CRM",
+    "logo": "assets/integrations/salesforce.png",
+    "url": "https://pipedream.com/s.v0/app_OrZhD7/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "category": "CRM",
+    "logo": "assets/integrations/hubspot.svg",
+    "url": "https://pipedream.com/s.v0/app_OkrhlP/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "dynamics",
+    "name": "Microsoft Dynamics 365",
+    "category": "CRM",
+    "logo": "assets/integrations/dynamics.svg",
+    "url": "https://cdn.sanity.io/images/7yse5usn/production/757de71b410431cbf112740ffeea3693ec7dfeba-62x62.svg",
+    "sourcePage": "https://nango.dev/api-integrations"
+  },
+  {
+    "id": "zoho",
+    "name": "Zoho CRM",
+    "category": "CRM",
+    "logo": "assets/integrations/zoho.png",
+    "url": "https://pipedream.com/s.v0/app_XaLh9K/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "pipedrive",
+    "name": "Pipedrive",
+    "category": "CRM",
+    "logo": "assets/integrations/pipedrive.png",
+    "url": "https://pipedream.com/s.v0/app_1lxhdk/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "apollo",
+    "name": "Apollo",
+    "category": "CRM",
+    "logo": "assets/integrations/apollo.png",
+    "url": "https://pipedream.com/s.v0/app_xohxll/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "drive",
+    "name": "Google Drive",
+    "category": "Documents",
+    "logo": "assets/integrations/drive.png",
+    "url": "https://pipedream.com/s.v0/app_1lxhk1/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "sharepoint",
+    "name": "SharePoint",
+    "category": "Documents",
+    "logo": "assets/integrations/sharepoint.svg",
+    "url": "https://cdn.sanity.io/images/7yse5usn/production/05dbc2e96e6d5ee723b4444a598e93436e3be448-62x62.svg",
+    "sourcePage": "https://nango.dev/api-integrations"
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "category": "Documents",
+    "logo": "assets/integrations/notion.svg",
+    "url": "https://pipedream.com/s.v0/app_X7Lhxr/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "dropbox",
+    "name": "Dropbox",
+    "category": "Documents",
+    "logo": "assets/integrations/dropbox.svg",
+    "url": "https://pipedream.com/s.v0/app_XGehk1/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "sheets",
+    "name": "Google Sheets",
+    "category": "Documents",
+    "logo": "assets/integrations/sheets.png",
+    "url": "https://pipedream.com/s.v0/app_168hvn/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "category": "Documents",
+    "logo": "assets/integrations/airtable.png",
+    "url": "https://pipedream.com/s.v0/app_XBxhAl/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "confluence",
+    "name": "Confluence",
+    "category": "Documents",
+    "logo": "assets/integrations/confluence.svg",
+    "url": "https://cdn.sanity.io/images/7yse5usn/production/ba2a80a3704564ca4f8ab9262f71b8ac9c654166-62x62.svg",
+    "sourcePage": "https://nango.dev/api-integrations"
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "category": "Team tools",
+    "logo": "assets/integrations/slack.png",
+    "url": "https://pipedream.com/s.v0/app_M0hv7G/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "teams",
+    "name": "Microsoft Teams",
+    "category": "Team tools",
+    "logo": "assets/integrations/teams.png",
+    "url": "https://pipedream.com/s.v0/app_1M0hlk/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "gmail",
+    "name": "Gmail",
+    "category": "Team tools",
+    "logo": "assets/integrations/gmail.png",
+    "url": "https://pipedream.com/s.v0/app_OQYhq7/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "outlook",
+    "name": "Outlook",
+    "category": "Team tools",
+    "logo": "assets/integrations/outlook.svg",
+    "url": "https://cdn.sanity.io/images/7yse5usn/production/7f2bd8f3b9d222287738d0d325a3970250582957-62x62.svg",
+    "sourcePage": "https://nango.dev/api-integrations"
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "category": "Team tools",
+    "logo": "assets/integrations/zoom.svg",
+    "url": "https://pipedream.com/s.v0/app_m5ghAd/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "calendar",
+    "name": "Google Calendar",
+    "category": "Team tools",
+    "logo": "assets/integrations/calendar.png",
+    "url": "https://pipedream.com/s.v0/app_13Gh2V/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "category": "Projects & support",
+    "logo": "assets/integrations/jira.svg",
+    "url": "https://pipedream.com/s.v0/app_mArhw1/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "category": "Projects & support",
+    "logo": "assets/integrations/asana.png",
+    "url": "https://pipedream.com/s.v0/app_OVWhPX/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "category": "Projects & support",
+    "logo": "assets/integrations/linear.svg",
+    "url": "https://pipedream.com/s.v0/app_X7Lh0L/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "category": "Projects & support",
+    "logo": "assets/integrations/trello.png",
+    "url": "https://pipedream.com/s.v0/app_168hnX/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "zendesk",
+    "name": "Zendesk",
+    "category": "Projects & support",
+    "logo": "assets/integrations/zendesk.png",
+    "url": "https://pipedream.com/s.v0/app_1pbhGX/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "intercom",
+    "name": "Intercom",
+    "category": "Projects & support",
+    "logo": "assets/integrations/intercom.svg",
+    "url": "https://cdn.sanity.io/images/7yse5usn/production/9b37572004346fb42c397c8999e5eb5f78aa8646-62x62.svg",
+    "sourcePage": "https://nango.dev/api-integrations"
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "category": "Projects & support",
+    "logo": "assets/integrations/github.png",
+    "url": "https://pipedream.com/s.v0/app_OrZhaO/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "snowflake",
+    "name": "Snowflake",
+    "category": "Data & business",
+    "logo": "assets/integrations/snowflake.png",
+    "url": "https://pipedream.com/s.v0/app_mWnh8j/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "postgres",
+    "name": "PostgreSQL",
+    "category": "Data & business",
+    "logo": "assets/integrations/postgres.png",
+    "url": "https://pipedream.com/s.v0/app_1M0hNB/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "category": "Data & business",
+    "logo": "assets/integrations/mysql.png",
+    "url": "https://pipedream.com/s.v0/app_1YMhwo/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "category": "Data & business",
+    "logo": "assets/integrations/mongodb.svg",
+    "url": "https://pipedream.com/s.v0/app_mvNhea/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "analytics",
+    "name": "Google Analytics",
+    "category": "Data & business",
+    "logo": "assets/integrations/analytics.png",
+    "url": "https://pipedream.com/s.v0/app_mJQh5A/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "category": "Data & business",
+    "logo": "assets/integrations/stripe.png",
+    "url": "https://pipedream.com/s.v0/app_OD5hrX/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "category": "Data & business",
+    "logo": "assets/integrations/shopify.svg",
+    "url": "https://pipedream.com/s.v0/app_X7Lhpm/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  },
+  {
+    "id": "mailchimp",
+    "name": "Mailchimp",
+    "category": "Data & business",
+    "logo": "assets/integrations/mailchimp.png",
+    "url": "https://pipedream.com/s.v0/app_mE7h2q/logo/orig",
+    "sourcePage": "https://pipedream.com/apps"
+  }
+]

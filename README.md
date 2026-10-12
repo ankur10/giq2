@@ -18,6 +18,12 @@ Projects, assignments, dismissed attention and example visibility persist in thi
 
 Mainline integration must use authenticated project/activity services and the existing router, permissions and API contracts. Configure the production post-login destination there: this prototype has no authentication flow. Task-specific navigation, automatic project assignment when starting work, cross-device persistence, authoritative date sorting, live status updates and retries need confirmed mainline support. Opening Ask does not automatically restore a saved question.
 
+## Integrations
+
+Open [Integrations](http://127.0.0.1:8772/#integrations) under **Workspace** after `npm start`. Browse a searchable 35-source logo grid across five categories or saved setups. Selecting a tile opens its detail/setup view; Back preserves search, category and focus. Configure one local setup per provider, with pause/resume and remove/session undo. Documents stores filenames only. Nothing is authorized, uploaded, read or synced. Setups persist under `growthiq-integrations-v1`; leaving setup discards unsaved edits.
+
+Source: [integrations.js](integrations.js), [integrations.css](integrations.css), with routing in `app.js` and inclusion in `index.html`/`build-site.cjs`. The 34 local vendor logos were reused from Nango/Pipedream at the user's request; [asset provenance](assets/integrations/provenance.json) records source URLs and origin pages. See [integrations-contract.md](integrations-contract.md) for behavior and recorded checks. All sources are proposals. Mainline handover needs verified authorization, ACL enforcement, discovered provider scopes, multiple accounts, actual sync states/errors and revoke/disconnect semantics using confirmed service contracts.
+
 ## Townhall keynote
 
 Open [From a signal to a decision](http://127.0.0.1:8772/#keynote) after `npm start`. This desktop product film plays once for 22 seconds: the camera approaches Your Briefing, a captured Sika/Akkim signal lifts out of the interface, its significance for H.B. Fuller comes forward, and the camera travels to Ask GrowthIQ. It is a short cinematic proof with captured product screens and crisp foreground text.
