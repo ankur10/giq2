@@ -47,7 +47,6 @@ h1,h2{font-family:"Source Serif 4",Georgia,serif;font-weight:400;letter-spacing:
 .thesis .answer::before{content:"";position:absolute;left:0;top:-52px;width:132px;height:5px;border-radius:3px;background:var(--orange)}
 
 /* 3. The journey: the line travels, and each version arrives on it */
-.journey h2{position:absolute;left:140px;top:84px;font-size:68px;line-height:1.1}
 .track{position:absolute;left:140px;top:356px;width:1640px;height:4px;border-radius:2px;background:rgb(169 182 207 / .16)}
 .track i{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--soft),var(--orange));transition:width 1.4s var(--ease)}
 .journey[data-on] .track i{width:60px}
@@ -81,3 +80,53 @@ h1,h2{font-family:"Source Serif 4",Georgia,serif;font-weight:400;letter-spacing:
 .screen .hint{position:absolute;left:44px;bottom:44px;width:104px;height:104px;border-radius:50%;font-size:0;background:rgb(7 11 22 / .78);box-shadow:0 0 0 2px rgb(255 255 255 / .5);transition:opacity .5s}
 .screen .hint::after{content:"";position:absolute;left:40px;top:31px;border-left:34px solid var(--paper);border-top:21px solid transparent;border-bottom:21px solid transparent}
 .film[data-at="1"] .hint{opacity:0}
+
+/* 5 to 11. Shared parts of the capability slides */
+.slide>h2{position:absolute;left:140px;top:84px;font-size:68px;line-height:1.1}
+.film>h2{top:60px;font-size:52px}
+.thesis>h2{top:232px;font-size:124px;line-height:1.08}
+.sub{position:absolute;left:140px;top:176px;width:1500px;font:400 34px/1.3 "Source Sans 3",Arial,sans-serif;color:var(--soft)}
+/* A product screen: white, lifted off the dark stage */
+.shot{position:absolute;margin:0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 36px 110px rgb(0 0 0 / .55),0 0 0 1px rgb(255 255 255 / .1)}
+.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
+.shot:not([data-step]){opacity:0}
+.slide[data-on] .shot:not([data-step]){animation:lift 1.3s var(--out) var(--d,.35s) forwards}
+.shot[data-step]:not([data-shown]){transform:translateY(40px) scale(.97)}
+@keyframes lift{from{opacity:0;transform:translateY(46px) scale(.97)}to{opacity:1;transform:none}}
+.shot.tagged figcaption{position:absolute;left:12px;bottom:12px;padding:5px 14px;border-radius:99px;font:600 22px "Source Sans 3",Arial,sans-serif;color:var(--paper);background:rgb(13 23 48 / .92)}
+.caption{position:absolute;top:860px;width:800px}
+.caption h3{font:400 40px/1.15 "Source Serif 4",Georgia,serif}
+.caption h3 small,.names small{margin-left:14px;padding:3px 12px;border-radius:99px;font:600 20px "Source Sans 3",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle;color:var(--orange);box-shadow:inset 0 0 0 2px var(--orange)}
+.caption p{margin-top:10px;font-size:30px;line-height:1.3;color:var(--soft)}
+
+/* 5. The map */
+.groups{position:absolute;left:140px;top:300px;display:grid;grid-template-columns:repeat(4,380px);column-gap:40px}
+.groups article{padding-top:28px;border-top:4px solid var(--orange)}
+.groups h3{font:600 26px "Source Sans 3",Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+.groups ul{margin-top:34px}
+.groups li{padding:26px 0;font:400 40px/1.2 "Source Serif 4",Georgia,serif;border-top:1px solid rgb(169 182 207 / .2)}
+.groups li:first-child{border-top:0;padding-top:0}
+
+/* 6. The answer: each panel lights the point it proves */
+.points{position:absolute;left:140px;top:300px;width:470px;margin:0;padding:0;list-style:none}
+.points li{padding:26px 0 26px 26px;border-left:4px solid rgb(169 182 207 / .2);font-size:30px;line-height:1.3;color:var(--faint);transition:color .6s,border-color .6s}
+.points b{display:block;margin-bottom:6px;font:400 40px/1.15 "Source Serif 4",Georgia,serif}
+.answer[data-at="1"] [data-lit="1"],.answer[data-at="2"] :is([data-lit="1"],[data-lit="2"]),.answer[data-at="3"] [data-lit]{color:var(--paper);border-color:var(--orange)}
+
+/* 7. The studio */
+.studio .sub{width:1500px}
+.names{position:absolute;left:140px;top:300px;width:520px}
+.names li{padding:22px 0;font:400 40px/1.2 "Source Serif 4",Georgia,serif;border-top:1px solid rgb(169 182 207 / .2);opacity:0}
+.names li:first-child{border-top:0}
+.studio[data-on] .names li{animation:slide .8s var(--out) calc(.6s + var(--i) * .1s) forwards;transform:translateX(-18px)}
+
+/* 12. The close: the line from the cover returns and comes to rest */
+.close-line{position:absolute;inset:0;width:100%;height:100%}
+.close-line path{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.close-line circle{fill:var(--orange);opacity:0;transform-origin:760px 318px;transform:scale(.2)}
+.close[data-on] .close-line path{animation:draw 1.8s var(--ease) .4s forwards}
+.close[data-on] .close-line circle{animation:land .9s var(--out) 2s forwards}
+.close>h2{top:390px;font-size:152px;line-height:1.06;opacity:0}
+.close>h2 em{color:var(--orange)}
+.close[data-on]>h2{animation:rise 1.4s var(--out) 1.1s forwards}
+.close .sign{position:absolute;left:140px;bottom:104px;font-size:28px;letter-spacing:.04em;color:var(--faint)}
