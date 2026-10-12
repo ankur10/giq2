@@ -2,14 +2,18 @@
 // step in assets/stage/voice/, and their lengths in stage/voice.json. Needs OPENAI_API_KEY,
 // in the environment or in .env. A real recording replaces a line by overwriting its file;
 // then run with --measure to refresh the lengths without regenerating anything.
-//   node tools/make-voiceover.mjs [--measure] [step ids...]
+//   node tools/make-voiceover.mjs [--measure] [--story <folder>] [step ids...]
+// --story names another narrated piece: a folder holding narration.mjs (exporting `lines` and
+// `VOICE`), which gets its voice/ folder and voice.json beside it. Default: the stage demo.
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import {lines, VOICE} from '../stage/narration.mjs';
 
-const root = path.join(import.meta.dirname, '..'), dir = path.join(root, 'assets', 'stage', 'voice');
-const args = process.argv.slice(2), measureOnly = args.includes('--measure'), only = args.filter(a => !a.startsWith('--'));
+const root = path.join(import.meta.dirname, '..'), args = process.argv.slice(2);
+const story = args.includes('--story') ? path.resolve(args.splice(args.indexOf('--story'), 2)[1]) : null;
+const {lines, VOICE} = await import(path.join(story ?? path.join(root, 'stage'), 'narration.mjs'));
+const dir = story ? path.join(story, 'voice') : path.join(root, 'assets', 'stage', 'voice'), lengthsFile = path.join(story ?? path.join(root, 'stage'), 'voice.json');
+const measureOnly = args.includes('--measure'), only = args.filter(a => !a.startsWith('--'));
 const key = process.env.OPENAI_API_KEY ?? fs.readFileSync(path.join(root, '.env'), 'utf8').match(/^OPENAI_API_KEY=["']?([^"'\s]+)/m)?.[1];
 fs.mkdirSync(dir, {recursive: true});
 
@@ -23,7 +27,7 @@ const seconds = file => Number(execFileSync('ffprobe', ['-v', 'error', '-show_en
 // Silence the model leaves at either end is trimmed, so `at` and `pause` mean what they say.
 const TRIM = 'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse';
 
-const lengths = fs.existsSync(path.join(root, 'stage', 'voice.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'stage', 'voice.json'))) : {};
+const lengths = fs.existsSync(lengthsFile) ? JSON.parse(fs.readFileSync(lengthsFile)) : {};
 for (const [id, line] of Object.entries(lines)) {
   const file = path.join(dir, id + '.m4a');
   if (!measureOnly && (!only.length || only.includes(id))) {
@@ -39,6 +43,6 @@ for (const [id, line] of Object.entries(lines)) {
   }
   lengths[id] = Math.round(seconds(file) * 100) / 100;
 }
-fs.writeFileSync(path.join(root, 'stage', 'voice.json'), JSON.stringify(lengths, null, 2) + '\n');
+fs.writeFileSync(lengthsFile, JSON.stringify(lengths, null, 2) + '\n');
 const total = Object.values(lengths).reduce((a, b) => a + b, 0);
 console.log(`${Object.keys(lengths).length} lines, ${total.toFixed(1)}s of speech`);

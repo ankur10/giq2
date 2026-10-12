@@ -13,17 +13,15 @@ const D = [38, 62, 66, 69, 74], A = [33, 61, 64, 69, 73], Bm = [35, 62, 66, 71, 
 const PROGRESSION = [D, A, Bm, G];
 const PULSE = [0, 2, 1, 3, 2, 1, 3, 2];   // which chord note each eighth of a bar plays
 
-// Everything the bed plays, in the film engine's units (beats of 0.6s) so it can be composed.
-export function music(script) {
-  const starts = startTimes(script), end = starts.at(-1) + script.at(-1).duration, beats = seconds => seconds / BEAT;
+// The bed for any narrated piece, in the film engine's units (beats of 0.6s) so it can be composed.
+// The arrangement grows with the story: chords alone at first, the pulse from `pulseFrom`, bass
+// and drums from `drumsFrom`, and one held chord from `close` to `end` (all in seconds).
+// `motifs` are the moments the three-note motif is left open; it resolves at the close.
+export function bed({end, pulseFrom, drumsFrom, close, motifs = [], thumps = []}) {
+  const beats = seconds => seconds / BEAT;
   const list = [{kind: 'room', at: 0, to: beats(end)}];
   const add = (kind, seconds, more = {}) => list.push({kind, at: beats(seconds), ...more});
-  // Moments inside a step keep their place in the picture when the step has been quickened.
-  const at = (id, offset = 0) => { const i = script.findIndex(s => s.id === id); return starts[i] + offset / (script[i].rate ?? 1); };
   const beat = 60 / TEMPO, bar = beat * 4;
-  // The arrangement grows with the story: chords alone under the opening, the pulse from the
-  // notification, bass and drums once she is inside the product, and one held chord to close.
-  const pulseFrom = at('notify'), drumsFrom = at('briefing'), close = at('end', 1.9);
   for (let n = 0; n * bar < close; n++) {
     const from = n * bar, chord = PROGRESSION[Math.floor(n / 2) % PROGRESSION.length], [bass, ...notes] = chord;
     if (n % 2 === 0) list.push({kind: 'pad', at: beats(from), to: beats(Math.min(from + bar * 2, close) - 0.15), notes: notes.slice(0, 3), gain: 0.06, attack: 0.4, release: 0.8, bright: true});
@@ -38,13 +36,19 @@ export function music(script) {
       }
     }
   }
-  // A low thump for each document that lands.
-  [1.6, 5.6, 9.6].forEach(offset => add('thump', at('build', offset)));
-  // The three-note motif: left open at the notification and the answer, resolved at the close.
-  [[at('notify', 0.3), E5], [at('answer', 2.5), E5], [close, Fs5]].forEach(([seconds, lastNote]) => [D5, A5, lastNote].forEach((note, i) => add('bell', seconds + i * 0.3, {note, gain: 0.16})));
+  thumps.forEach(seconds => add('thump', seconds));
+  [...motifs.map(seconds => [seconds, E5]), [close, Fs5]].forEach(([seconds, lastNote]) => [D5, A5, lastNote].forEach((note, i) => add('bell', seconds + i * 0.3, {note, gain: 0.16})));
   list.push({kind: 'pad', at: beats(close), to: beats(end), notes: [50, 57, 66, 69], gain: 0.09, attack: 0.3, release: 3, bright: true});
   add('bell', close, {note: 62, gain: 0.12});
   return list.sort((a, b) => a.at - b.at);
+}
+// The stage demo's bed: the pulse from the notification, drums once she is inside the product,
+// a low thump for each document that lands.
+export function music(script) {
+  const starts = startTimes(script), end = starts.at(-1) + script.at(-1).duration;
+  // Moments inside a step keep their place in the picture when the step has been quickened.
+  const at = (id, offset = 0) => { const i = script.findIndex(s => s.id === id); return starts[i] + offset / (script[i].rate ?? 1); };
+  return bed({end, pulseFrom: at('notify'), drumsFrom: at('briefing'), close: at('end', 1.9), motifs: [at('notify', 0.3), at('answer', 2.5)], thumps: [1.6, 5.6, 9.6].map(offset => at('build', offset))});
 }
 
 // Fetches every voice file once. Decoding is done per audio context, since it consumes the bytes.

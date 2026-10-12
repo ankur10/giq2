@@ -1,0 +1,26 @@
+/* The GrowthIQ 2.0 video. Every moving value is set from tour.mjs as a function of time, so a
+   frame can be drawn for any moment; nothing here animates by itself. */
+@font-face{font-family:"Source Serif 4";src:url(../../assets/serif.woff2) format("woff2");font-weight:200 900;font-display:block}
+@font-face{font-family:"Source Sans 3";src:url(../../assets/sans.woff2) format("woff2");font-weight:200 900;font-display:block}
+:root{--navy:#14213d;--deep:#0d1730;--edge:#070b16;--orange:#e8701a;--paper:#f4f1ea;--soft:#a9b6cf;--faint:#5d6b8a}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--edge)}
+.tour{position:fixed;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));overflow:hidden;color:var(--paper);font-family:"Source Sans 3",Arial,sans-serif;background:radial-gradient(120% 90% at 50% 45%,var(--navy) 0%,var(--deep) 45%,var(--edge) 100%)}
+.start{position:fixed;left:50%;bottom:8%;transform:translateX(-50%);margin:0;padding:10px 22px;border-radius:99px;font:500 16px "Source Sans 3",Arial,sans-serif;color:var(--paper);background:rgb(7 11 22 / .8)}
+.beat{position:absolute;inset:0;perspective:2200px;opacity:0}
+.card{position:absolute;border-radius:14px;background:#fff;box-shadow:0 50px 150px rgb(0 0 0 / .6),0 0 0 1px rgb(255 255 255 / .1);transform-origin:50% 60%}
+.card>img{display:block;width:100%;height:100%;border-radius:14px}
+.card .dim{position:absolute;inset:0;border-radius:14px;background:#0d1730;opacity:0}
+.panel{position:absolute;border-radius:8px;background-color:#fff;background-repeat:no-repeat;opacity:0}
+.label{position:absolute;left:210px;top:78px;margin:0;padding-left:20px;border-left:4px solid var(--orange);font:600 28px/1.5 "Source Sans 3",Arial,sans-serif;letter-spacing:.04em;color:var(--paper)}
+.caption{position:absolute;left:260px;right:260px;bottom:56px;margin:0;text-align:center;font:400 34px/1.3 "Source Sans 3",Arial,sans-serif;color:var(--paper);text-wrap:balance}
+.caption span{padding:6px 18px;border-radius:8px;background:rgb(7 11 22 / .82);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.tag{position:absolute;margin:0;font:400 38px/1.2 "Source Serif 4",Georgia,serif}
+.title{position:absolute;left:140px;top:300px;width:1500px;margin:0;font:400 124px/1.08 "Source Serif 4",Georgia,serif;letter-spacing:-.02em}
+.title span{display:inline-block}
+.title em{color:var(--orange)}
+.typed{position:absolute;left:210px;top:270px;width:1500px;margin:0;font:400 88px/1.16 "Source Serif 4",Georgia,serif;letter-spacing:-.015em}
+.typed i{display:inline-block;width:5px;height:84px;margin-left:6px;vertical-align:-12px;background:var(--orange)}
+.sign{position:absolute;left:140px;bottom:120px;margin:0;font-size:28px;letter-spacing:.04em;color:var(--faint)}
+.line{position:absolute;inset:0;width:100%;height:100%}
+.line path{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-dasharray:1}
+.line circle{fill:var(--orange)}

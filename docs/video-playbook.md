@@ -123,6 +123,22 @@ npm run video:export -- film 0 99 out/film.mp4
 
 A long piece can be exported as several ranges in parallel and joined with `ffmpeg`.
 
+## Making a narrated reel of real screens
+
+`deck/video/` is the GrowthIQ 2.0 video: real product screenshots with panels that lift off them, a voice-over and the music bed. It is driven by the voice like the narrated demo, but its picture is a pure function of time, so it exports frame by frame like the film.
+
+- `deck/video/narration.mjs`: one line per beat.
+- `deck/video/shots.mjs`: what each beat shows: the screenshot, the regions that lift off it and when.
+- Screenshots go in `deck/assets/video/`. They are not committed, because they show a customer workspace.
+
+```bash
+node tools/make-voiceover.mjs --story deck/video
+npm run deck
+npm run video:export -- deck/video/ 0 116 out/growthiq-2.0.mp4 http://127.0.0.1:8773/
+```
+
+`npm run deck` serves the repo on port 8773 and must stay running during the export. The end time is the video's length, which `deck/video/` prints as `window.totalSeconds`. Open `http://127.0.0.1:8773/deck/video/` and press space to watch it live.
+
 ## Rules that were learned the hard way
 
 - **Never trust a live recording's timing by itself.** A screen recording can run several percent fast or slow. Pieces that can be stepped are exported frame by frame. The narrated demo cannot, so it flashes two markers and the export measures them.
