@@ -15,3 +15,6 @@ ds-bundle/
 
 # exported videos
 out/
+
+# superseded deck video
+deck/assets/demo-old.mp4

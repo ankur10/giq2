@@ -18,6 +18,9 @@ for (const file of files) {
   fs.copyFileSync(path.join(__dirname, file), path.join(output, file));
 }
 fs.cpSync(path.join(__dirname, 'assets'), path.join(output, 'assets'), { recursive: true });
+// The GrowthIQ 2.0 deck is published as it stands, without the source of its video.
+const deckOnly = source => !/deck\/(video|assets\/video|README\.md|vercel\.json|\.vercelignore|assets\/demo-old\.mp4)(\/|$)/.test(source);
+fs.cpSync(path.join(__dirname, 'deck'), path.join(output, 'deck'), { recursive: true, filter: deckOnly });
 fs.mkdirSync(path.join(output, 'data'), { recursive: true });
 fs.copyFileSync(path.join(__dirname, 'data/data1.json'), path.join(output, 'data/data1.json'));
 console.log('Static site built in dist/');
