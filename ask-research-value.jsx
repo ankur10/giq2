@@ -40,25 +40,19 @@ function useCountUp(box,to,ms=1800){
  return value;
 }
 
-// One line under the answer, linking to the full account on the Sources tab.
+// A quiet line under the answer, linking to the reports on the Sources tab.
 export function ResearchLine({onOpen}){
- const box=useRef(),value=useCountUp(box,total,1400);
- return <button ref={box} className="ar-value-line" onClick={onOpen}><span className="ar-value-mark">MnM</span><span>Draws on <strong>{money(value)}</strong> of proprietary research · {research.length} reports</span><span className="ar-value-go" aria-hidden="true">→</span></button>
+ const box=useRef(),value=useCountUp(box,total,1200);
+ return <button ref={box} className="ar-value-line" onClick={onOpen}>Draws on <strong>{money(value)}</strong> of MnM proprietary research</button>
 }
 
-// The Sources tab's headline: the amount counting up, the reports stacking into a bar beside it,
-// then each report with what the answer took from it.
+// The reports behind the answer, as one more group of sources, with the amount in its heading.
 export function ResearchValue(){
- const box=useRef(),value=useCountUp(box,total);
- let reached=0;
- return <section ref={box} className="ar-value" aria-label="Proprietary research behind this answer">
-  <div className="ar-value-hero">
-   <p className="ar-value-eyebrow">Proprietary research</p>
-   <p className="ar-value-sentence">This answer draws on <strong className="ar-value-number" aria-label={money(total)}>{money(value)}</strong> of proprietary research by MnM.</p>
-   <div className="ar-value-bar" aria-hidden="true">{research.map(r=>{const from=reached;reached+=r.price;const lit=Math.max(0,Math.min(1,(value-from)/r.price));return <span key={r.title} style={{flexGrow:r.price,opacity:.25+.75*lit,transform:`scaleY(${.35+.65*lit})`}}/>})}</div>
-   <dl className="ar-value-facts"><div><dt>Reports</dt><dd>{research.length}</dd></div><div><dt>Tables cited</dt><dd>{tables}</dd></div><div><dt>Markets covered</dt><dd>{new Set(research.map(r=>r.area)).size}</dd></div></dl>
-  </div>
-  <ol className="ar-value-reports">{research.map((r,i)=><li key={r.title} style={{'--i':i}}><span className="ar-value-index">{String(i+1).padStart(2,'0')}</span><span className="ar-value-title"><strong>{r.title}</strong><small>{r.area} · {r.tables} tables used</small></span><span className="ar-value-price">{money(r.price)}</span></li>)}</ol>
+ const box=useRef(),value=useCountUp(box,total,1200);
+ return <section ref={box} className="ar-source-group ar-value">
+  <h2>MnM proprietary research <span className="ar-count">{research.length}</span></h2>
+  <p className="ar-value-summary">This answer draws on <strong>{money(value)}</strong> of proprietary research by MnM, across {tables} tables.</p>
+  {research.map(r=><div className="ar-source-row ar-value-row" key={r.title}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg><span><strong>{r.title}</strong><small>{r.area} · {r.tables} tables used</small></span><span className="ar-value-price">{money(r.price)}</span></div>)}
   <p className="ar-small">Concept: report titles and list prices are illustrative.</p>
  </section>
 }
