@@ -43,7 +43,7 @@ function useCountUp(box,to,ms=1800){
 // A quiet line under the answer, linking to the reports on the Sources tab.
 export function ResearchLine({onOpen}){
  const box=useRef(),value=useCountUp(box,total,1200);
- return <button ref={box} className="ar-value-line" onClick={onOpen}>Draws on <strong>{money(value)}</strong> of MnM proprietary research</button>
+ return <button ref={box} className="ar-value-line" onClick={onOpen}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg><span>Draws on <strong>{money(value)}</strong> of MnM proprietary research</span><span className="ar-value-go" aria-hidden="true">→</span></button>
 }
 
 // The reports behind the answer, as one more group of sources, with the amount in its heading.
@@ -51,7 +51,7 @@ export function ResearchValue(){
  const box=useRef(),value=useCountUp(box,total,1200);
  return <section ref={box} className="ar-source-group ar-value">
   <h2>MnM proprietary research <span className="ar-count">{research.length}</span></h2>
-  <p className="ar-value-summary">This answer draws on <strong>{money(value)}</strong> of proprietary research by MnM, across {tables} tables.</p>
+  <div className="ar-value-summary"><p><strong className="ar-value-number">{money(value)}</strong><span>of proprietary research by MnM behind this answer</span></p><dl><div><dt>Reports</dt><dd>{research.length}</dd></div><div><dt>Tables cited</dt><dd>{tables}</dd></div></dl></div>
   {research.map(r=><div className="ar-source-row ar-value-row" key={r.title}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg><span><strong>{r.title}</strong><small>{r.area} · {r.tables} tables used</small></span><span className="ar-value-price">{money(r.price)}</span></div>)}
   <p className="ar-small">Concept: report titles and list prices are illustrative.</p>
  </section>
