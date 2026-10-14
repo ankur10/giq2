@@ -27,3 +27,7 @@
 
 /* The page heading supplies context; keep the action row compact. */
 .mw-intro{justify-content:flex-end;padding-bottom:16px;margin-bottom:20px}
+
+.mw-research-total{font-size:13px;color:var(--muted);margin-top:8px;font-variant-numeric:tabular-nums}
+.mw-research-total strong{font-weight:600;color:var(--ink)}
+.mw-research{font-variant-numeric:tabular-nums}
