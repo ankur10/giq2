@@ -102,14 +102,45 @@
   }
 
   /* ---------- Intelligence Studio: the agent hub ---------- */
+  // Every agent as a node in its stage's column; links are the hand-offs each agent's next
+  // actions make. Today's story (one opportunity from scouting to a decision) is lit.
+  const STORY=['opportunity-scout','opportunity-assessment','assumption-tester','stakeholder-brief','growth-portfolio'];
+  function network(){
+    const W=640,H=330,top=40,cols=STAGES.map(([s])=>C.filter(a=>a.stage===s)),pos={};
+    cols.forEach((list,ci)=>{const x=36+ci*(W-110)/(STAGES.length-1),gap=(H-top-14)/Math.max(list.length,1);list.forEach((a,i)=>{pos[a.id]=[x,top+gap*(i+.5)]})});
+    const edges=[];C.forEach(a=>(X[a.id]?.actions||[]).forEach(([,t])=>{if(t.startsWith('agent/')){const to=t.slice(6);if(pos[to]&&to!==a.id)edges.push([a.id,to])}}));
+    const lit=([f,t])=>STORY.indexOf(t)===STORY.indexOf(f)+1&&STORY.includes(f);
+    const curve=([f,t])=>{const [x1,y1]=pos[f],[x2,y2]=pos[t],mx=(x1+x2)/2;return `M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`};
+    return `<svg class="ag-net" viewBox="0 0 ${W} ${H}" role="img" aria-label="The 24 agents by stage, with the hand-offs between them">
+      ${STAGES.map(([s],ci)=>`<text x="${36+ci*(W-110)/(STAGES.length-1)}" y="16" class="ag-net-stage">${esc(s)}</text>`).join('')}
+      ${edges.filter(e=>!lit(e)).map(e=>`<path d="${curve(e)}" class="ag-net-edge"/>`).join('')}
+      ${edges.filter(lit).map(e=>`<path d="${curve(e)}" class="ag-net-edge lit" pathLength="1"/>`).join('')}
+      ${C.map(a=>{const [x,y]=pos[a.id],st=X[a.id]?.status,on=STORY.includes(a.id);return `<a href="#agent/${a.id}" class="ag-net-node${st==='Live'?' live':''}${on?' story':''}"><title>${esc(a.name)}: ${esc(a.question)}</title>${st==='Live'?`<circle cx="${x}" cy="${y}" r="9" class="ag-net-pulse"/>`:''}<circle cx="${x}" cy="${y}" r="${on?6:4.5}" class="ag-net-dot"/><text x="${x+11}" y="${y+4}" class="ag-net-label">${esc(a.name)}</text></a>`}).join('')}
+    </svg>`;
+  }
   function hub(){
-    const live=C.filter(a=>X[a.id]&&['Live','Sent'].includes(X[a.id].status));
+    const live=C.filter(a=>X[a.id]?.status==='Live').length,monitors=MON.filter(m=>m[5]).length;
+    const lead='opportunity-assessment',others=['customer-shift','competitor-move','pre-mortem'];
+    const call=(id,big)=>{const a=agent(id),x=X[id];return `<article class="ag-call-card${big?' lead':''}"><header><a href="#agent/${id}" class="ag-call-agent">${esc(a.name)}</a>${status(x)}</header><h3><a href="#agent/${id}">${esc(x.call)}</a></h3>${changedLine(x)}${big?view(x.view):''}<footer><span class="ag-meta">${esc(a.stage)} · last run ${esc(x.lastRun)}</span><a class="ag-open" href="#agent/${id}">Open ${icon('arrow')}</a></footer></article>`};
     return `<div class="ag-hub">
-      <section class="ag-door"><label class="ag-door-field" for="ag-door-input">${icon('search')}<span class="sr-only">Describe what you need to know</span><input id="ag-door-input" type="search" placeholder="What do you need to know? For example: which of our customers are changing?" autocomplete="off"></label><div id="ag-door-results" class="ag-door-results" aria-live="polite"></div></section>
-      <section class="ag-section"><header class="ag-section-head"><h2>Running for you</h2><p>${live.length} agents run on a schedule or watch continuously for H.B. Fuller.</p></header>
-        <ul class="ag-rows">${live.map(a=>`<li><a href="#agent/${a.id}" class="ag-row"><span class="ag-row-name">${esc(a.name)}</span>${status(X[a.id])}<span class="ag-row-call">${esc(X[a.id].call)}</span><span class="ag-row-when">${esc(X[a.id].lastRun)}</span>${icon('arrow','ag-row-go')}</a></li>`).join('')}</ul></section>
-      ${STAGES.map(([s,line])=>`<section class="ag-section" aria-label="${esc(s)}"><header class="ag-section-head"><h2>${esc(s)}</h2><p>${esc(line)}</p></header>
-        <ul class="ag-rows ag-catalog">${C.filter(a=>a.stage===s).map(a=>`<li><a href="#agent/${a.id}" class="ag-row"><span class="ag-row-name">${esc(a.name)}<small>${esc(a.question)}</small></span><span class="ag-row-sig">${esc(a.signature.split('.')[0])}</span><span class="ag-row-when">${esc(a.freq)}</span>${icon('arrow','ag-row-go')}</a></li>`).join('')}</ul></section>`).join('')}
+      <section class="ag-hero" aria-labelledby="ag-hero-title">
+        <div class="ag-hero-copy">
+          <h2 id="ag-hero-title">${live} agents are working for H.B. Fuller.</h2>
+          <p>They watch 5 competitors, 8 key customers and 4 markets through ${monitors} monitors, and hand each other the work: from a signal, to a decision, to the board.</p>
+          <label class="ag-door-field" for="ag-door-input">${icon('search')}<span class="sr-only">Describe what you need to know</span><input id="ag-door-input" type="search" placeholder="What do you need to know?" autocomplete="off"></label>
+          <div id="ag-door-results" class="ag-door-results" aria-live="polite"></div>
+          <div class="ag-prompts" aria-label="Try asking">${['Which of our customers are changing?','Where should we grow next?','What is Henkel up to?','Is our case going to hold?'].map(q=>`<button type="button" data-ag-prompt="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+        </div>
+        <figure class="ag-hero-net">${network()}<figcaption><span class="ag-net-key-path"></span>Today: bio-based packaging went from a scouted opportunity to a decision request<span class="ag-net-key-live"></span>Running now · hover any point for its agent</figcaption></figure>
+      </section>
+
+      <section class="ag-section" aria-labelledby="ag-today"><header class="ag-section-head ag-section-split"><div><h2 id="ag-today">Needs you today</h2><p>The calls that changed since you last looked, most important first.</p></div></header>
+        <div class="ag-today">${call(lead,true)}<div class="ag-today-side">${others.map(id=>call(id,false)).join('')}</div></div>
+      </section>
+
+      <section class="ag-section" aria-labelledby="ag-board"><header class="ag-section-head"><h2 id="ag-board">All agents</h2><p>Twenty-four agents, from noticing a change to sending a decision up. Each one ends in a call, not a document.</p></header>
+        <div class="ag-board-cols">${STAGES.map(([s,line])=>`<section class="ag-col" aria-label="${esc(s)}"><header><h3>${esc(s)}</h3><p>${esc(line)}</p></header><ul>${C.filter(a=>a.stage===s).map(a=>`<li><a href="#agent/${a.id}" class="ag-chip"><span class="ag-chip-name">${esc(a.name)}</span><span class="ag-chip-meta">${X[a.id]?status(X[a.id]):''}<span>${esc(a.freq)}</span></span><span class="ag-chip-sig">${esc(a.signature.split('.')[0])}</span></a></li>`).join('')}</ul></section>`).join('')}</div>
+      </section>
       <p class="ag-note">Agent outputs in this preview are illustrative examples for H.B. Fuller; customers are invented. <a href="#studio">Open the earlier Studio tasks</a>.</p>
     </div>`;
   }
@@ -194,6 +225,7 @@
     const b=e.target.closest('button');if(!b)return;
     if(b.dataset.agMonitor!==undefined){const i=Number(b.dataset.agMonitor),on=!monitorsOn.has(i);on?monitorsOn.add(i):monitorsOn.delete(i);b.setAttribute('aria-checked',String(on));const c=document.getElementById('ag-mon-count');if(c)c.textContent=monitorsOn.size;toast(on?'Monitor switched on in this preview.':'Monitor switched off in this preview.')}
     if(b.dataset.agPick){const [key,id]=b.dataset.agPick.split(':');picked[key]=id;const root=b.closest('[data-ag-reader]');root.querySelectorAll('[role=tab]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));const panelEl=root.querySelector('[role=tabpanel]');panelEl.setAttribute('aria-labelledby',b.id);panelEl.innerHTML=card(id)}
+    if(b.dataset.agPrompt){const i=document.getElementById('ag-door-input');i.value=b.dataset.agPrompt;document.getElementById('ag-door-results').innerHTML=suggest(i.value);i.focus()}
     if(b.dataset.agRun)toast('Example agent: no new run in this preview.');
     if(b.dataset.agWatch)toast('Added to Watch in this preview.');
     if(b.dataset.agBrief){location.hash='agent/stakeholder-brief'}
