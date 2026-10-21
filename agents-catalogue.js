@@ -14,7 +14,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "Runs every morning by design.",
   "data": "Source articles; Live Signals; company and market coverage.",
   "only": "MnM numbers: revenue at stake from MnM market sizes. Memory: your markets.",
-  "signature": "Impact map. Each signal plotted against your markets, sized by MnM's estimate of the revenue at stake. New since the last run highlighted.",
+  "signature": "Ranked signal table. Each signal rated for relevance, with the size of the market it touches.",
   "sources": "Discovery (Exa or Parallel)"
  },
  {
@@ -31,7 +31,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "Thresholds on the shifts that matter most to you.",
   "data": "MnM forecasts and how they have been revised over time; market coverage; signals.",
   "only": "History: how MnM's own forecasts have been revised. MnM numbers.",
-  "signature": "Forecast revision timeline. Each market's outlook over eight quarters, turning points marked, last month's view shown faintly behind.",
+  "signature": "Forecast revision timeline. Each market's growth as forecast in each MnM report edition.",
   "sources": "Discovery (Exa or Parallel)"
  },
  {
@@ -82,7 +82,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "Leading indicators at the first step of the path.",
   "data": "Connected markets; market forecasts at each step.",
   "only": "MnM connected markets and forecasts at every step.",
-  "signature": "Demand path. The chain of connected markets from the change to you, each step showing size and timing. The flagship view.",
+  "signature": "Demand path. The chain of connected markets from the change to you, with MnM growth at each step.",
   "sources": "None: runs on MnM data"
  },
  {
@@ -116,7 +116,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "Revisions to any of the three factors for shortlisted opportunities.",
   "data": "Report tables; market forecasts; customers' end markets; competitor presence.",
   "only": "MnM's own framework, E = M × C × C, run on MnM data for all three factors. Connected markets for the demand chain.",
-  "signature": "Growth Equation field. Opportunities placed by market growth and customer demand, sized by competitive gap, with each one's three factors shown as it is selected.",
+  "signature": "Opportunity field. Market growth against market size, sized by how many rivals are already present.",
   "sources": "None: runs on MnM data"
  },
  {
@@ -184,7 +184,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "The conditions that would flip the verdict.",
   "data": "Market size, competition and the assumptions that carry the verdict.",
   "only": "MnM market models. Memory: your criteria and thresholds.",
-  "signature": "Verdict dial with sensitivity bar. The verdict, the assumptions that would flip it ranked by effect, and how the verdict has moved across runs.",
+  "signature": "Criteria verdict. Each criterion rated with its evidence, the rule that gives the verdict, and what would change it.",
   "sources": "None: runs on MnM data"
  },
  {
@@ -201,7 +201,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "Deals or moves by the shortlisted companies.",
   "data": "Company coverage; financials; deal news.",
   "only": "MnM company coverage and deal history.",
-  "signature": "Route comparison. Build, buy and partner side by side, with candidate targets plotted by fit and size.",
+  "signature": "Route comparison. Build, buy and partner options with the known facts and a fit rating.",
   "sources": "Discovery (Exa or Parallel)"
  },
  {
@@ -235,7 +235,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "The early-warning signs themselves.",
   "data": "Market risks; competitor behaviour; frameworks such as PESTLE.",
   "only": "Memory: your plan. Always on: warning signs become watches.",
-  "signature": "Risk tree. The ways the plan could fail, each ending in an early-warning sign that lights up when it starts to show.",
+  "signature": "Risk list. Ranked risks, each with its warning sign lit or quiet.",
   "sources": "Discovery (Exa or Parallel) for the warning signs"
  },
  {
@@ -252,7 +252,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "New research or signals on the top needs.",
   "data": "Primary research (source to confirm); Synthetic Interviews.",
   "only": "MnM primary research (to confirm).",
-  "signature": "Needs map. Unmet needs placed by how often and how strongly they come up, with the evidence behind each.",
+  "signature": "Needs ranked by mentions. Counts from interviews and surveys, with quotes.",
   "sources": "None: runs on MnM data"
  },
  {
@@ -286,7 +286,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "A weekly digest for leadership.",
   "data": "The agent output behind each bet; pipeline data from SalesPlay; the research-value figure.",
   "only": "Always on. History: each bet's path over time.",
-  "signature": "Portfolio map with trails. Every bet by status and size, with a trail showing how it has moved week by week.",
+  "signature": "Portfolio board. Every bet with its status and what changed this week.",
   "sources": "None: fed by Watch"
  },
  {
@@ -303,7 +303,7 @@ window.GROWTHIQ_AGENT_CATALOGUE = [
   "watch": "A fall in any of the three factors.",
   "data": "MnM forecasts; your customers' end-market outlook; competitor presence.",
   "only": "MnM numbers behind all three factors. History: the score month by month. The living version of MnM's public Growth Diagnostic.",
-  "signature": "Growth Equation gauge. The score with its three factors as bars, and a twelve-month trend line.",
+  "signature": "Three growth factors. Market momentum, customer demand and competitive position, each improving, steady or worsening.",
   "sources": "None: built from other agents"
  },
  {

@@ -20,7 +20,7 @@
     const grid=[0,.25,.5,.75,1].map(f=>`<line x1="${L}" x2="${W-R}" y1="${T+f*(H-T-B)}" y2="${T+f*(H-T-B)}" class="ag-grid"/>`).join('');
     const ghosts=v.points.filter(p=>p.prev).map(p=>`<circle cx="${sx(p.prev.x)}" cy="${sy(p.prev.y)}" r="${p.r}" class="ag-ghost"/><line x1="${sx(p.prev.x)}" y1="${sy(p.prev.y)}" x2="${sx(p.x)}" y2="${sy(p.y)}" class="ag-move" marker-end="url(#ag-arrow)"/>`).join('');
     const dots=v.points.map(p=>{const x=sx(p.x),y=sy(p.y),right=x>W*.62;return `<g class="${tone(p.tone)}"><circle cx="${x}" cy="${y}" r="${p.r}" class="ag-dot"/><text x="${right?x-p.r-6:x+p.r+6}" y="${y+4}" text-anchor="${right?'end':'start'}" class="ag-label">${esc(p.label)}${p.tag?` · ${esc(p.tag)}`:''}</text></g>`}).join('');
-    return `<figure class="ag-view"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(v.x.label)} against ${esc(v.y.label)}"><defs><marker id="ag-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="ag-arrowhead"/></marker></defs>${grid}<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" class="ag-axis"/><line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" class="ag-axis"/>${ghosts}${dots}<text x="${(W+L)/2}" y="${H-12}" text-anchor="middle" class="ag-axis-label">${esc(v.x.label)} →</text><text x="16" y="${(H-B+T)/2}" text-anchor="middle" transform="rotate(-90 16 ${(H-B+T)/2})" class="ag-axis-label">${esc(v.y.label)} →</text></svg>${v.size?`<figcaption>Circle size: ${esc(v.size)}. Faint circles show the previous run.</figcaption>`:v.points.some(p=>p.prev)?'<figcaption>Faint circles show the previous run.</figcaption>':''}</figure>`;
+    return `<figure class="ag-view"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(v.x.label)} against ${esc(v.y.label)}"><defs><marker id="ag-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="ag-arrowhead"/></marker></defs>${grid}<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" class="ag-axis"/><line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" class="ag-axis"/>${v.x.ticks?[v.x.min,(v.x.min+v.x.max)/2,v.x.max].map(t=>`<text x="${sx(t)}" y="${H-B+16}" text-anchor="middle" class="ag-tick">${t}</text>`).join('')+[v.y.min,(v.y.min+v.y.max)/2,v.y.max].map(t=>`<text x="${L-8}" y="${sy(t)+4}" text-anchor="end" class="ag-tick">${t}</text>`).join(''):''}${ghosts}${dots}<text x="${(W+L)/2}" y="${H-12}" text-anchor="middle" class="ag-axis-label">${esc(v.x.label)} →</text><text x="16" y="${(H-B+T)/2}" text-anchor="middle" transform="rotate(-90 16 ${(H-B+T)/2})" class="ag-axis-label">${esc(v.y.label)} →</text></svg>${v.size?`<figcaption>Circle size: ${esc(v.size)}. Faint circles show the previous run.</figcaption>`:v.points.some(p=>p.prev)?'<figcaption>Faint circles show the previous run.</figcaption>':''}</figure>`;
   }
   function timeline(v){
     const W=640,H=300,L=44,R=150,T=20,B=40,all=v.series.flatMap(s=>s.values),min=Math.floor(Math.min(...all)-.5),max=Math.ceil(Math.max(...all)+.5),n=v.labels.length;
@@ -56,7 +56,7 @@
   }
   function scoreboard(v){
     const cls=x=>/Confirmed|Quiet/.test(x)?'ag-up':/Refuted|lit/.test(x)?'ag-down':'ag-neutral';
-    return `<figure class="ag-view"><div class="ag-score">${v.rows.map(r=>`<div class="ag-score-row ${cls(r.verdict)}"><p>${esc(r.claim)}</p><span class="ag-verdict">${esc(r.verdict)}</span><span class="ag-bar"><i class="pos" style="--w:${r.score}%"></i></span><small>${r.score}%</small>${r.lane?`<em>${esc(r.lane)}</em>`:''}</div>`).join('')}</div></figure>`;
+    return `<figure class="ag-view"><div class="ag-score">${v.rows.map(r=>`<div class="ag-score-row ${cls(r.verdict)}"><p>${esc(r.claim)}</p><span class="ag-verdict">${esc(r.verdict)}</span>${r.score!=null?`<span class="ag-bar"><i class="pos" style="--w:${r.score}%"></i></span><small>${r.score}%</small>`:'<span></span><span></span>'}${r.lane?`<em>${esc(r.lane)}</em>`:''}</div>`).join('')}</div></figure>`;
   }
   function stages(v){
     return `<figure class="ag-view"><div class="ag-stages" style="--n:${v.stages.length}">${v.stages.map((s,i)=>`<section><h4>${esc(s)}</h4>${v.items.filter(it=>it.stage===i).map(it=>`<div class="ag-stage-item"><strong>${esc(it.label)}</strong><small>${esc(it.date)}</small><em>${esc(it.note)}</em></div>`).join('')}</section>`).join('')}</div></figure>`;
@@ -71,8 +71,23 @@
   function brief(v){
     return `<figure class="ag-view"><div class="ag-brief"><h4>${esc(v.title)}</h4><div class="ag-brief-figures">${v.figures.map(([n,l,s])=>`<div><strong>${esc(n)}</strong><span>${esc(l)}</span><a class="ag-source" href="#agent-hub">${esc(s)}</a></div>`).join('')}</div><ul>${v.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul><p class="ag-ask"><b>Decision asked for:</b> ${esc(v.ask)}</p></div></figure>`;
   }
-  const VIEWS={field,timeline,path,chain,board,grid,dial,scoreboard,stages,bars,brief};
-  const view=v=>VIEWS[v.type](v);
+  // A plain table, for comparisons where the honest answer is a rating, not a number.
+  const pill=t=>{const k=String(t).toLowerCase();const c=/^(high|act|go|rising|improving)/.test(k)?'ag-up':/^(low|ignore|no-go|falling|worsening)/.test(k)?'ag-down':'ag-neutral';return `<span class="ag-rating ${c}">${esc(t)}</span>`};
+  function table(v){
+    return `<figure class="ag-view"><div class="ag-table-wrap"><table class="ag-table ag-view-table"><thead><tr>${v.cols.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${v.rows.map(r=>`<tr>${r.map((c,i)=>i===0?`<th scope="row">${esc(c)}</th>`:(v.pills||[]).includes(i)?`<td>${pill(c)}</td>`:`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${v.note?`<figcaption>${esc(v.note)}</figcaption>`:''}</figure>`;
+  }
+  // Ranked counts: the bar is a count of something observed.
+  function rank(v){
+    const max=Math.max(...v.rows.map(r=>r.count));
+    return `<figure class="ag-view"><div class="ag-rank">${v.rows.map(r=>`<div class="ag-rank-row"><span>${esc(r.label)}</span><span class="ag-bar"><i class="pos" style="--w:${r.count/max*100}%"></i></span><b>${r.count}</b>${r.note?`<small>${esc(r.note)}</small>`:''}</div>`).join('')}</div><figcaption>${esc(v.unit)}</figcaption></figure>`;
+  }
+  // Criteria rated with evidence, the rule that turns ratings into a verdict, and what would change it.
+  function criteria(v){
+    return `<figure class="ag-view"><div class="ag-criteria"><div class="ag-verdict-box"><span>Verdict</span><strong>${esc(v.verdict)}</strong><small>${esc(v.rule)}</small></div><div class="ag-table-wrap"><table class="ag-table ag-view-table"><thead><tr><th scope="col">Criterion</th><th scope="col">Rating</th><th scope="col">Evidence</th></tr></thead><tbody>${v.rows.map(([c,r,e])=>`<tr><th scope="row">${esc(c)}</th><td>${pill(r)}</td><td>${esc(e)}</td></tr>`).join('')}</tbody></table></div></div>${v.flips?`<div class="ag-flips"><h4>What would change the verdict</h4><ul>${v.flips.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>`:''}</figure>`;
+  }
+  const VIEWS={field,timeline,path,chain,board,grid,dial,scoreboard,stages,bars,brief,table,rank,criteria};
+  // Every view names where its figures come from.
+  const view=v=>{const html=VIEWS[v.type](v);return v.source?html.replace(/<\/figure>$/,`<p class="ag-source-line">${icon('source')}<span><b>Source</b> ${esc(v.source)}</span></p></figure>`):html};
 
   /* ---------- One agent output ---------- */
   const status=x=>`<span class="ag-status ag-status-${esc(x.status.toLowerCase())}"><i></i>${esc(x.status)}</span>`;
