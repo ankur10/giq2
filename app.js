@@ -39,6 +39,8 @@
   const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.document}</svg>`;
   const routeInfo = {
     integrations:['Integrations','Integrations','Connect your company’s tools and knowledge.'],
+    'agent-hub':['Intelligence Studio','Intelligence Studio','Agents that spot, find, decide and test for you, and keep watching.'],
+    agent:['Intelligence Studio','Intelligence Studio','One agent: its latest call, what changed and why.'],
     feed:['My Feed','My Feed','A fresh perspective. A useful next step.'],
     work:['My Work','My Work','Projects, research and requests.'],
     keynote:['Your Briefing','Your growth briefing','Your perspective on the markets, companies and moves that matter.'],
@@ -55,7 +57,7 @@
     'my-competitors':['Competitors','My competitors','The companies you follow and the moves that matter.'],
     benchmark:['Competitors','Competitor benchmarking','A clearer perspective on financial performance.'],
     'benchmark-empty':['Competitors','Competitor benchmarking','Choose the companies and metrics you want to compare.'],
-    customers:['Customers','Customer intelligence','Your customer workspace, powered by SalesPlay.'],
+    customers:['Customers','Customer intelligence','Your key customers, and the shifts in their markets.'],
     signals:['Live Signals','Live signals','Follow the developments shaping your business.'],
     'studio-v3':['Intelligence Studio','Intelligence Studio','Explore the connections between your question and your next deliverable.'],
     'studio-v4':['Intelligence Studio','Intelligence Studio','A question. A direction. A focused brief.'],
@@ -72,7 +74,7 @@
     support:['Support','How can we help?','Manage your requests and get the support you need.'],
     ticket:['Support','Raise a support ticket','Tell us what happened. We’ll help you take the next step.']
   };
-  const nav = [['My Feed','feed','home'],['My Work','work','grid'],['Your Briefing','home','home'],['Intelligence Studio','studio','document'],['Ask GrowthIQ','ask','ask'],['Ask Domain Expert','domain-expert','customers'],['Radar','radar','signals'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['Keynote','keynote','spark'],['GrowthIQ Live','demo','globe'],['Integrations','integrations','branch'],['Support','support','support']];
+  const nav = [['My Feed','feed','home'],['My Work','work','grid'],['Your Briefing','home','home'],['Intelligence Studio','agent-hub','document'],['Ask GrowthIQ','ask','ask'],['Ask Domain Expert','domain-expert','customers'],['Radar','radar','signals'],['Markets','markets','market'],['Competitors','competitors','competitor'],['Customers','customers','customers'],['Live Signals','signals','signals'],['Keynote','keynote','spark'],['GrowthIQ Live','demo','globe'],['Integrations','integrations','branch'],['Support','support','support']];
   const marketRows = [
     ['Antimicrobial Coatings Market',10.8,7],['Automotive Conformal Coatings Market',10,3.5],['Bioadhesives Market',8.6,14.6],['Bonding Films Market',8.2,.985]
   ];
@@ -192,7 +194,7 @@
     }catch{if(ticket===spatialMountTicket&&target.isConnected)target.innerHTML='<div class="spatial-loading"><h2>Open the product workspace</h2><p>The presentation could not load. Your existing product views remain available.</p><a class="btn primary" href="#home">Open your briefing</a></div>';}
   }
 
-  const studioVariants=[['studio','V1','Original'],['studio-next','V2','Guided'],['studio-v3','V3','Spatial map'],['studio-v4','V4','Cinematic demo'],['studio-v5','V5','Editorial']];
+  const studioVariants=[['agent-hub','V6','Agents'],['studio','V1','Original'],['studio-next','V2','Guided'],['studio-v3','V3','Spatial map'],['studio-v4','V4','Cinematic demo'],['studio-v5','V5','Editorial']];
   const spatialSessions={};
   const spatialPrepared={};
   let spatialModule=null,spatialUnmount=null,spatialMountTicket=0;
@@ -282,7 +284,7 @@
     const field=(name,label,type='text',required=false,placeholder='')=>`<div class="field"><label for="ticket-${name}">${label}${required?'<span class="required">Required</span>':''}</label><input id="ticket-${name}" name="${name}" type="${type}" value="${e(draft[name]||'')}" ${required?'required':''} placeholder="${e(placeholder)}"><p class="field-error" id="error-${name}" hidden></p></div>`;
     return `<div class="ticket-layout"><form id="ticket-form" class="ticket-form" novalidate><div class="form-section-head"><h2>Ticket details</h2>${btn('Save draft & minimize','save-draft','document','quiet')}</div>${field('subject','Subject','text',true,'Briefly describe the issue')}<div class="field-grid"><div class="field"><label for="ticket-category">Category</label><select id="ticket-category" name="category"><option>General Query</option></select></div><div class="field"><label for="ticket-priority">Priority</label><select id="ticket-priority" name="priority"><option>Medium</option></select></div>${field('email','Email','email')}${field('name','Name')}</div><div class="field"><label for="ticket-description">Description <span class="required">Required</span></label><textarea id="ticket-description" name="description" required placeholder="What happened, and what did you expect?">${e(draft.description||'')}</textarea><p class="field-error" id="error-description" hidden></p></div><div class="field"><label for="ticket-attachments">Attachments</label><div class="attachment-area">${icon('attachment')}<span>Choose files to add more context</span><input id="ticket-attachments" name="attachments" type="file" multiple></div><div id="ticket-files" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div></div><div class="form-actions">${link('Cancel','support','','quiet')}<button class="btn primary" type="submit">Submit ticket ${icon('arrow')}</button></div><div id="ticket-result"></div></form><aside class="form-help"><h3>A little detail goes a long way</h3><p>A clear subject and a description of what happened help us understand your request.</p><p>Include screenshots or relevant documents if they help explain the issue.</p><div class="info-line">${icon('info')}Your existing support category and priority are retained.</div></aside></div>`;
   }
-  function view(){return (window.GROWTHIQ_WORK?.contextBanner?.(state.route)||'')+({integrations:()=>window.GROWTHIQ_INTEGRATIONS.view(),'connected-markets':()=>marketTabs()+'<div id="connected-markets-root"></div>',feed:()=>window.GROWTHIQ_FEED.view(),work:()=>window.GROWTHIQ_WORK.view(),radar:()=>window.GROWTHIQ_TRACKER.view(),'domain-expert':()=>window.GROWTHIQ_EXPERT.view(),keynote:keynoteView,demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers,signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route]()}
+  function view(){const agents=window.GROWTHIQ_AGENTS,panel=agents?.panel(state.route)||'',page=({'agent-hub':()=>agents.hub(),agent:()=>agents.page(state.agentId),integrations:()=>window.GROWTHIQ_INTEGRATIONS.view(),'connected-markets':()=>marketTabs()+'<div id="connected-markets-root"></div>',feed:()=>window.GROWTHIQ_FEED.view(),work:()=>window.GROWTHIQ_WORK.view(),radar:()=>window.GROWTHIQ_TRACKER.view(),'domain-expert':()=>window.GROWTHIQ_EXPERT.view(),keynote:keynoteView,demo:fullDemoView,home,ask,markets:marketView,ecosystem:marketView,'my-markets':myMarkets,competitors,'my-competitors':myCompetitors,benchmark:()=>benchmarking(false),'benchmark-empty':()=>benchmarking(true),customers:()=>window.GROWTHIQ_AGENTS?window.GROWTHIQ_AGENTS.customers():customers(),signals,studio,'studio-v3':studioSpatial,'studio-v4':studioSpatial,'studio-v5':studioSpatial,'studio-v3-workspace':studioWorkspace,'studio-v4-workspace':studioWorkspace,'studio-v5-workspace':studioWorkspace,'studio-next':studioNext,'studio-next-workspace':studioWorkspace,agents:studio,'deep-research':studio,'studio-workspace':studioWorkspace,support,ticket})[state.route](),tabsEnd=page.startsWith('<nav class="tabs"')?page.indexOf('</nav>')+6:0;return (window.GROWTHIQ_WORK?.contextBanner?.(state.route)||'')+page.slice(0,tabsEnd)+panel+page.slice(tabsEnd)}
   function render(){unmountSpatial();document.getElementById('app').innerHTML=shell();syncNavigation();mountSpatial()}
   function renderView(){
     const focused=document.activeElement;
@@ -430,7 +432,8 @@
     const requested=location.hash.slice(1)||'feed';
     state.savedViews[state.route]={query:state.query,scroll:window.scrollY};
     const parts=requested.split('/');
-    if(parts.length>1&&studioVariants.some(v=>v[0]===parts[0])){
+    if(parts[0]==='agent'&&parts.length>1){state.route='agent';state.agentId=parts.slice(1).join('/')}
+    else if(parts.length>1&&studioVariants.some(v=>v[0]===parts[0])){
       const base=parts[0],id=parts.slice(1).join('/'),task=S.tasks.find(t=>t.id===id);
       state.route=task?base+'-workspace':base;
       if(task){state.studioTask=id;state.studioStep='brief';if(base==='studio-next'){studioNextState.prepared[id]=true;studioNextState.subject=studioDraft().subject;}if(isSpatialStudio()){const d=studioDraft(),session=spatialSessions[base]||(spatialSessions[base]={});session.subject=d.subject;session.context=d.context;session.selected=id;spatialPrepared[base+':'+id]=true;}}
