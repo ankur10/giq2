@@ -1,0 +1,350 @@
+<title>GrowthIQ Agent Catalogue</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: a reading column for the argument, then full-width tables, each in its own horizontal scroller. */
+:root{
+  --bg:#f6f8f9; --surface:#ffffff; --ink:#152a36; --muted:#55666f; --line:#dbe3e6;
+  --accent:#1f5d7c; --accent-soft:#e6f0f5; --wave1:#b4561a; --wave1-soft:#fbede3;
+  --serif:"Source Serif 4",Georgia,serif; --sans:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1a21; --surface:#15232c; --ink:#e4ecef; --muted:#9db0b9; --line:#29404c;
+  --accent:#7fbad6; --accent-soft:#1b3442; --wave1:#f0a26b; --wave1-soft:#3a2617; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1a21; --surface:#15232c; --ink:#e4ecef; --muted:#9db0b9; --line:#29404c;
+  --accent:#7fbad6; --accent-soft:#1b3442; --wave1:#f0a26b; --wave1-soft:#3a2617; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:48px 80px}
+.page{max-width:1240px;margin:0 auto}
+.read{max-width:68ch}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,4vw,2.75rem);letter-spacing:-.01em}
+h2{font-size:1.6rem;margin-bottom:14px}
+p{margin:0 0 12px}
+.eyebrow{font:600 .75rem/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
+.meta{font-size:.85rem;color:var(--muted);margin-top:18px}
+section{margin-top:56px}
+ul.plain{margin:0;padding-left:1.1em}
+ul.plain li{margin-bottom:6px}
+.note{font-size:.88rem;color:var(--muted)}
+.table-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--surface);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td b{font-weight:600}
+.compact{min-width:560px}
+.catalogue{min-width:2200px}
+.catalogue td.view b{display:block;font-family:var(--serif);color:var(--accent)}
+.catalogue td{line-height:1.5}
+.catalogue th:first-child,.catalogue td:first-child{position:sticky;left:0;background:var(--surface);min-width:230px;max-width:250px;box-shadow:1px 0 0 var(--line)}
+.catalogue td:first-child b{display:block;font-family:var(--serif);font-size:1.02rem}
+.catalogue td:first-child i{display:block;margin-top:4px;color:var(--muted);font-family:var(--serif)}
+.catalogue td.call{font-weight:600;min-width:240px}
+.catalogue td.wide{min-width:200px}
+.stage-row td{background:var(--accent-soft);font:600 .8rem/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);padding:8px 14px}
+.stage-row td span{text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);margin-left:10px}
+.catalogue .stage-row td:first-child{background:var(--accent-soft)}
+.pill{display:inline-block;font:600 .72rem/1 var(--sans);letter-spacing:.04em;padding:5px 8px;border-radius:3px;white-space:nowrap;border:1px solid var(--line);color:var(--muted);background:var(--bg)}
+.pill.w1{color:var(--wave1);background:var(--wave1-soft);border-color:transparent}
+.pill.new{color:var(--accent);background:var(--accent-soft);border-color:transparent;margin-top:6px}
+.freq{white-space:nowrap}
+.freq small{display:block;color:var(--muted);font-size:.8rem}
+.filters{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0 4px}
+.filters div{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.filters span{font-size:.8rem;font-weight:600;color:var(--muted);margin-right:4px}
+.filters button{font:500 .88rem var(--sans);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:5px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.filters button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.count{font-size:.85rem;color:var(--muted);margin-top:6px}
+.questions li{margin-bottom:10px}
+</style>
+
+<div class="page">
+  <header class="read">
+    <p class="eyebrow">Draft for team review · Intelligence Studio</p>
+    <h1>GrowthIQ Agent Catalogue</h1>
+    <p class="lede">A proposal for 24 Intelligence Studio agents that each end in a decision and the next move, inside GrowthIQ.</p>
+    <p class="meta">21 October 2026</p>
+  </header>
+
+  <section>
+    <div class="read">
+      <h2>Built on the MarketsandMarkets promise</h2>
+      <p>The MarketsandMarkets home page promises: "We see growth before it happens." It explains growth through the Growth Equation, "Expansion = Markets × Customers × Competition", asks "Can you see your customers' customers — demand two steps downstream?", and describes three products in sequence: KnowledgeStore to understand, GrowthIQ to discover, and SalesPlay to act, ending in "Measured pipeline &amp; revenue impact". The agents are built to deliver that promise.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Promise on the home page</th><th>How the agents deliver it</th></tr></thead>
+      <tbody>
+        <tr><td><b>See growth before it happens</b></td><td>Market Shift Radar · Demand Tracer · Technology Scout · Customers' Customers · Hiring Signals · Launch Watch · Deal Radar</td></tr>
+        <tr><td><b>The Growth Equation: Markets × Customers × Competition</b></td><td>Opportunity Scout shows every opportunity on all three factors, using MnM data and counts. Growth Score tracks the client's own position on them every month.</td></tr>
+        <tr><td><b>Markets</b></td><td>Opportunity Scout · Market Sizer · Market Shift Radar · Capacity Tracker · Regulation Watch</td></tr>
+        <tr><td><b>Customers, and their customers</b></td><td>Customer Shift watches key customers; Customers' Customers looks two steps downstream</td></tr>
+        <tr><td><b>Competition</b></td><td>Competitor Move · Living Landscape · Launch Watch · Hiring Signals</td></tr>
+        <tr><td><b>Understand, discover, act</b></td><td>Agents draw on KnowledgeStore tables, discover in GrowthIQ, and hand accounts and opportunities to SalesPlay</td></tr>
+        <tr><td><b>Measured pipeline and revenue impact</b></td><td>Growth Portfolio and the quarterly impact email report pipeline and revenue influenced through SalesPlay</td></tr>
+        <tr><td><b>Analyst-validated, traceable to evidence</b></td><td>Every figure links to its MnM table; Assumption Tester escalates to analysts; an analyst stamp is available on any call</td></tr>
+        <tr><td><b>Machine speed, human depth</b></td><td>Monitors and agents for speed; MnM analysts for depth</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>Who it is for</h2>
+      <p>Leadership signs for GrowthIQ. Strategy and market intelligence teams use it every day. The daily users' work therefore has to reach leadership without leadership logging in.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Group</th><th>Role</th><th>What they need from agents</th></tr></thead>
+      <tbody>
+        <tr><td><b>Strategy teams</b></td><td>Daily users</td><td>Decide where to play and how to win: find, size, decide and test.</td></tr>
+        <tr><td><b>Market intelligence teams</b></td><td>Daily users</td><td>Keep the picture current and answer others' questions with fast, sourced work they can pass upward.</td></tr>
+        <tr><td><b>Leadership</b></td><td>Buyer</td><td>The decisions and the status of growth bets, delivered to them in minutes.</td></tr>
+        <tr><td><b>Sales and business development</b></td><td>Served through SalesPlay</td><td>Accounts, plays and pipeline. GrowthIQ agents hand opportunities and accounts to SalesPlay rather than duplicating it.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>What every agent produces</h2>
+      <p>Every agent output has the same six parts, shown in GrowthIQ, never as a block of text. Every call also carries a confidence level.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Part</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td><b>What changed</b></td><td>Opens every output after the first run: what moved since the previous run, shown on the view itself. ChatGPT has no previous run to compare with.</td></tr>
+        <tr><td><b>The call</b></td><td>A verdict, ranking or recommendation in one line, beside the agent's signature view.</td></tr>
+        <tr><td><b>The evidence</b></td><td>The sources and assumptions behind it, each one openable.</td></tr>
+        <tr><td><b>Next actions</b></td><td>Buttons that start the next agent, ask an expert, or send the result up to leadership as a Stakeholder Brief or a bet in the Growth Portfolio.</td></tr>
+        <tr><td><b>Traceable figures</b></td><td>A number appears only if it comes from MnM data, a disclosed fact, or a count of observed events, and every view names its source. Judgements such as relevance, fit or likelihood are shown as ratings with their evidence, never as a precise number or a score.</td></tr>
+        <tr><td><b>A watch</b></td><td>The conditions that would change the call, set as alerts. Offered only where something could overturn it.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>How the agents cover the GrowthIQ promise</h2>
+      <p>GrowthIQ promises to help companies understand shifts in their markets and shifts in their customers. Both sides are covered at three speeds.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Speed</th><th>Shifts in the market</th><th>Shifts in the client's customers</th></tr></thead>
+      <tbody>
+        <tr><td><b>Events, as they happen</b></td><td>Signal Triage · Competitor Move · Demand Tracer · Launch Watch · Deal Radar · Hiring Signals</td><td>Customer Shift · Hiring Signals</td></tr>
+        <tr><td><b>Slow, structural change</b></td><td>Market Shift Radar · Technology Scout · Living Landscape · Regulation Watch · Capacity Tracker</td><td>Customers' Customers</td></tr>
+        <tr><td><b>Needs and opportunities</b></td><td>Opportunity Scout · Market Sizer</td><td>Customer Voice · hand-off to SalesPlay</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>Why this is not ChatGPT</h2>
+      <p>A capable analyst with ChatGPT and a web browser could produce a text version of most of these agents in an hour. Every agent must therefore pass a simple test: it fails that comparison for at least two of the five reasons below. The test is about substance; the signature views are how the difference becomes visible.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Only GrowthIQ has</th><th>What it means</th><th>Why ChatGPT can't match it</th></tr></thead>
+      <tbody>
+        <tr><td><b>MnM numbers</b></td><td>Proprietary forecasts, segment splits, connected markets and company coverage.</td><td>It only has what is on the public web.</td></tr>
+        <tr><td><b>History</b></td><td>Every run is kept, so each output shows what changed since the last one; MnM's own forecast revisions add a longer view.</td><td>Each conversation starts from nothing.</td></tr>
+        <tr><td><b>Memory</b></td><td>The client's markets, key customers, competitors, criteria and open bets, built up over months.</td><td>It doesn't know the client unless told every time.</td></tr>
+        <tr><td><b>Always on</b></td><td>Agents re-run, re-rank and alert without being asked.</td><td>It answers once and stops.</td></tr>
+        <tr><td><b>People</b></td><td>MnM analysts who can confirm or overturn a call, and every figure traced to a specific MnM table.</td><td>No one stands behind its numbers.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>The agents</h2>
+      <p>Twenty-four agents, grouped by stage. The last column shows which kind of monitoring service, if any, feeds each agent. The table scrolls sideways; the agent column stays in place.</p>
+    </div>
+    <div class="filters">
+      <div role="group" aria-label="Filter by how often it is used"><span>Use</span>
+        <button id="u-all" data-filter="use" data-value="all" aria-pressed="true">All</button>
+        <button id="u-habit" data-filter="use" data-value="Habit" aria-pressed="false">Habit</button>
+        <button id="u-recurring" data-filter="use" data-value="Recurring" aria-pressed="false">Recurring</button>
+        <button id="u-event" data-filter="use" data-value="Event-driven" aria-pressed="false">Event-driven</button>
+        <button id="u-decision" data-filter="use" data-value="Per decision" aria-pressed="false">Per decision</button>
+      </div>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="table-wrap"><table class="catalogue">
+      <thead><tr><th>Agent and the question it answers</th><th>How often</th><th>For</th><th>You give</th><th>The call</th><th>Signature view</th><th>Why only GrowthIQ</th><th>Next actions</th><th>Watch</th><th>Evidence and data</th><th>Monitor sources</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>Monitoring: the engine behind Watch, Tracker and Radar</h2>
+      <p>Commercial web-monitoring services can run scheduled searches and watch web pages for change. GrowthIQ users cannot use them directly, and the raw output is a stream of links and diffs. GrowthIQ turns that stream into calls. The same layer powers the Tracker and Radar products and the alerts behind Watch.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Service</th><th>What it does</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td><b>Parallel Monitor</b></td><td>Runs a plain-language query on a schedule (hourly, daily or weekly) and returns only new items, with duplicates removed. Results arrive by webhook as structured data with source links.</td><td>Finding new events about a company, market or topic</td></tr>
+        <tr><td><b>Exa Monitors</b></td><td>Runs a search on a schedule (one hour minimum) and returns only new results. The output can follow a schema you set, with citations and a confidence level kept separately. Runs can be triggered manually and their history read back.</td><td>Discovery where structured data is needed</td></tr>
+        <tr><td><b>Context.dev Monitors</b></td><td>Watches given pages, sitemaps or a site's key pages and reports what changed, with a diff, a summary and evidence. Compares exact text or meaning. Does not discover new news. Credit-based, with 1,000 free credits a month.</td><td>Competitors' and customers' own sites: product, pricing and careers pages, new pages</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note read" style="margin-top:10px">Summarised from the vendors' product and documentation pages, October 2026. Parallel and Exa do not publish pricing on those pages.</p>
+
+    <div class="read" style="margin-top:26px"><h3>What GrowthIQ adds to the raw services</h3></div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Raw service gives</th><th>GrowthIQ adds</th></tr></thead>
+      <tbody>
+        <tr><td>A query box and a schedule</td><td>Ready-made monitors in plain language, set up from the client's markets, customers and competitors in one click</td></tr>
+        <tr><td>Links and page diffs</td><td>Each event mapped to MnM's market and segment structure, with an estimate of what is at stake from MnM's numbers</td></tr>
+        <tr><td>Everything that matches</td><td>Ranking by relevance to this client, using their memory: their markets, customers, open bets and past calls</td></tr>
+        <tr><td>One vendor's results</td><td>Results merged across services, with duplicates removed across them</td></tr>
+        <tr><td>New items only</td><td>What changed since the last run, kept over time, so a slow trend becomes visible</td></tr>
+        <tr><td>A webhook</td><td>A route into the right agent, a Radar digest, or an alert on a call in the Growth Portfolio</td></tr>
+        <tr><td>A confidence label, sometimes</td><td>A confidence level on every call, with sources, and an MnM analyst on request</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="read" style="margin-top:26px">
+      <h3>Monitor library</h3>
+      <p>Ready-made monitors that users switch on in Tracker or Radar, or that agents set up for them. Each one feeds the agents that need its events.</p>
+    </div>
+    <div class="table-wrap"><table class="compact" style="min-width:820px">
+      <thead><tr><th>Area</th><th>Monitor</th><th>Watches</th><th>Type</th><th>Cadence</th><th>Feeds</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="6"><b>Competitors</b></td><td>Announcements</td><td>Press releases and news about each competitor</td><td>Discovery</td><td>Daily</td><td>Competitor Move · Signal Triage</td></tr>
+        <tr><td>Product pages and sitemap</td><td>New or changed product and market pages</td><td>Page changes</td><td>Daily</td><td>Launch Watch · Living Landscape</td></tr>
+        <tr><td>Careers pages</td><td>New roles and the capabilities they point to</td><td>Page changes</td><td>Weekly</td><td>Hiring Signals</td></tr>
+        <tr><td>Results and filings</td><td>Earnings releases, annual reports and filings</td><td>Discovery</td><td>On release</td><td>Competitor Move · Living Landscape</td></tr>
+        <tr><td>Pricing and packaging</td><td>Changes to published prices and offers, where they exist</td><td>Page changes</td><td>Weekly</td><td>Competitor Move</td></tr>
+        <tr><td>Senior hires and departures</td><td>Leadership changes</td><td>Discovery</td><td>Weekly</td><td>Competitor Move</td></tr>
+        <tr><td rowspan="5"><b>Key customers</b></td><td>News and filings</td><td>Announcements, results and filings</td><td>Discovery</td><td>Daily</td><td>Customer Shift</td></tr>
+        <tr><td>Plants and capital spending</td><td>New plants, expansions, closures and investment plans</td><td>Discovery</td><td>Daily</td><td>Customer Shift · Capacity Tracker</td></tr>
+        <tr><td>Strategy statements</td><td>What leaders say in results calls and investor days</td><td>Discovery</td><td>Quarterly</td><td>Customers' Customers</td></tr>
+        <tr><td>Careers pages</td><td>Roles that show where a customer is heading</td><td>Page changes</td><td>Weekly</td><td>Hiring Signals · Customer Shift</td></tr>
+        <tr><td>Leadership changes</td><td>New decision-makers</td><td>Discovery</td><td>Weekly</td><td>Customer Shift · SalesPlay</td></tr>
+        <tr><td rowspan="4"><b>Markets</b></td><td>New entrants and start-ups</td><td>Companies entering your markets</td><td>Discovery</td><td>Weekly</td><td>Deal Radar · Living Landscape</td></tr>
+        <tr><td>Capacity changes</td><td>Plant additions and closures across the market</td><td>Discovery</td><td>Weekly</td><td>Capacity Tracker · Market Shift Radar</td></tr>
+        <tr><td>Industry bodies</td><td>Publications and data from trade associations</td><td>Page changes</td><td>Weekly</td><td>Market Shift Radar</td></tr>
+        <tr><td>Public funding and tenders</td><td>Government programmes, incentives and large tenders</td><td>Discovery</td><td>Weekly</td><td>Opportunity Scout · Regulation Watch</td></tr>
+        <tr><td rowspan="3"><b>Technology</b></td><td>Research publications</td><td>New papers on technologies you follow</td><td>Discovery</td><td>Weekly</td><td>Technology Scout</td></tr>
+        <tr><td>Standards bodies</td><td>New and revised technical standards</td><td>Page changes</td><td>Weekly</td><td>Technology Scout · Regulation Watch</td></tr>
+        <tr><td>Start-up funding</td><td>Rounds in the technologies you follow</td><td>Discovery</td><td>Daily</td><td>Technology Scout · Deal Radar</td></tr>
+        <tr><td rowspan="2"><b>Regulation</b></td><td>Rules and consultations</td><td>Proposed and adopted rules in your markets and regions</td><td>Discovery</td><td>Daily</td><td>Regulation Watch · Market Shift Radar</td></tr>
+        <tr><td>Regulator pages</td><td>Changes to key regulators' guidance pages</td><td>Page changes</td><td>Weekly</td><td>Regulation Watch</td></tr>
+        <tr><td rowspan="2"><b>Capital</b></td><td>Funding rounds</td><td>Rounds in your markets and their neighbours</td><td>Discovery</td><td>Daily</td><td>Deal Radar</td></tr>
+        <tr><td>Acquisitions and partnerships</td><td>Deals across your value chain</td><td>Discovery</td><td>Daily</td><td>Deal Radar · Entry Route</td></tr>
+        <tr><td><b>Events</b></td><td>Trade shows and conferences</td><td>Launches and talks announced for industry events</td><td>Discovery</td><td>Weekly</td><td>Launch Watch</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note read" style="margin-top:10px">Twenty-three monitors to start. Each is set up from the client's own lists, so a client with ten competitors and twenty key customers runs a few hundred monitors.</p>
+
+  </section>
+
+  <section>
+    <div class="read">
+      <h2>Engagement and email</h2>
+      <p>Leadership pays for GrowthIQ but rarely logs in, so email is how GrowthIQ reaches the person who renews. For strategy and market intelligence teams, a useful daily or weekly email turns occasional use into a habit. The risk is noise: monitors produce many events, and if each one becomes an email, users learn to ignore GrowthIQ. Every email must be worth opening.</p>
+    </div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Principle</th><th>In practice</th></tr></thead>
+      <tbody>
+        <tr><td><b>The email is the product</b></td><td>The call, the reason and the evidence are in the email itself, so a reader can act without logging in. Only the detail sits behind a link.</td></tr>
+        <tr><td><b>Silent unless it matters</b></td><td>No email when nothing important happened. A short email is fine; an empty or padded one never is.</td></tr>
+        <tr><td><b>Act in one click</b></td><td>Add to the Growth Portfolio, dismiss, mark as not relevant, send to SalesPlay, or forward as a Stakeholder Brief. Each click also teaches the ranking what this person cares about.</td></tr>
+        <tr><td><b>Built to be forwarded</b></td><td>A brief forwarded from an analyst to their manager is how GrowthIQ reaches new people inside a client, and new users are how accounts grow.</td></tr>
+        <tr><td><b>Matched to the role</b></td><td>Analysts get a daily feed; leadership gets a weekly summary. Neither gets the other's email.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table class="compact" style="min-width:760px">
+      <thead><tr><th>Email</th><th>For</th><th>When</th><th>What's in it</th><th>Drawn from</th></tr></thead>
+      <tbody>
+        <tr><td><b>Morning brief</b></td><td>Market intelligence, strategy</td><td>Daily, early, only on days with something worth reading</td><td>The three to five signals that matter, each marked act or watch, with the most important call first</td><td>Signal Triage · Customer Shift · Launch Watch</td></tr>
+        <tr><td><b>Alert</b></td><td>The owner of the call</td><td>Rarely: when a watch flips a call, or a key customer or rival makes a major move. Capped, for example at two a week</td><td>What changed, which call it affects, and what to do</td><td>Watch</td></tr>
+        <tr><td><b>Growth bets</b></td><td>Leadership</td><td>Weekly</td><td>Each bet's status, what changed, and which need a decision. Readable in two minutes and written to be forwarded</td><td>Growth Portfolio</td></tr>
+        <tr><td><b>Market shifts</b></td><td>Strategy, leadership</td><td>Monthly</td><td>The three growth factors and what moved them, structural shifts, capacity changes and regulation coming</td><td>Growth Score · Market Shift Radar · Capacity Tracker · Regulation Watch</td></tr>
+        <tr><td><b>Customer outlook</b></td><td>Strategy, sales leadership</td><td>Quarterly</td><td>Which key customers will buy more or less, and why, two steps downstream</td><td>Customers' Customers · Customer Shift</td></tr>
+        <tr><td><b>What GrowthIQ did for you</b></td><td>Leadership, the account owner</td><td>Quarterly</td><td>Decisions supported, bets tracked, alerts that mattered, pipeline and revenue influenced through SalesPlay, and the MnM research drawn on. This is the renewal email</td><td>Growth Portfolio · SalesPlay · research value</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table class="compact">
+      <thead><tr><th>Measure</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><b>Actions per email</b></td><td>Clicks to add, forward, dismiss, send to SalesPlay or open the call. Opens alone say little.</td></tr>
+        <tr><td><b>Unsubscribes and "not relevant" clicks</b></td><td>The warning sign that volume is too high.</td></tr>
+        <tr><td><b>Forwards, and the new users they bring</b></td><td>How GrowthIQ spreads inside a client.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note read" style="margin-top:10px">Staging's Tracker page already previews a weekly briefing email; these emails extend it into a set, each with its own job. The same alerts and briefs should also reach Slack and Teams, but email comes first because it reaches leadership.</p>
+  </section>
+
+</div>
+
+<script>
+const stages=[
+ ['Spot','Notice what changed and what it means'],
+ ['Find','Find and size where to grow'],
+ ['Decide','Choose what to pursue and how'],
+ ['Test','Check the case before committing'],
+ ['Send up','Get the work in front of leadership'],
+ ['Watch','Know when something that matters changes']
+];
+const A=(name,stage,wave,use,freq,isNew,forWho,q,give,call,next,watch,data,only,view,src)=>({name,stage,wave,use,freq,isNew,forWho,q,give,call,next,watch,data,only,view,src});
+const agents=[
+ A('Signal Triage','Spot',1,'Habit','Daily',false,'Market intelligence, strategy','What changed overnight that matters to us?','Your markets, companies and topics, taken from your Tracker.','Each new signal marked Act, Watch or Ignore, ranked by likely impact on you, with one line on why.','Ask a follow-up; run Competitor Move; add to a Stakeholder Brief.','Runs every morning by design.','Source articles; Live Signals; company and market coverage.','MnM numbers: revenue at stake from MnM market sizes. Memory: your markets.','<b>Ranked signal table.</b> Each signal rated high, medium or low for relevance, with the size of the market it touches from MnM, and the call: act, watch or ignore.','Discovery (Exa or Parallel)'),
+ A('Market Shift Radar','Spot',1,'Recurring','Monthly',true,'Strategy, market intelligence, leadership','What is structurally changing in our markets?','Your markets, taken from My Markets.','The structural shifts in your markets, ranked by impact: growth turning up or down, demand moving between segments, substitutes gaining, new entrants, regulation. Each with what it means for you.','Trace the demand effect; scout the opportunities it opens; send up a Stakeholder Brief.','Thresholds on the shifts that matter most to you.','MnM forecasts and how they have been revised over time; market coverage; signals.','History: how MnM\'s own forecasts have been revised. MnM numbers.','<b>Forecast revision timeline.</b> Each market\'s growth as forecast in each MnM report edition, with the turning points marked.','Discovery (Exa or Parallel)'),
+ A('Customer Shift','Spot',1,'Habit','Weekly',true,'Strategy, market intelligence, business development','Which of our key customers are changing in ways that change their demand for us?','Your key customers, from the Customers module or entered by you.','Each customer move marked as more demand or less demand for you, with a suggested action. Moves include end-market mix, plants opened or closed, capital spending, launches, acquisitions, strategy statements and signs of distress.','See that customer\'s customers; send the account to SalesPlay; send up a Stakeholder Brief.','Built in: runs weekly across your key customers.','Company coverage; signals; the Customers module (Beta).','Memory: your key customers, tracked over months. Always on.','<b>Customer pulse board.</b> A tile per key customer, coloured by whether their demand for you is rising or falling, with arrows for the change since last week.','Discovery and page changes'),
+ A('Competitor Move','Spot',2,'Event-driven','As events happen',false,'Strategy, market intelligence','A competitor just moved. What does it mean for us, and what should we do?','The competitor and the move, or a signal about it.','What they did, the likely intent, the impact on your segments, and three responses ranked.','Assess a response with Opportunity Assessment; send up a Stakeholder Brief; watch the competitor.','Follow-on moves, such as hiring, capacity or deals, that would confirm the intent.','Competitor presence by segment; financials; recent moves; news.','MnM numbers: presence by segment. Memory: your own segments.','<b>Overlap map.</b> The rival\'s move laid over your segment presence grid, with the three responses branching from it.','Discovery and page changes'),
+ A('Demand Tracer','Spot',2,'Event-driven','As events happen',false,'Strategy, market intelligence','A change is happening in another market. Will it reach us, and when?','A change, such as a technology shift, a regulation or a surge in demand, or a market to start from.','The path from that change to your markets, with the direction of the effect and MnM\'s growth forecast at each step.','Run Opportunity Scout on markets along the path; size the closest with Market Sizer.','Leading indicators at the first step of the path.','Connected markets; market forecasts at each step.','MnM connected markets and forecasts at every step.','<b>Demand path.</b> The chain of connected markets from the change to you, with MnM\'s growth rate at each step. The flagship view.','None: runs on MnM data'),
+ A('Customers\' Customers','Find',1,'Recurring','Quarterly, and on request',5,'Strategy, market intelligence, sales leadership','Can we see our customers\' customers: demand two steps downstream?','Your key customers and what you sell them.','For each key customer, where their own customers\' markets are heading, and so whether that customer will buy more or less from you (growing, flat or shrinking), ranked by the size of the change.','Watch the customer with Customer Shift; scout opportunities in the growing end markets; send the account to SalesPlay; send up a Stakeholder Brief.','Forecast revisions in your customers\' end markets.','MnM forecasts for the markets your customers sell into; connected markets; company coverage.','The C² of MnM\'s Growth Equation, as a product. Needs MnM forecasts for your customers\' end markets and the connected-markets map. Memory: your customers.','<b>Demand chain.</b> End markets flowing through each key customer to you, with MnM growth for each end market. Link weights only where a customer discloses its revenue split.','Discovery (Exa or Parallel) for customers\' strategy statements'),
+ A('Opportunity Scout','Find',1,'Per decision','Each planning cycle',5,'Strategy, leadership','Where is our next growth, across markets, customers and competition?','Your company or business unit.','A ranked shortlist of five to ten opportunities, each shown on MnM\'s Growth Equation: market growth and size (MnM), how many of your key customers\' end markets it serves, and how many rivals are already present.','Assess the top ones; size one in detail; add to the Growth Portfolio; send the target accounts to SalesPlay.','Revisions to any of the three factors for shortlisted opportunities.','Report tables; market forecasts; customers\' end markets; competitor presence.','MnM\'s own framework, E = M × C × C, run on MnM data for all three factors. Connected markets for the demand chain.','<b>Opportunity field.</b> Market growth against market size, both from MnM, with each bubble sized by the number of rivals already present.','None: runs on MnM data'),
+ A('Market Sizer','Find',2,'Event-driven','On request',false,'Market intelligence, strategy','How big is our slice of this market, and how fast is it growing?','The market and your definition of it: segment, geography, application. Optionally your own template.','Size and growth for your slice, with every assumption shown and adjustable, and the one assumption that moves the answer most.','Test the most sensitive assumption; assess the opportunity.','Report updates and forecast revisions.','The report table behind each figure; market models; KnowledgeStore.','MnM market models and the table behind each figure.','<b>Live model with sensitivity bars.</b> Adjust any assumption and see the size move, where MnM\'s models expose their drivers; every figure links to its MnM table.','None: runs on MnM data'),
+ A('Technology Scout','Find',2,'Recurring','Quarterly',false,'Strategy, market intelligence, innovation teams','Which emerging technologies could create or erode demand for us?','Your markets or products.','Technologies ranked by impact on you, with readiness and expected timing, each marked as a threat or an opportunity.','Trace the demand effect; scout the opportunities it opens.','Readiness milestones and adoption signals.','Technology research and signals. Supports Innovation Command Center.','MnM technology research. History: readiness over time.','<b>Readiness horizon.</b> Technologies on a timeline by readiness and impact, in threat and opportunity lanes.','Discovery (Exa or Parallel)'),
+ A('Living Landscape','Find',2,'Habit','Weekly',false,'Market intelligence','Who are the players in this market, and what has changed?','A market or a set of competitors.','The current landscape (players, positions and presence by segment), with changes since your last look highlighted.','Run Competitor Move on any change; send up a Stakeholder Brief.','Built in: the landscape updates itself.','Company coverage; competitor presence.','MnM company coverage. History: changes since your last look.','<b>Presence grid with change markers.</b> Who competes where, with every change since your last look flagged.','Discovery and page changes'),
+ A('Opportunity Assessment','Decide',1,'Per decision','Once per opportunity',false,'Strategy, leadership','Should we pursue this, and which of these first?','One or several opportunities, from Opportunity Scout or your own, and your criteria and thresholds. Defaults are offered.','Each criterion rated high, medium or low with its evidence, a verdict of go, no-go or not yet from a rule the client sets, a ranking when there are several, and what would flip each verdict. Uses SWOT, PESTLE or a 2×2 where they help.','Test the assumptions; choose an entry route; run a pre-mortem; add to the Growth Portfolio; send to SalesPlay once it is a go.','The conditions that would flip the verdict.','Market size, competition and the assumptions that carry the verdict.','MnM market models. Memory: your criteria and thresholds.','<b>Criteria verdict.</b> The verdict, each criterion\'s rating beside its evidence, the rule that produced it, and the changes that would flip it.','None: runs on MnM data'),
+ A('Entry Route','Decide',2,'Per decision','Once per opportunity',false,'Strategy, leadership','How should we get in: build, buy or partner?','An opportunity you have decided to pursue.','The recommended route with its reasons, and a shortlist of acquisition targets or partners.','Brief yourself on each target; watch the targets.','Deals or moves by the shortlisted companies.','Company coverage; financials; deal news.','MnM company coverage and deal history.','<b>Route comparison.</b> Build, buy and partner options side by side, with the known facts about each candidate and a fit rating. Revenue only where disclosed.','Discovery (Exa or Parallel)'),
+ A('Assumption Tester','Test',1,'Event-driven','For each decision',false,'Strategy, market intelligence','What does our case rest on, and does it hold?','An answer, an assessment or a plan, or your own list of assumptions.','The critical assumptions, each with a verdict from a panel of AI experts (confirmed, at odds or refuted) and the share of simulated respondents who agreed. That share is not a probability.','Send the weakest assumption to a human analyst; re-run the assessment.','Signals that bear on a refuted or disputed assumption.','Interview transcripts behind each verdict; Synthetic Interviews; Ask Domain Experts.','People: an AI expert panel, with MnM analysts behind it.','<b>Assumption scoreboard.</b> Each assumption\'s verdict and agreement score, with a lane for those sent to a human analyst.','None: runs on interviews and analysts'),
+ A('Pre-mortem','Test',2,'Per decision','Once per major decision',false,'Strategy, leadership','If this fails in two years, why will it have failed?','A decision or a plan.','The most likely ways it fails, in ranked order, each with an early-warning sign marked lit or quiet.','Turn the warning signs into watches; test the riskiest assumption.','The early-warning signs themselves.','Market risks; competitor behaviour; frameworks such as PESTLE.','Memory: your plan. Always on: warning signs become watches.','<b>Risk list.</b> Ranked risks, each with its warning sign lit or quiet, watched by Radar monitors.','Discovery (Exa or Parallel) for the warning signs'),
+ A('Customer Voice','Test',2,'Per decision','Once per question',false,'Strategy, product and innovation teams','What do customers in this market need that they are not getting?','A market or a customer group.','Unmet needs ranked by how often they are mentioned in real interviews and surveys, with quotes.','Scout opportunities that meet the top needs.','New research or signals on the top needs.','Primary research (source to confirm); Synthetic Interviews.','MnM primary research (to confirm).','<b>Needs ranked by mentions.</b> Counted mentions for each need, with what customers said.','None: runs on MnM data'),
+ A('Stakeholder Brief','Send up',1,'Habit','Weekly, often more',false,'Market intelligence and strategy, for leadership','How do I get this in front of leadership?','Any agent output or Ask GrowthIQ answer.','One screen: the call at the top, three supporting points, the evidence and confidence, and the decision being asked for. Shared by link.','Add the bet to the Growth Portfolio.','Changes to the evidence after the brief is sent.','Carried over from the source work.','Table-level sourcing. People: an optional "verified by an MnM analyst" stamp.','<b>Sourced one-pager.</b> The call, three points and the decision asked for, with a source chip on every figure and no invented scores.','None'),
+ A('Growth Portfolio','Send up',1,'Habit','Weekly',false,'Leadership','Where do our growth bets stand, and which need a decision?','Nothing. It collects the bets added from other agents.','Each bet with its status (on track, at risk or off track), what changed this week, and which need a decision now. Pipeline and revenue influenced are added once a CRM or SalesPlay is connected.','Open a bet; re-run its assessment.','A weekly digest for leadership.','The agent output behind each bet; pipeline data from SalesPlay; the research-value figure.','Always on. History: each bet\'s path over time.','<b>Portfolio map with trails.</b> Every bet by status and size, with a trail showing how it has moved week by week.','None: fed by Watch'),
+ A('Growth Score','Send up',2,'Recurring','Monthly',5,'Leadership, strategy','How strong is our growth position, and is it improving?','Nothing new: it uses the markets, customers and competitors already in GrowthIQ.','The three factors of the Growth Equation (market momentum, customer demand and competitive position), each marked improving, steady or worsening with the data behind it, and what moved them since last month. No composite number.','Open the factor that fell; run Opportunity Scout; send up a Stakeholder Brief.','A fall in any of the three factors.','MnM forecasts; your customers\' end-market outlook; competitor presence.','MnM numbers behind all three factors. History: month by month. The ongoing version of MnM\'s public Growth Diagnostic.','<b>Three growth factors.</b> Market momentum, customer demand and competitive position, each with its direction and the evidence behind it.','None: built from other agents'),
+ A('Watch','Watch',1,'Habit','Always on',false,'Everyone','Tell me when something that matters changes.','Triggers, usually suggested by other agents.','When a trigger fires: what changed, which call it affects, and what to do.','Re-run the agent behind the call.','This is the watch.','Signals; Tracker; report updates.','Always on. Memory: the calls it protects.','<b>Trigger timeline.</b> What fired, which call it affects, and that call before and after.','Discovery and page changes: the engine'),
+ A('Hiring Signals','Spot',2,'Habit','Weekly',4,'Strategy, market intelligence','What are competitors and customers building, judging by who they hire?','Companies, taken from your competitors and key customers.','Hiring patterns that reveal a strategy (new technologies, regions or capabilities), ranked by what they mean for you.','Run Competitor Move or Customer Shift on the company; watch the pattern.','Continued hiring in the same area.','Careers pages watched for changes; roles mapped to MnM markets and technologies.','Memory: your rivals and customers. History: hiring over months. Roles mapped to MnM\'s market and technology structure.','<b>Hiring heat grid.</b> Companies against capabilities, shaded by hiring intensity, with the change since last month.','Page changes (Context.dev)'),
+ A('Launch Watch','Spot',2,'Event-driven','As pages change',4,'Strategy, market intelligence, product teams','What is a rival launching, or about to?','Your competitors.','New products, markets and pages detected on rivals\' sites, often before any announcement, each mapped to your segments and marked as a threat or an opportunity.','Run Competitor Move; update the Living Landscape; watch the launch.','Follow-up pages, press coverage and pricing for the launch.','Competitors\' sitemaps and product pages; MnM segments.','Memory: your rivals and segments. History: what their sites showed before. MnM\'s segment structure.','<b>Launch timeline.</b> Each rival\'s new pages and products on a timeline, placed against your segments.','Page changes (Context.dev), with discovery for press'),
+ A('Deal Radar','Spot',2,'Habit','Weekly',4,'Strategy, leadership, corporate development','Who is putting money into our markets and the ones next to them?','Your markets, taken from My Markets.','Funding rounds, acquisitions and partnerships in and around your markets, ranked by what they signal.','Choose an entry route; scout the technology; scout the opportunity.','Follow-on rounds and deals by the same investors or companies.','Deal and funding news; connected markets.','MnM connected markets show deals one step away from you. Memory: your markets.','<b>Capital flow map.</b> Money flowing into your markets and their neighbours, drawn on the connected-markets map; amounts where disclosed, counts otherwise.','Discovery (Exa or Parallel)'),
+ A('Regulation Watch','Spot',3,'Recurring','Weekly',4,'Strategy, market intelligence, leadership','Which rules and standards are coming that will change our markets?','Your markets and regions.','Upcoming regulations and standards, with the segments affected, the direction of the effect and the timing.','Feed Market Shift Radar; run a pre-mortem; scout the opportunity it opens.','Consultation and decision dates.','Regulator and standards-body sites and news; MnM market structure.','MnM market structure ties each rule to the segments it moves. Memory: your markets and regions.','<b>Regulatory calendar.</b> Rules on a timeline by stage (proposed, in consultation, adopted), each linked to the segments it affects.','Discovery, with page changes on regulator sites'),
+ A('Capacity Tracker','Spot',3,'Recurring','Monthly',4,'Strategy, market intelligence','Who is adding or cutting capacity in our market, and what will it do to supply?','Your markets.','Capacity added or removed, by company and region, set against MnM\'s demand forecast, with a call on whether supply is tightening or heading for surplus.','Feed Market Shift Radar; run Competitor Move on the company.','Plant start-up and closure dates.','Plant and expansion news; MnM market sizes and forecasts.','MnM numbers supply the demand side. History: announcements over time.','<b>Supply and demand balance.</b> Disclosed plant capacity against MnM\'s volume forecast, year by year, where both are available.','Discovery (Exa or Parallel)')
+];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const filter={use:'all'};
+function render(){
+  const shown=agents.filter(a=>filter.use==='all'||a.use===filter.use);
+  document.getElementById('rows').innerHTML=stages.map(([stage,line])=>{
+    const list=shown.filter(a=>a.stage===stage);
+    if(!list.length)return '';
+    return `<tr class="stage-row"><td colspan="11">${stage}<span>${line}</span></td></tr>`+list.map(a=>`<tr>
+      <td><b>${esc(a.name)}</b><i>“${esc(a.q)}”</i></td>
+      <td class="freq">${esc(a.freq)}<small>${esc(a.use)}</small></td>
+      <td>${esc(a.forWho)}</td>
+      <td class="wide">${esc(a.give)}</td>
+      <td class="call">${esc(a.call)}</td>
+      <td class="wide view">${a.view}</td>
+      <td class="wide">${esc(a.only)}</td>
+      <td class="wide">${esc(a.next)}</td>
+      <td>${esc(a.watch)}</td>
+      <td class="wide">${esc(a.data)}</td>
+      <td class="wide">${esc(a.src)}</td></tr>`).join('');
+  }).join('');
+  document.getElementById('count').textContent=`Showing ${shown.length} of ${agents.length} agents`;
+}
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  filter[b.dataset.filter]=b.dataset.value;
+  document.querySelectorAll(`.filters button[data-filter="${b.dataset.filter}"]`).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  render();
+}));
+render();
+</script>
